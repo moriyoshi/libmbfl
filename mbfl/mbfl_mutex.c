@@ -195,7 +195,7 @@ MBFLAPI int mbfl_mutex_unlock(mbfl_mutex *mutex)
 	}
 #endif
 	return 0;
-n}
+}
 
 MBFLAPI void mbfl_mutex_free(mbfl_mutex *mutex)
 {
