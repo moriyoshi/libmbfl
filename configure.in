@@ -10,11 +10,14 @@ AC_PROG_CXX
 AC_PROG_LIBTOOL
 AC_PROG_RANLIB
 
-# Checks for libraries.
-
 # Checks for header files.
 AC_HEADER_STDC
-AC_CHECK_HEADERS([stdlib.h stddef.h assert.h])
+AC_CHECK_HEADERS([stdlib.h stddef.h assert.h errno.h])
+
+AC_ARG_ENABLE([threads],
+  [  --enable-threads    enable threading support],
+  [enable_threads="$enableval"],
+  [enable_threads="autodetect"])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
@@ -23,7 +26,41 @@ AC_TYPE_SIZE_T
 # Checks for library functions.
 AC_FUNC_MALLOC
 AC_FUNC_REALLOC
-AC_CHECK_FUNCS([strcasecmp strchr])
+AC_FUNC_MEMCMP
+AC_CHECK_FUNCS([strcasecmp strchr memmove])
+
+if test "$enable_threads" != "no"; then
+  MBFL_PTHREADS([
+    avail_pthread="yes"
+  ],[
+    avail_pthread="no"
+  ])
+
+  MBFL_WIN32_NATIVE_THREADS([
+    avail_win32_native_thread="yes"
+  ],[
+    avail_win32_native_thread="no"
+  ])
+
+  if test "$enable_threads" == "autodetect"; then
+    enable_threads="no"
+    if test "$avail_pthread" != "no"; then
+      enable_threads="pthread"
+    fi
+  fi
+fi
+
+if test "$enable_threads" != "no"; then
+  CFLAGS="$CFLAGS -D_REENTRANT"
+  case "$enable_threads" in
+  "pthread" [)]
+     AC_DEFINE([USE_PTHREAD],[1],[Define to 1 if pthread is adopted for threading])
+     ;;
+  "win32native" [)]
+     AC_DEFINE([USE_WIN32_NATIVE_THREAD],[1],[Define to 1 if win32 native thread is adopted for threading])
+  esac
+fi
+
 
 AC_CONFIG_FILES([Makefile mbfl/Makefile filters/Makefile nls/Makefile])
 AC_OUTPUT
