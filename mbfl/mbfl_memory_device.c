@@ -36,6 +36,8 @@
 #include <stddef.h>
 #endif
 
+#include <assert.h>
+
 #include "mbfl_allocators.h"
 #include "mbfl_string.h"
 #include "mbfl_memory_device.h"

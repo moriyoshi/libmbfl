@@ -36,30 +36,32 @@
 #include <stddef.h>
 #endif
 
+#include <assert.h>
+
 #include "mbfl_allocators.h"
 #include "mbfl_string.h"
 #include "mbfl_wchar_device.h"
 
 void mbfl_wchar_device_ctor(mbfl_wchar_device *device)
 {
-	if (device) {
-		device->buffer = (unsigned int *)0;
-		device->length = 0;
-		device->pos= 0;
-		device->allocsz = MBFL_MEMORY_DEVICE_ALLOC_SIZE;
-	}
+	assert(device != NULL);
+
+	device->buffer = (unsigned int *)0;
+	device->length = 0;
+	device->pos= 0;
+	device->allocsz = MBFL_MEMORY_DEVICE_ALLOC_SIZE;
 }
 
 void mbfl_wchar_device_dtor(mbfl_wchar_device *device)
 {
-	if (device) {
-		if (device->buffer) {
-			mbfl_free(device->buffer);
-		}
-		device->buffer = (unsigned int*)0;
-		device->length = 0;
-		device->pos = 0;
+	assert(device != NULL);
+
+	if (device->buffer) {
+		mbfl_free(device->buffer);
 	}
+	device->buffer = (unsigned int*)0;
+	device->length = 0;
+	device->pos = 0;
 }
 
 int mbfl_wchar_device_output(int c, void *data)
