@@ -146,7 +146,7 @@ static const mbfl_encoding *mbfl_encoding_ptr_list[] = {
 	&mbfl_encoding_euc_jp,
 	&mbfl_encoding_sjis,
 	&mbfl_encoding_eucjp_win,
-	&mbfl_encoding_sjis_win,
+	&mbfl_encoding_cp932,
 	&mbfl_encoding_jis,
 	&mbfl_encoding_2022jp,
 	&mbfl_encoding_cp1252,

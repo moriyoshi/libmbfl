@@ -68,7 +68,7 @@ enum _mbfl_encoding_id {
 	mbfl_encoding_id_euc_jp,
 	mbfl_encoding_id_sjis,
 	mbfl_encoding_id_eucjp_win,
-	mbfl_encoding_id_sjis_win,
+	mbfl_encoding_id_cp932,
 	mbfl_encoding_id_sjis_mac,
 	mbfl_encoding_id_jis,
 	mbfl_encoding_id_2022jp,
