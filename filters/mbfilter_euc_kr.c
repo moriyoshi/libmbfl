@@ -59,7 +59,7 @@ static const unsigned char mblen_table_euckr[] = { /* 0xA1-0xFE */
 static const char *mbfl_encoding_euc_kr_aliases[] = {"EUC_KR", "eucKR", "x-euc-kr", NULL};
 
 const mbfl_encoding mbfl_encoding_euc_kr = {
-	mbfl_no_encoding_euc_kr,
+	mbfl_encoding_id_euc_kr,
 	"EUC-KR",
 	"EUC-KR",
 	(const char *(*)[])&mbfl_encoding_euc_kr_aliases,
@@ -68,15 +68,15 @@ const mbfl_encoding mbfl_encoding_euc_kr = {
 };
 
 const mbfl_identify_vtbl vtbl_identify_euckr = {
-	mbfl_no_encoding_euc_kr,
+	mbfl_encoding_id_euc_kr,
 	mbfl_filt_ident_common_ctor,
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_euckr
 };
 
 const mbfl_convert_vtbl vtbl_euckr_wchar = {
-	mbfl_no_encoding_euc_kr,
-	mbfl_no_encoding_wchar,
+	mbfl_encoding_id_euc_kr,
+	mbfl_encoding_id_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_euckr_wchar,
@@ -84,8 +84,8 @@ const mbfl_convert_vtbl vtbl_euckr_wchar = {
 };
 
 const mbfl_convert_vtbl vtbl_wchar_euckr = {
-	mbfl_no_encoding_wchar,
-	mbfl_no_encoding_euc_kr,
+	mbfl_encoding_id_wchar,
+	mbfl_encoding_id_euc_kr,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_euckr,

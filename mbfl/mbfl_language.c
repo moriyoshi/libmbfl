@@ -56,7 +56,7 @@ static const mbfl_language *mbfl_language_ptr_table[] = {
 };
 
 /* language resolver */
-const mbfl_language * mbfl_name2language(const char *name)
+const mbfl_language * mbfl_get_language_by_name(const char *name)
 {
 	const mbfl_language *language;
 	int i, j;
@@ -96,7 +96,7 @@ const mbfl_language * mbfl_name2language(const char *name)
 	return NULL;
 }
 
-const mbfl_language * mbfl_no2language(enum mbfl_no_language no_language)
+const mbfl_language * mbfl_get_language_by_id(mbfl_language_id no_language)
 {
 	const mbfl_language *language;
 	int i;
@@ -111,23 +111,23 @@ const mbfl_language * mbfl_no2language(enum mbfl_no_language no_language)
 	return NULL;
 }
 
-enum mbfl_no_language mbfl_name2no_language(const char *name)
+mbfl_language_id mbfl_language_get_id_by_name(const char *name)
 {
 	const mbfl_language *language;
 
-	language = mbfl_name2language(name);
+	language = mbfl_get_language_by_name(name);
 	if (language == NULL) {
-		return mbfl_no_language_invalid;
+		return mbfl_language_id_invalid;
 	} else {
 		return language->no_language;
 	}
 }
 
-const char * mbfl_no_language2name(enum mbfl_no_language no_language)
+const char * mbfl_language_get_name_by_id(mbfl_language_id no_language)
 {
 	const mbfl_language *language;
 
-	language = mbfl_no2language(no_language);
+	language = mbfl_get_language_by_id(no_language);
 	if (language == NULL) {
 		return "";
 	} else {

@@ -36,7 +36,7 @@
 #include "mbfilter_base64.h"
 
 const mbfl_encoding mbfl_encoding_base64 = {
-	mbfl_no_encoding_base64,
+	mbfl_encoding_id_base64,
 	"BASE64",
 	"BASE64",
 	NULL,
@@ -45,8 +45,8 @@ const mbfl_encoding mbfl_encoding_base64 = {
 };
 
 const mbfl_convert_vtbl vtbl_8bit_b64 = {
-	mbfl_no_encoding_8bit,
-	mbfl_no_encoding_base64,
+	mbfl_encoding_id_8bit,
+	mbfl_encoding_id_base64,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_base64enc,
@@ -54,8 +54,8 @@ const mbfl_convert_vtbl vtbl_8bit_b64 = {
 };
 
 const mbfl_convert_vtbl vtbl_b64_8bit = {
-	mbfl_no_encoding_base64,
-	mbfl_no_encoding_8bit,
+	mbfl_encoding_id_base64,
+	mbfl_encoding_id_8bit,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_base64dec,

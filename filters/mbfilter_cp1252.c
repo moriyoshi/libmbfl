@@ -40,7 +40,7 @@ static int mbfl_filt_ident_cp1252(int c, mbfl_identify_filter *filter);
 static const char *mbfl_encoding_cp1252_aliases[] = {"cp1252", NULL};
 
 const mbfl_encoding mbfl_encoding_cp1252 = {
-	mbfl_no_encoding_cp1252,
+	mbfl_encoding_id_cp1252,
 	"Windows-1252",
 	"Windows-1252",
 	(const char *(*)[])&mbfl_encoding_cp1252_aliases,
@@ -49,15 +49,15 @@ const mbfl_encoding mbfl_encoding_cp1252 = {
 };
 
 const mbfl_identify_vtbl vtbl_identify_cp1252 = {
-	mbfl_no_encoding_cp1252,
+	mbfl_encoding_id_cp1252,
 	mbfl_filt_ident_common_ctor,
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_cp1252
 };
 
 const mbfl_convert_vtbl vtbl_cp1252_wchar = {
-	mbfl_no_encoding_cp1252,
-	mbfl_no_encoding_wchar,
+	mbfl_encoding_id_cp1252,
+	mbfl_encoding_id_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_cp1252_wchar,
@@ -65,8 +65,8 @@ const mbfl_convert_vtbl vtbl_cp1252_wchar = {
 };
 
 const mbfl_convert_vtbl vtbl_wchar_cp1252 = {
-	mbfl_no_encoding_wchar,
-	mbfl_no_encoding_cp1252,
+	mbfl_encoding_id_wchar,
+	mbfl_encoding_id_cp1252,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_cp1252,

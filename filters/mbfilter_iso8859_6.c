@@ -38,7 +38,7 @@
 static const char *mbfl_encoding_8859_6_aliases[] = {"ISO_8859-6", "arabic", NULL};
 
 const mbfl_encoding mbfl_encoding_8859_6 = {
-	mbfl_no_encoding_8859_6,
+	mbfl_encoding_id_8859_6,
 	"ISO-8859-6",
 	"ISO-8859-6",
 	(const char *(*)[])&mbfl_encoding_8859_6_aliases,
@@ -47,15 +47,15 @@ const mbfl_encoding mbfl_encoding_8859_6 = {
 };
 
 const mbfl_identify_vtbl vtbl_identify_8859_6 = {
-	mbfl_no_encoding_8859_6,
+	mbfl_encoding_id_8859_6,
 	mbfl_filt_ident_common_ctor,
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_true
 };
 
 const mbfl_convert_vtbl vtbl_8859_6_wchar = {
-	mbfl_no_encoding_8859_6,
-	mbfl_no_encoding_wchar,
+	mbfl_encoding_id_8859_6,
+	mbfl_encoding_id_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_8859_6_wchar,
@@ -63,8 +63,8 @@ const mbfl_convert_vtbl vtbl_8859_6_wchar = {
 };
 
 const mbfl_convert_vtbl vtbl_wchar_8859_6 = {
-	mbfl_no_encoding_wchar,
-	mbfl_no_encoding_8859_6,
+	mbfl_encoding_id_wchar,
+	mbfl_encoding_id_8859_6,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_8859_6,

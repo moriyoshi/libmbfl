@@ -65,7 +65,7 @@ static const unsigned char mblen_table_html[] = { /* 0x00, 0x80 - 0xFF, only val
 static const char *mbfl_encoding_html_ent_aliases[] = {"HTML", "html", NULL};
 
 const mbfl_encoding mbfl_encoding_html_ent = {
-	mbfl_no_encoding_html_ent,
+	mbfl_encoding_id_html_ent,
 	"HTML-ENTITIES",
 	"US-ASCII",
 	(const char *(*)[])&mbfl_encoding_html_ent_aliases,
@@ -74,8 +74,8 @@ const mbfl_encoding mbfl_encoding_html_ent = {
 };
 
 const mbfl_convert_vtbl vtbl_wchar_html = {
-	mbfl_no_encoding_wchar,
-	mbfl_no_encoding_html_ent,
+	mbfl_encoding_id_wchar,
+	mbfl_encoding_id_html_ent,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_html_enc,
@@ -83,8 +83,8 @@ const mbfl_convert_vtbl vtbl_wchar_html = {
 };
 
 const mbfl_convert_vtbl vtbl_html_wchar = {
-	mbfl_no_encoding_html_ent,
-	mbfl_no_encoding_wchar,
+	mbfl_encoding_id_html_ent,
+	mbfl_encoding_id_wchar,
 	mbfl_filt_conv_html_dec_ctor,
 	mbfl_filt_conv_html_dec_dtor,
 	mbfl_filt_conv_html_dec,

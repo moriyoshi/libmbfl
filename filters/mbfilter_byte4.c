@@ -36,7 +36,7 @@
 #include "mbfilter_byte4.h"
 
 const mbfl_encoding mbfl_encoding_byte4be = {
-	mbfl_no_encoding_byte4be,
+	mbfl_encoding_id_byte4be,
 	"byte4be",
 	NULL,
 	NULL,
@@ -45,7 +45,7 @@ const mbfl_encoding mbfl_encoding_byte4be = {
 };
 
 const mbfl_encoding mbfl_encoding_byte4le = {
-	mbfl_no_encoding_byte4le,
+	mbfl_encoding_id_byte4le,
 	"byte4le",
 	NULL,
 	NULL,
@@ -54,8 +54,8 @@ const mbfl_encoding mbfl_encoding_byte4le = {
 };
 
 const mbfl_convert_vtbl vtbl_byte4be_wchar = {
-	mbfl_no_encoding_byte4be,
-	mbfl_no_encoding_wchar,
+	mbfl_encoding_id_byte4be,
+	mbfl_encoding_id_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_byte4be_wchar,
@@ -63,16 +63,16 @@ const mbfl_convert_vtbl vtbl_byte4be_wchar = {
 };
 
 const mbfl_convert_vtbl vtbl_wchar_byte4be = {
-	mbfl_no_encoding_wchar,
-	mbfl_no_encoding_byte4be,
+	mbfl_encoding_id_wchar,
+	mbfl_encoding_id_byte4be,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_byte4be,
 	mbfl_filt_conv_common_flush };
 
 const mbfl_convert_vtbl vtbl_byte4le_wchar = {
-	mbfl_no_encoding_byte4le,
-	mbfl_no_encoding_wchar,
+	mbfl_encoding_id_byte4le,
+	mbfl_encoding_id_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_byte4le_wchar,
@@ -80,8 +80,8 @@ const mbfl_convert_vtbl vtbl_byte4le_wchar = {
 };
 
 const mbfl_convert_vtbl vtbl_wchar_byte4le = {
-	mbfl_no_encoding_wchar,
-	mbfl_no_encoding_byte4le,
+	mbfl_encoding_id_wchar,
+	mbfl_encoding_id_byte4le,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_byte4le,

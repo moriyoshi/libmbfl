@@ -6,11 +6,11 @@
 #include "nls_kr.h"
 
 const mbfl_language mbfl_language_korean = {
-	mbfl_no_language_korean,
+	mbfl_language_id_korean,
 	"Korean",
 	"ko",
 	NULL,
-	mbfl_no_encoding_2022kr,
-	mbfl_no_encoding_base64,
-	mbfl_no_encoding_7bit
+	mbfl_encoding_id_2022kr,
+	mbfl_encoding_id_base64,
+	mbfl_encoding_id_7bit
 };

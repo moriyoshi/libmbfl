@@ -87,7 +87,7 @@
 #include "filters/mbfilter_htmlent.h"
 
 static const mbfl_identify_vtbl vtbl_identify_false = {
-	mbfl_no_encoding_pass,
+	mbfl_encoding_id_pass,
 	mbfl_filt_ident_false_ctor,
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_false };
@@ -147,7 +147,7 @@ void mbfl_identify_filter_set_vtbl(mbfl_identify_filter *filter, const mbfl_iden
 	}
 }
 
-const mbfl_identify_vtbl * mbfl_identify_filter_get_vtbl(enum mbfl_no_encoding encoding)
+const mbfl_identify_vtbl * mbfl_identify_filter_get_vtbl(mbfl_encoding_id encoding)
 {
 	const mbfl_identify_vtbl * vtbl;
 	int i;
@@ -173,7 +173,7 @@ void mbfl_identify_filter_select_vtbl(mbfl_identify_filter *filter)
 	mbfl_identify_filter_set_vtbl(filter, vtbl);
 }
 
-mbfl_identify_filter *mbfl_identify_filter_new(enum mbfl_no_encoding encoding)
+mbfl_identify_filter *mbfl_identify_filter_new(mbfl_encoding_id encoding)
 {
 	mbfl_identify_filter * filter;
 
@@ -184,7 +184,7 @@ mbfl_identify_filter *mbfl_identify_filter_new(enum mbfl_no_encoding encoding)
 	}
 
 	/* encoding structure */
-	filter->encoding = mbfl_no2encoding(encoding);
+	filter->encoding = mbfl_get_encoding_by_id(encoding);
 	if (filter->encoding == NULL) {
 		filter->encoding = &mbfl_encoding_pass;
 	}

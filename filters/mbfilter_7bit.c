@@ -36,7 +36,7 @@
 #include "mbfilter_7bit.h"
 
 const mbfl_encoding mbfl_encoding_7bit = {
-	mbfl_no_encoding_7bit,
+	mbfl_encoding_id_7bit,
 	"7bit",
 	"7bit",
 	NULL,
@@ -45,8 +45,8 @@ const mbfl_encoding mbfl_encoding_7bit = {
 };
 
 const mbfl_convert_vtbl vtbl_8bit_7bit = {
-	mbfl_no_encoding_8bit,
-	mbfl_no_encoding_7bit,
+	mbfl_encoding_id_8bit,
+	mbfl_encoding_id_7bit,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_any_7bit,
@@ -54,8 +54,8 @@ const mbfl_convert_vtbl vtbl_8bit_7bit = {
 };
 
 const mbfl_convert_vtbl vtbl_7bit_8bit = {
-	mbfl_no_encoding_7bit,
-	mbfl_no_encoding_8bit,
+	mbfl_encoding_id_7bit,
+	mbfl_encoding_id_8bit,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_7bit_any,

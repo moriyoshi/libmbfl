@@ -35,7 +35,7 @@
 #include "mbfilter_utf7imap.h"
 
 const mbfl_encoding mbfl_encoding_utf7imap = {
-	mbfl_no_encoding_utf7imap,
+	mbfl_encoding_id_utf7imap,
 	"UTF7-IMAP",
 	NULL,
 	NULL,
@@ -44,16 +44,16 @@ const mbfl_encoding mbfl_encoding_utf7imap = {
 };
 
 const mbfl_convert_vtbl vtbl_utf7imap_wchar = {
-	mbfl_no_encoding_utf7imap,
-	mbfl_no_encoding_wchar,
+	mbfl_encoding_id_utf7imap,
+	mbfl_encoding_id_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_utf7imap_wchar,
 	mbfl_filt_conv_common_flush };
 
 const mbfl_convert_vtbl vtbl_wchar_utf7imap = {
-	mbfl_no_encoding_wchar,
-	mbfl_no_encoding_utf7imap,
+	mbfl_encoding_id_wchar,
+	mbfl_encoding_id_utf7imap,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_utf7imap,

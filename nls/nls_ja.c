@@ -6,11 +6,11 @@
 #include "nls_ja.h"
 
 const mbfl_language mbfl_language_japanese = {
-	mbfl_no_language_japanese,
+	mbfl_language_id_japanese,
 	"Japanese",
 	"ja",
 	NULL,
-	mbfl_no_encoding_2022jp,
-	mbfl_no_encoding_base64,
-	mbfl_no_encoding_7bit
+	mbfl_encoding_id_2022jp,
+	mbfl_encoding_id_base64,
+	mbfl_encoding_id_7bit
 };

@@ -6,22 +6,22 @@
 #include "nls_zh.h"
 
 const mbfl_language mbfl_language_simplified_chinese = {
-	mbfl_no_language_simplified_chinese,
+	mbfl_language_id_simplified_chinese,
 	"Simplified Chinese",
 	"zh-cn",
 	NULL,
-	mbfl_no_encoding_hz,
-	mbfl_no_encoding_base64,
-	mbfl_no_encoding_7bit
+	mbfl_encoding_id_hz,
+	mbfl_encoding_id_base64,
+	mbfl_encoding_id_7bit
 };
 
 const mbfl_language mbfl_language_traditional_chinese = {
-	mbfl_no_language_traditional_chinese,
+	mbfl_language_id_traditional_chinese,
 	"Traditional Chinese",
 	"zh-tw",
 	NULL,
-	mbfl_no_encoding_big5,
-	mbfl_no_encoding_base64,
-	mbfl_no_encoding_8bit
+	mbfl_encoding_id_big5,
+	mbfl_encoding_id_base64,
+	mbfl_encoding_id_8bit
 };
 

@@ -119,7 +119,7 @@ struct _mbfl_buffer_converter {
 	const mbfl_encoding *to;
 };
 
-mbfl_buffer_converter * mbfl_buffer_converter_new(enum mbfl_no_encoding from, enum mbfl_no_encoding to, int buf_initsz);
+mbfl_buffer_converter * mbfl_buffer_converter_new(mbfl_encoding_id from, mbfl_encoding_id to, int buf_initsz);
 void mbfl_buffer_converter_delete(mbfl_buffer_converter *convd);
 void mbfl_buffer_converter_reset(mbfl_buffer_converter *convd);
 int mbfl_buffer_converter_illegal_mode(mbfl_buffer_converter *convd, int mode);
@@ -142,30 +142,30 @@ struct _mbfl_encoding_detector {
 	int filter_list_size;
 };
 
-mbfl_encoding_detector * mbfl_encoding_detector_new(enum mbfl_no_encoding *elist, int eliztsz);
+mbfl_encoding_detector * mbfl_encoding_detector_new(mbfl_encoding_id *elist, int eliztsz);
 void mbfl_encoding_detector_delete(mbfl_encoding_detector *identd);
 int mbfl_encoding_detector_feed(mbfl_encoding_detector *identd, mbfl_string *string);
-enum mbfl_no_encoding mbfl_encoding_detector_judge(mbfl_encoding_detector *identd);
+mbfl_encoding_id mbfl_encoding_detector_judge(mbfl_encoding_detector *identd);
 
 
 /*
  * encoding converter
  */
 mbfl_string *
-mbfl_convert_encoding(mbfl_string *string, mbfl_string *result, enum mbfl_no_encoding toenc);
+mbfl_convert_encoding(mbfl_string *string, mbfl_string *result, mbfl_encoding_id toenc);
 
 
 /*
  * identify encoding
  */
 const mbfl_encoding *
-mbfl_identify_encoding(mbfl_string *string, enum mbfl_no_encoding *elist, int eliztsz);
+mbfl_identify_encoding(mbfl_string *string, mbfl_encoding_id *elist, int eliztsz);
 
 const char *
-mbfl_identify_encoding_name(mbfl_string *string, enum mbfl_no_encoding *elist, int eliztsz);
+mbfl_identify_encoding_name(mbfl_string *string, mbfl_encoding_id *elist, int eliztsz);
 
-const enum mbfl_no_encoding
-mbfl_identify_encoding_no(mbfl_string *string, enum mbfl_no_encoding *elist, int eliztsz);
+const mbfl_encoding_id
+mbfl_identify_encoding_no(mbfl_string *string, mbfl_encoding_id *elist, int eliztsz);
 
 /*
  * strlen
@@ -225,9 +225,9 @@ struct mime_header_encoder_data;	/* forward declaration */
 
 struct mime_header_encoder_data *
 mime_header_encoder_new(
-    enum mbfl_no_encoding incode,
-    enum mbfl_no_encoding outcode,
-    enum mbfl_no_encoding encoding);
+    mbfl_encoding_id incode,
+    mbfl_encoding_id outcode,
+    mbfl_encoding_id encoding);
 
 void
 mime_header_encoder_delete(struct mime_header_encoder_data *pe);
@@ -241,8 +241,8 @@ mime_header_encoder_result(struct mime_header_encoder_data *pe, mbfl_string *res
 mbfl_string *
 mbfl_mime_header_encode(
     mbfl_string *string, mbfl_string *result,
-    enum mbfl_no_encoding outcode,
-    enum mbfl_no_encoding encoding,
+    mbfl_encoding_id outcode,
+    mbfl_encoding_id encoding,
     const char *linefeed,
     int indent);
 
@@ -252,7 +252,7 @@ mbfl_mime_header_encode(
 struct mime_header_decoder_data;	/* forward declaration */
 
 struct mime_header_decoder_data *
-mime_header_decoder_new(enum mbfl_no_encoding outcode);
+mime_header_decoder_new(mbfl_encoding_id outcode);
 
 void
 mime_header_decoder_delete(struct mime_header_decoder_data *pd);
@@ -267,7 +267,7 @@ mbfl_string *
 mbfl_mime_header_decode(
     mbfl_string *string,
     mbfl_string *result,
-    enum mbfl_no_encoding outcode);
+    mbfl_encoding_id outcode);
 
 
 /*

@@ -86,7 +86,7 @@
 static const char *mbfl_encoding_auto_aliases[] = {"unknown", NULL};
 
 static const mbfl_encoding mbfl_encoding_auto = {
-	mbfl_no_encoding_auto,
+	mbfl_encoding_id_auto,
 	"auto",
 	NULL,
 	(const char *(*)[])&mbfl_encoding_auto_aliases,
@@ -159,7 +159,7 @@ static const mbfl_encoding *mbfl_encoding_ptr_list[] = {
 };
 
 /* encoding resolver */
-const mbfl_encoding *mbfl_name2encoding(const char *name)
+const mbfl_encoding *mbfl_get_encoding_by_name(const char *name)
 {
 	const mbfl_encoding *encoding;
 	int i, j;
@@ -202,7 +202,7 @@ const mbfl_encoding *mbfl_name2encoding(const char *name)
 	return NULL;
 }
 
-const mbfl_encoding *mbfl_no2encoding(enum mbfl_no_encoding no_encoding)
+const mbfl_encoding *mbfl_get_encoding_by_id(mbfl_encoding_id no_encoding)
 {
 	const mbfl_encoding *encoding;
 	int i;
@@ -217,23 +217,23 @@ const mbfl_encoding *mbfl_no2encoding(enum mbfl_no_encoding no_encoding)
 	return NULL;
 }
 
-enum mbfl_no_encoding mbfl_name2no_encoding(const char *name)
+mbfl_encoding_id mbfl_encoding_get_id_by_name(const char *name)
 {
 	const mbfl_encoding *encoding;
 
-	encoding = mbfl_name2encoding(name);
+	encoding = mbfl_get_encoding_by_name(name);
 	if (encoding == NULL) {
-		return mbfl_no_encoding_invalid;
+		return mbfl_encoding_id_invalid;
 	} else {
 		return encoding->no_encoding;
 	}
 }
 
-const char *mbfl_no_encoding2name(enum mbfl_no_encoding no_encoding)
+const char *mbfl_encoding_get_name_by_id(mbfl_encoding_id no_encoding)
 {
 	const mbfl_encoding *encoding;
 
-	encoding = mbfl_no2encoding(no_encoding);
+	encoding = mbfl_get_encoding_by_id(no_encoding);
 	if (encoding == NULL) {
 		return "";
 	} else {
@@ -241,11 +241,11 @@ const char *mbfl_no_encoding2name(enum mbfl_no_encoding no_encoding)
 	}
 }
 
-const char * mbfl_no2preferred_mime_name(enum mbfl_no_encoding no_encoding)
+const char * mbfl_encoding_get_mime_preferred_name_by_id(mbfl_encoding_id no_encoding)
 {
 	const mbfl_encoding *encoding;
 
-	encoding = mbfl_no2encoding(no_encoding);
+	encoding = mbfl_get_encoding_by_id(no_encoding);
 	if (encoding != NULL && encoding->mime_name != NULL && encoding->mime_name[0] != '\0') {
 		return encoding->mime_name;
 	} else {
@@ -253,11 +253,11 @@ const char * mbfl_no2preferred_mime_name(enum mbfl_no_encoding no_encoding)
 	}
 }
 
-int mbfl_is_support_encoding(const char *name)
+extern int mbfl_is_supported_encoding(const char *name)
 {
 	const mbfl_encoding *encoding;
 
-	encoding = mbfl_name2encoding(name);
+	encoding = mbfl_get_encoding_by_name(name);
 	if (encoding == NULL) {
 		return 0;
 	} else {

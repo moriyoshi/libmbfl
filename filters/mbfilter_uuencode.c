@@ -35,7 +35,7 @@
 #include "mbfilter_uuencode.h"
 
 const mbfl_encoding mbfl_encoding_uuencode = {
-	mbfl_no_encoding_uuencode,
+	mbfl_encoding_id_uuencode,
 	"UUENCODE",
 	"x-uuencode",
 	NULL,
@@ -44,8 +44,8 @@ const mbfl_encoding mbfl_encoding_uuencode = {
 };
 
 const mbfl_convert_vtbl vtbl_uuencode_8bit = {
-	mbfl_no_encoding_uuencode,
-	mbfl_no_encoding_8bit,
+	mbfl_encoding_id_uuencode,
+	mbfl_encoding_id_8bit,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_uudec,

@@ -38,14 +38,14 @@
  * string object
  */
 typedef struct _mbfl_string {
-	enum mbfl_no_language no_language;
-	enum mbfl_no_encoding no_encoding;
+	mbfl_language_id no_language;
+	mbfl_encoding_id no_encoding;
 	unsigned char *val;
 	unsigned int len;
 } mbfl_string;
 
 void mbfl_string_init(mbfl_string *string);
-void mbfl_string_init_set(mbfl_string *string, enum mbfl_no_language no_language, enum mbfl_no_encoding no_encoding);
+void mbfl_string_init_set(mbfl_string *string, mbfl_language_id no_language, mbfl_encoding_id no_encoding);
 void mbfl_string_clear(mbfl_string *string);
 
 #endif /* MBFL_STRING_H */

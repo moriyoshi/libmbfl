@@ -41,7 +41,7 @@ static int mbfl_filt_ident_jis(int c, mbfl_identify_filter *filter);
 static int mbfl_filt_ident_2022jp(int c, mbfl_identify_filter *filter);
 
 const mbfl_encoding mbfl_encoding_jis = {
-	mbfl_no_encoding_jis,
+	mbfl_encoding_id_jis,
 	"JIS",
 	"ISO-2022-JP",
 	NULL,
@@ -50,7 +50,7 @@ const mbfl_encoding mbfl_encoding_jis = {
 };
 
 const mbfl_encoding mbfl_encoding_2022jp = {
-	mbfl_no_encoding_2022jp,
+	mbfl_encoding_id_2022jp,
 	"ISO-2022-JP",
 	"ISO-2022-JP",
 	NULL,
@@ -59,22 +59,22 @@ const mbfl_encoding mbfl_encoding_2022jp = {
 };
 
 const mbfl_identify_vtbl vtbl_identify_jis = {
-	mbfl_no_encoding_jis,
+	mbfl_encoding_id_jis,
 	mbfl_filt_ident_common_ctor,
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_jis
 };
 
 const mbfl_identify_vtbl vtbl_identify_2022jp = {
-	mbfl_no_encoding_2022jp,
+	mbfl_encoding_id_2022jp,
 	mbfl_filt_ident_common_ctor,
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_2022jp
 };
 
 const mbfl_convert_vtbl vtbl_jis_wchar = {
-	mbfl_no_encoding_jis,
-	mbfl_no_encoding_wchar,
+	mbfl_encoding_id_jis,
+	mbfl_encoding_id_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_jis_wchar,
@@ -82,8 +82,8 @@ const mbfl_convert_vtbl vtbl_jis_wchar = {
 };
 
 const mbfl_convert_vtbl vtbl_wchar_jis = {
-	mbfl_no_encoding_wchar,
-	mbfl_no_encoding_jis,
+	mbfl_encoding_id_wchar,
+	mbfl_encoding_id_jis,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_jis,
@@ -91,8 +91,8 @@ const mbfl_convert_vtbl vtbl_wchar_jis = {
 };
 
 const mbfl_convert_vtbl vtbl_2022jp_wchar = {
-	mbfl_no_encoding_2022jp,
-	mbfl_no_encoding_wchar,
+	mbfl_encoding_id_2022jp,
+	mbfl_encoding_id_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_jis_wchar,
@@ -100,8 +100,8 @@ const mbfl_convert_vtbl vtbl_2022jp_wchar = {
 };
 
 const mbfl_convert_vtbl vtbl_wchar_2022jp = {
-	mbfl_no_encoding_wchar,
-	mbfl_no_encoding_2022jp,
+	mbfl_encoding_id_wchar,
+	mbfl_encoding_id_2022jp,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_2022jp,

@@ -31,7 +31,7 @@
 #include "mbfilter.h"
 
 const mbfl_encoding mbfl_encoding_8bit = {
-	mbfl_no_encoding_8bit,
+	mbfl_encoding_id_8bit,
 	"8bit",
 	"8bit",
 	NULL,

@@ -8,11 +8,11 @@
 static const char *mbfl_language_german_aliases[] = {"Deutsch", NULL};
 
 const mbfl_language mbfl_language_german = {
-	mbfl_no_language_german,
+	mbfl_language_id_german,
 	"German",
 	"de",
 	(const char *(*)[])&mbfl_language_german_aliases,
-	mbfl_no_encoding_8859_15,
-	mbfl_no_encoding_qprint,
-	mbfl_no_encoding_8bit
+	mbfl_encoding_id_8859_15,
+	mbfl_encoding_id_qprint,
+	mbfl_encoding_id_8bit
 };

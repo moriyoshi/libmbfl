@@ -37,7 +37,7 @@
 static const char *mbfl_encoding_pass_aliases[] = {"none", NULL};
 
 const mbfl_encoding mbfl_encoding_pass = {
-	mbfl_no_encoding_pass,
+	mbfl_encoding_id_pass,
 	"pass",
 	NULL,
 	(const char *(*)[])&mbfl_encoding_pass_aliases,
@@ -46,8 +46,8 @@ const mbfl_encoding mbfl_encoding_pass = {
 };
 
 const mbfl_convert_vtbl vtbl_pass = {
-	mbfl_no_encoding_pass,
-	mbfl_no_encoding_pass,
+	mbfl_encoding_id_pass,
+	mbfl_encoding_id_pass,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_pass,

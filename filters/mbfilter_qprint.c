@@ -38,7 +38,7 @@
 static const char *mbfl_encoding_qprint_aliases[] = {"qprint", NULL};
 
 const mbfl_encoding mbfl_encoding_qprint = {
-	mbfl_no_encoding_qprint,
+	mbfl_encoding_id_qprint,
 	"Quoted-Printable",
 	"Quoted-Printable",
 	(const char *(*)[])&mbfl_encoding_qprint_aliases,
@@ -47,16 +47,16 @@ const mbfl_encoding mbfl_encoding_qprint = {
 };
 
 const mbfl_convert_vtbl vtbl_8bit_qprint = {
-	mbfl_no_encoding_8bit,
-	mbfl_no_encoding_qprint,
+	mbfl_encoding_id_8bit,
+	mbfl_encoding_id_qprint,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_qprintenc,
 	mbfl_filt_conv_qprintenc_flush };
 
 const mbfl_convert_vtbl vtbl_qprint_8bit = {
-	mbfl_no_encoding_qprint,
-	mbfl_no_encoding_8bit,
+	mbfl_encoding_id_qprint,
+	mbfl_encoding_id_8bit,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_qprintdec,

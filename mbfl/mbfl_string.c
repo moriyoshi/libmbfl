@@ -42,15 +42,15 @@ void
 mbfl_string_init(mbfl_string *string)
 {
 	if (string) {
-		string->no_language = mbfl_no_language_uni;
-		string->no_encoding = mbfl_no_encoding_pass;
+		string->no_language = mbfl_language_id_uni;
+		string->no_encoding = mbfl_encoding_id_pass;
 		string->val = (unsigned char*)0;
 		string->len = 0;
 	}
 }
 
 void
-mbfl_string_init_set(mbfl_string *string, enum mbfl_no_language no_language, enum mbfl_no_encoding no_encoding)
+mbfl_string_init_set(mbfl_string *string, mbfl_language_id no_language, mbfl_encoding_id no_encoding)
 {
 	if (string) {
 		string->no_language = no_language;

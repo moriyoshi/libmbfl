@@ -207,8 +207,8 @@ const mbfl_convert_vtbl *mbfl_convert_filter_list[] = {
 };
 
 mbfl_convert_filter * mbfl_convert_filter_new(
-    enum mbfl_no_encoding from,
-    enum mbfl_no_encoding to,
+    mbfl_encoding_id from,
+    mbfl_encoding_id to,
     int (*output_function)(int, void* ),
     int (*flush_function)(void*),
     void* data)
@@ -222,8 +222,8 @@ mbfl_convert_filter * mbfl_convert_filter_new(
 	}
 
 	/* encoding structure */
-	filter->from = mbfl_no2encoding(from);
-	filter->to = mbfl_no2encoding(to);
+	filter->from = mbfl_get_encoding_by_id(from);
+	filter->to = mbfl_get_encoding_by_id(to);
 	if (filter->from == NULL) {
 		filter->from = &mbfl_encoding_pass;
 	}
@@ -269,14 +269,14 @@ int mbfl_convert_filter_flush(mbfl_convert_filter *filter)
 	return (filter->flush_function ? (*filter->flush_function)(filter->data) : 0);
 }
 
-void mbfl_convert_filter_reset(mbfl_convert_filter *filter, enum mbfl_no_encoding from, enum mbfl_no_encoding to)
+void mbfl_convert_filter_reset(mbfl_convert_filter *filter, mbfl_encoding_id from, mbfl_encoding_id to)
 {
 	/* destruct old filter */
 	(*filter->filter_dtor)(filter);
 
 	/* resset filter member */
-	filter->from = mbfl_no2encoding(from);
-	filter->to = mbfl_no2encoding(to);
+	filter->from = mbfl_get_encoding_by_id(from);
+	filter->to = mbfl_get_encoding_by_id(to);
 
 	/* set the vtbl */
 	mbfl_convert_filter_select_vtbl(filter);
@@ -429,19 +429,19 @@ void mbfl_convert_filter_set_vtbl(mbfl_convert_filter *filter, const mbfl_conver
 }
 
 
-const mbfl_convert_vtbl * mbfl_convert_filter_get_vtbl(enum mbfl_no_encoding from, enum mbfl_no_encoding to)
+const mbfl_convert_vtbl * mbfl_convert_filter_get_vtbl(mbfl_encoding_id from, mbfl_encoding_id to)
 {
 	const mbfl_convert_vtbl *vtbl;
 	int i;
 
-	if (to == mbfl_no_encoding_base64 ||
-	    to == mbfl_no_encoding_qprint ||
-	    to == mbfl_no_encoding_7bit) {
-		from = mbfl_no_encoding_8bit;
-	} else if (from == mbfl_no_encoding_base64 ||
-	           from == mbfl_no_encoding_qprint ||
-				  from == mbfl_no_encoding_uuencode) {
-		to = mbfl_no_encoding_8bit;
+	if (to == mbfl_encoding_id_base64 ||
+	    to == mbfl_encoding_id_qprint ||
+	    to == mbfl_encoding_id_7bit) {
+		from = mbfl_encoding_id_8bit;
+	} else if (from == mbfl_encoding_id_base64 ||
+	           from == mbfl_encoding_id_qprint ||
+				  from == mbfl_encoding_id_uuencode) {
+		to = mbfl_encoding_id_8bit;
 	}
 
 	i = 0;

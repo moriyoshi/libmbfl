@@ -39,7 +39,7 @@
 static int mbfl_filt_ident_hz(int c, mbfl_identify_filter *filter);
 
 const mbfl_encoding mbfl_encoding_hz = {
-	mbfl_no_encoding_hz,
+	mbfl_encoding_id_hz,
 	"HZ",
 	"HZ-GB-2312",
 	NULL,
@@ -48,15 +48,15 @@ const mbfl_encoding mbfl_encoding_hz = {
 };
 
 const mbfl_identify_vtbl vtbl_identify_hz = {
-	mbfl_no_encoding_hz,
+	mbfl_encoding_id_hz,
 	mbfl_filt_ident_common_ctor,
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_hz
 };
 
 const mbfl_convert_vtbl vtbl_hz_wchar = {
-	mbfl_no_encoding_hz,
-	mbfl_no_encoding_wchar,
+	mbfl_encoding_id_hz,
+	mbfl_encoding_id_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_hz_wchar,
@@ -64,8 +64,8 @@ const mbfl_convert_vtbl vtbl_hz_wchar = {
 };
 
 const mbfl_convert_vtbl vtbl_wchar_hz = {
-	mbfl_no_encoding_wchar,
-	mbfl_no_encoding_hz,
+	mbfl_encoding_id_wchar,
+	mbfl_encoding_id_hz,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_hz,
