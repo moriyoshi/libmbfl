@@ -19,6 +19,9 @@ mkinstalldirs
 .deps
 .libs
 *.lo
+*.tar
+*.tar.gz
+*.tar.bz2
 *.o
 *.la
 *.a
