@@ -1,4 +1,4 @@
-EXTRA_DIST=Makefile.bcc32
+EXTRA_DIST=Makefile.bcc32 mk_sb_tbl.awk
 noinst_LTLIBRARIES=libmbfl_filters.la
 INCLUDES=-I../mbfl
 libmbfl_filters_la_LDFLAGS=-version-info $(SHLIB_VERSION)

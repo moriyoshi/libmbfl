@@ -215,6 +215,9 @@
 				RelativePath=".\filters\mbfilter_iso8859_15.c">
 			</File>
 			<File
+				RelativePath=".\filters\mbfilter_iso8859_16.c">
+			</File>
+			<File
 				RelativePath=".\filters\mbfilter_iso8859_2.c">
 			</File>
 			<File
@@ -439,6 +442,9 @@
 				RelativePath=".\filters\mbfilter_iso8859_15.h">
 			</File>
 			<File
+				RelativePath=".\filters\mbfilter_iso8859_16.h">
+			</File>
+			<File
 				RelativePath=".\filters\mbfilter_iso8859_2.h">
 			</File>
 			<File
@@ -593,6 +599,9 @@
 			</File>
 			<File
 				RelativePath=".\filters\unicode_table_iso8859_15.h">
+			</File>
+			<File
+				RelativePath=".\filters\unicode_table_iso8859_16.h">
 			</File>
 			<File
 				RelativePath=".\filters\unicode_table_iso8859_2.h">
