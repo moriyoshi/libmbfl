@@ -1,4 +1,3 @@
-## $MBFL$
 # Process this file with autoconf to produce a configure script.
 AC_INIT(mbfl/mbfilter.c)
 AM_INIT_AUTOMAKE(libmbfl, 1.0.0)
