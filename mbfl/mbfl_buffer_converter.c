@@ -32,7 +32,11 @@
 #include "config.h"
 #endif
 
+#ifdef HAVE_STDDEF_H
 #include <stddef.h>
+#endif
+
+#include <assert.h>
 
 #include "mbfl_allocators.h"
 #include "mbfl_buffer_converter.h"
@@ -93,18 +97,23 @@ mbfl_buffer_converter * mbfl_buffer_converter_new(mbfl_encoding_id from, mbfl_en
 	return convd;
 }
 
+void mbfl_buffer_converter_dtor(mbfl_buffer_converter *convd)
+{
+	assert(convd);
+
+	if (convd->filter1 != NULL) {
+		mbfl_convert_filter_delete(convd->filter1);
+	}
+	if (convd->filter2 != NULL) {
+		mbfl_convert_filter_delete(convd->filter2);
+	}
+	mbfl_memory_device_clear(&convd->device);
+}
+
 void mbfl_buffer_converter_delete(mbfl_buffer_converter *convd)
 {
-	if (convd != NULL) {
-		if (convd->filter1) {
-			mbfl_convert_filter_delete(convd->filter1);
-		}
-		if (convd->filter2) {
-			mbfl_convert_filter_delete(convd->filter2);
-		}
-		mbfl_memory_device_clear(&convd->device);
-		mbfl_free((void*)convd);
-	}
+	mbfl_buffer_converter_delete(convd);
+	mbfl_free((void*)convd);
 }
 
 void mbfl_buffer_converter_reset(mbfl_buffer_converter *convd)

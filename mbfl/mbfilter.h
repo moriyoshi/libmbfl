@@ -89,8 +89,6 @@
 #ifndef MBFL_MBFILTER_H
 #define MBFL_MBFILTER_H
 
-#include <stddef.h>
-
 #include "mbfl_consts.h"
 #include "mbfl_allocators.h"
 #include "mbfl_encoding.h"

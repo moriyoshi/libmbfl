@@ -32,6 +32,10 @@
 #include "config.h"
 #endif
 
+#ifdef HAVE_STDDEF_H
+#include <stddef.h>
+#endif
+
 #include "mbfl_encoding.h"
 #include "mbfilter_pass.h"
 #include "mbfilter_8bit.h"

@@ -31,6 +31,10 @@
 #include "config.h"
 #endif
 
+#ifdef HAVE_STDDEF_H
+#include <stddef.h>
+#endif
+
 #include "mbfilter.h"
 #include "mbfilter_pass.h"
 
