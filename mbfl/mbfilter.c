@@ -777,8 +777,12 @@ mbfl_oddlen(mbfl_string *string)
 	const unsigned char *mbtab;
 	const mbfl_encoding *encoding;
 
+
+	if (string == NULL) {
+		return -1;
+	}
 	encoding = mbfl_no2encoding(string->no_encoding);
-	if (encoding == NULL || string == NULL) {
+	if (encoding == NULL) {
 		return -1;
 	}
 
