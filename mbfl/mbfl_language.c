@@ -83,14 +83,14 @@ int mbfl_language_tbl_init(void)
 	mbfl_arraylist_ctor(&mbfl_language_tbl);
 	mbfl_language_tbl_initialized = 1;
 
-	(err = mbfl_register_language(&mbfl_language_uni, &mbfl_language_id_uni)) ||
-	(err = mbfl_register_language(&mbfl_language_japanese, NULL)) ||
-	(err = mbfl_register_language(&mbfl_language_korean, NULL)) ||
-	(err = mbfl_register_language(&mbfl_language_simplified_chinese, NULL)) ||
-	(err = mbfl_register_language(&mbfl_language_traditional_chinese, NULL)) ||
-	(err = mbfl_register_language(&mbfl_language_english, NULL)) ||
-	(err = mbfl_register_language(&mbfl_language_german, NULL)) ||
-	(err = mbfl_register_language(&mbfl_language_russian, NULL)) || 1;
+	(err = mbfl_register_language(&mbfl_language_uni, &mbfl_language_id_uni)) != 0 ||
+	(err = mbfl_register_language(&mbfl_language_japanese, NULL)) != 0||
+	(err = mbfl_register_language(&mbfl_language_korean, NULL)) != 0 ||
+	(err = mbfl_register_language(&mbfl_language_simplified_chinese, NULL))  != 0 ||
+	(err = mbfl_register_language(&mbfl_language_traditional_chinese, NULL)) != 0 ||
+	(err = mbfl_register_language(&mbfl_language_english, NULL)) != 0 ||
+	(err = mbfl_register_language(&mbfl_language_german, NULL)) != 0 ||
+	(err = mbfl_register_language(&mbfl_language_russian, NULL)) != 0 || 1;
 
 	return err;
 }
