@@ -104,6 +104,7 @@
 #include "mbfilter.h"
 #include "mbfl_string.h"
 #include "mbfl_filter_output.h"
+#include "mbfl_memory_device.h"
 #include "mbfilter_pass.h"
 
 /* hex character table "0123456789ABCDEF" */
@@ -473,7 +474,7 @@ retry:
 			for (;;) {
 				pc->found_pos++;
 				p = h;
-				m = pc->needle.buffer;
+				m = (int *)pc->needle.buffer;
 				n = pc->needle_pos - 1;
 				while (n > 0 && *p == *m) {
 					n--;
@@ -508,7 +509,7 @@ int mbfl_strpos(mbfl_string *haystack, mbfl_string *needle, int offset, int reve
 		return -8;
 	}
 	/* needle is converted into wchar */
-	mbfl_wchar_device_init(&pc.needle);
+	mbfl_wchar_device_ctor(&pc.needle);
 	filter = mbfl_convert_filter_new(
 	  needle->no_encoding,
 	  mbfl_encoding_id_wchar,
@@ -533,7 +534,7 @@ int mbfl_strpos(mbfl_string *haystack, mbfl_string *needle, int offset, int reve
 		return -4;
 	}
 	if (pc.needle_len <= 0) {
-		mbfl_wchar_device_clear(&pc.needle);
+		mbfl_wchar_device_dtor(&pc.needle);
 		return -2;
 	}
 	/* initialize filter and collector data */
@@ -542,7 +543,7 @@ int mbfl_strpos(mbfl_string *haystack, mbfl_string *needle, int offset, int reve
 	  mbfl_encoding_id_wchar,
 	  collector_strpos, 0, &pc);
 	if (filter == NULL) {
-		mbfl_wchar_device_clear(&pc.needle);
+		mbfl_wchar_device_dtor(&pc.needle);
 		return -4;
 	}
 	pc.start = offset;
@@ -569,7 +570,7 @@ int mbfl_strpos(mbfl_string *haystack, mbfl_string *needle, int offset, int reve
 	mbfl_convert_filter_flush(filter);
 	result = pc.matched_pos;
 	mbfl_convert_filter_delete(filter);
-	mbfl_wchar_device_clear(&pc.needle);
+	mbfl_wchar_device_dtor(&pc.needle);
 
 	return result;
 }
@@ -589,7 +590,7 @@ int mbfl_substr_count(mbfl_string *haystack, mbfl_string *needle)
 		return -8;
 	}
 	/* needle is converted into wchar */
-	mbfl_wchar_device_init(&pc.needle);
+	mbfl_wchar_device_ctor(&pc.needle);
 	filter = mbfl_convert_filter_new(
 	  needle->no_encoding,
 	  mbfl_encoding_id_wchar,
@@ -614,7 +615,7 @@ int mbfl_substr_count(mbfl_string *haystack, mbfl_string *needle)
 		return -4;
 	}
 	if (pc.needle_len <= 0) {
-		mbfl_wchar_device_clear(&pc.needle);
+		mbfl_wchar_device_dtor(&pc.needle);
 		return -2;
 	}
 	/* initialize filter and collector data */
@@ -623,7 +624,7 @@ int mbfl_substr_count(mbfl_string *haystack, mbfl_string *needle)
 	  mbfl_encoding_id_wchar,
 	  collector_strpos, 0, &pc);
 	if (filter == NULL) {
-		mbfl_wchar_device_clear(&pc.needle);
+		mbfl_wchar_device_dtor(&pc.needle);
 		return -4;
 	}
 	pc.start = 0;
@@ -650,7 +651,7 @@ int mbfl_substr_count(mbfl_string *haystack, mbfl_string *needle)
 	}
 	mbfl_convert_filter_flush(filter);
 	mbfl_convert_filter_delete(filter);
-	mbfl_wchar_device_clear(&pc.needle);
+	mbfl_wchar_device_dtor(&pc.needle);
 
 	return result;
 }
