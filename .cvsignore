@@ -16,6 +16,7 @@ ltmain.sh
 install-sh
 stamp-h1
 mkinstalldirs
+missing
 .deps
 .libs
 *.dll
