@@ -3,9 +3,9 @@ $Id$
 libmbfl-1.1.0 TODO's
 (means the features listed below need to be implemented in the future)
 
-- more consistent conversion filter code with some fancy magics, I mean
-  int (*filter_function)(int, mbfl_convert_filter *) should be
-  int (*filter_function)(mbfl_filter_input, mbfl_convert_filter *) where
-  mbfl_filter_input is a union of mbfl_wchar_t and unsigned char. 
-- thread-safe iterators for array lists
-- dynamic loadable encoding converter modules
+ - more consistent conversion filter code with some fancy magics, I mean
+   int (*filter_function)(int, mbfl_convert_filter *) should be
+   int (*filter_function)(mbfl_filter_input, mbfl_convert_filter *) where
+   mbfl_filter_input is a union of mbfl_wchar_t and unsigned char. 
+ - thread-safe iterators for array lists
+ - dynamic loadable encoding converter modules
