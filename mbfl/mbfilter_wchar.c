@@ -41,11 +41,11 @@
 const mbfl_encoding mbfl_encoding_wchar = {
 	mbfl_encoding_id_wchar,
 	"wchar",
-	0,
-	0,
-	0,
+	NULL,
+	NULL,
+	NULL,
 	MBFL_ENCTYPE_WCS4BE,
-	0
+	NULL,
 };
 
 
