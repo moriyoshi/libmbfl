@@ -139,16 +139,6 @@ static const struct mbfl_identify_vtbl *mbfl_identify_filter_list[] = {
 /*
  * identify filter
  */
-
-void mbfl_identify_filter_set_vtbl(mbfl_identify_filter *filter, const struct mbfl_identify_vtbl *vtbl)
-{
-	if (filter && vtbl) {
-		filter->filter_ctor = vtbl->filter_ctor;
-		filter->filter_dtor = vtbl->filter_dtor;
-		filter->filter_function = vtbl->filter_function;
-	}
-}
-
 const struct mbfl_identify_vtbl * mbfl_identify_filter_get_vtbl(enum mbfl_no_encoding encoding)
 {
 	const struct mbfl_identify_vtbl * vtbl;
@@ -172,7 +162,9 @@ void mbfl_identify_filter_select_vtbl(mbfl_identify_filter *filter)
 	if (vtbl == NULL) {
 		vtbl = &vtbl_identify_false;
 	}
-	mbfl_identify_filter_set_vtbl(filter, vtbl);
+	filter->filter_ctor = vtbl->filter_ctor;
+	filter->filter_dtor = vtbl->filter_dtor;
+	filter->filter_function = vtbl->filter_function;
 }
 
 mbfl_identify_filter *mbfl_identify_filter_new(enum mbfl_no_encoding encoding)
