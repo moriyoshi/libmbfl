@@ -1,3 +1,4 @@
+EXTRA_DIST=Makefile.bcc32
 noinst_LTLIBRARIES=libmbfl_nls.la
 INCLUDES=-I../mbfl
-libmbfl_nls_la_SOURCES=nls_ja.c nls_de.c nls_en.c nls_kr.c nls_ru.c nls_zh.c nls_uni.c
+libmbfl_nls_la_SOURCES=nls_ja.c nls_de.c nls_en.c nls_kr.c nls_ru.c nls_zh.c nls_uni.c nls_ja.h nls_de.h nls_en.h nls_kr.h nls_ru.h nls_zh.h nls_uni.h

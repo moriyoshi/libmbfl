@@ -32,9 +32,9 @@
 
 #include "mbfilter.h"
 
-extern const mbfl_encoding mbfl_encoding_pass; 
-extern const mbfl_convert_vtbl vtbl_pass;
+MBFLAPI extern const mbfl_encoding mbfl_encoding_pass; 
+MBFLAPI extern const mbfl_convert_vtbl vtbl_pass;
 
-int mbfl_filt_conv_pass(int c, mbfl_convert_filter *filter);
+MBFLAPI int mbfl_filt_conv_pass(int c, mbfl_convert_filter *filter);
 
 #endif /* MBFL_MBFILTER_PASS_H */
