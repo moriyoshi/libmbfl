@@ -28,6 +28,7 @@ typedef struct _mbfl_collection {
 #define mbfl_collection_contains(a, b, c) (a)->contains_op((a), (b), (c))
 #define mbfl_collection_create_iter(a) (a)->create_iter_op((a))
 #define mbfl_collection_dtor(a) (a)->dtor(a)
+#define mbfl_collection_get_num_items(a) (a)->num_items
 
 MBFLAPI int mbfl_collection_ctor(mbfl_collection *);
 MBFLAPI void _mbfl_collection_dtor(mbfl_collection *);

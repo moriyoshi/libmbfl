@@ -24,6 +24,7 @@ typedef struct _mbfl_list {
 #define mbfl_list_remove_item(a, b, c) mbfl_collection_remove_item(&((a)->_super),(b), (c))
 #define mbfl_list_contains(a, b, c) mbfl_collection_contains(&((a)->_super),(b), (c))
 #define mbfl_list_create_iter(a) mbfl_collection_create_iter(&((a)->_super))
+#define mbfl_list_get_num_items(a) mbfl_collection_get_num_items(&((a)->_super))
 #define mbfl_list_insert_item_at(a, b, c, d, e) (a)->insert_item_at_op((a), (b), (c), (d), (e))
 #define mbfl_list_update_item_at(a, b, c, d, e) (a)->update_item_at_op((a), (b), (c), (d), (e))
 #define mbfl_list_get_item_at(a, b, c, d) (a)->get_item_at_op((a), (b), (c), (d))

@@ -91,3 +91,5 @@ EXPORTS
 	_mbfl_arraylist_ctor @86
 	__mbfl_arraylist_dtor @87
 	_mbfl_iterator_free @88
+	_mbfl_register_language @89
+	_mbfl_language_id_uni @90

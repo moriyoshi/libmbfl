@@ -12,7 +12,6 @@
 static const char *mbfl_language_uni_aliases[] = {"universal", NULL};
 
 const mbfl_language mbfl_language_uni = {
-	mbfl_language_id_uni,
 	"uni",
 	"uni",
 	(const char *(*)[])&mbfl_language_uni_aliases,

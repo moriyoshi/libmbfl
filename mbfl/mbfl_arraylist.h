@@ -23,6 +23,7 @@ MBFLAPI void _mbfl_arraylist_dtor(mbfl_arraylist *);
 #define mbfl_arraylist_remove(a, b, c) mbfl_list_remove(&((a)->_super),(b), (c))
 #define mbfl_arraylist_contains(a, b, c) mbfl_list_contains(&((a)->_super),(b), (c))
 #define mbfl_arraylist_create_iter(a) mbfl_list_create_iter(&((a)->_super))
+#define mbfl_arraylist_get_num_items(a) mbfl_list_get_num_items(&((a)->_super))
 #define mbfl_arraylist_insert_item_at(a, b, c, d, e) mbfl_list_insert_item_at(&((a)->_super), (b), (c), (d), (e))
 #define mbfl_arraylist_update_item_at(a, b, c, d, e) mbfl_list_update_item_at(&((a)->_super), (b), (c), (d), (e))
 #define mbfl_arraylist_get_item_at(a, b, c, d) mbfl_list_get_item_at(&((a)->_super), (b), (c), (d))

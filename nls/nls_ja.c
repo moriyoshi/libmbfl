@@ -10,7 +10,6 @@
 #include "nls_ja.h"
 
 const mbfl_language mbfl_language_japanese = {
-	mbfl_language_id_japanese,
 	"Japanese",
 	"ja",
 	NULL,

@@ -10,7 +10,6 @@
 #include "nls_ru.h"
 
 const mbfl_language mbfl_language_russian = {
-	mbfl_language_id_russian,
 	"Russian",
 	"ru",
 	NULL,

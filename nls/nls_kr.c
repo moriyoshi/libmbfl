@@ -10,7 +10,6 @@
 #include "nls_kr.h"
 
 const mbfl_language mbfl_language_korean = {
-	mbfl_language_id_korean,
 	"Korean",
 	"ko",
 	NULL,

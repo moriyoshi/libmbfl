@@ -10,7 +10,6 @@
 #include "nls_en.h"
 
 const mbfl_language mbfl_language_english = {
-	mbfl_language_id_english,
 	"English",
 	"en",
 	NULL,

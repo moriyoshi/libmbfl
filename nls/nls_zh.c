@@ -10,7 +10,6 @@
 #include "nls_zh.h"
 
 const mbfl_language mbfl_language_simplified_chinese = {
-	mbfl_language_id_simplified_chinese,
 	"Simplified Chinese",
 	"zh-cn",
 	NULL,
@@ -20,7 +19,6 @@ const mbfl_language mbfl_language_simplified_chinese = {
 };
 
 const mbfl_language mbfl_language_traditional_chinese = {
-	mbfl_language_id_traditional_chinese,
 	"Traditional Chinese",
 	"zh-tw",
 	NULL,
