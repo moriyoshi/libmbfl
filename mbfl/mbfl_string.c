@@ -32,6 +32,8 @@
 #include "config.h"
 #endif
 
+#include <stddef.h>
+
 #include "mbfl_allocators.h"
 #include "mbfl_string.h"
 
@@ -44,7 +46,7 @@ mbfl_string_init(mbfl_string *string)
 	if (string) {
 		string->no_language = mbfl_language_id_uni;
 		string->no_encoding = mbfl_encoding_id_pass;
-		string->val = (unsigned char*)0;
+		string->val = (unsigned char*)NULL;
 		string->len = 0;
 	}
 }
@@ -55,7 +57,7 @@ mbfl_string_init_set(mbfl_string *string, mbfl_language_id no_language, mbfl_enc
 	if (string) {
 		string->no_language = no_language;
 		string->no_encoding = no_encoding;
-		string->val = (unsigned char*)0;
+		string->val = (unsigned char*)NULL;
 		string->len = 0;
 	}
 }
@@ -64,10 +66,10 @@ void
 mbfl_string_clear(mbfl_string *string)
 {
 	if (string) {
-		if (string->val != (unsigned char*)0) {
+		if (string->val != (unsigned char*)NULL) {
 			mbfl_free(string->val);
 		}
-		string->val = (unsigned char*)0;
+		string->val = (unsigned char*)NULL;
 		string->len = 0;
 	}
 }
