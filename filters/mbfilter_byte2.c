@@ -53,6 +53,7 @@ const mbfl_encoding mbfl_encoding_byte2le = {
 	MBFL_ENCTYPE_SBCS
 };
 
+static const char *mbfl_encoding_uhc_aliases[] = {"CP949", NULL};
 
 int mbfl_filt_conv_byte2be_wchar(int c, mbfl_convert_filter *filter)
 {

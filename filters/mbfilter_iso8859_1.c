@@ -45,6 +45,7 @@ const mbfl_encoding mbfl_encoding_8859_1 = {
 	MBFL_ENCTYPE_SBCS
 };
 
+#define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
 
 /*
  * wchar => ISO-8859-1

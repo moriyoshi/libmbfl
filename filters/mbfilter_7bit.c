@@ -44,6 +44,7 @@ const mbfl_encoding mbfl_encoding_7bit = {
 	MBFL_ENCTYPE_SBCS
 };
 
+#define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
 
 int mbfl_filt_conv_any_7bit(int c, mbfl_convert_filter *filter)
 {

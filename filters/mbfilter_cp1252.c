@@ -46,6 +46,8 @@ const mbfl_encoding mbfl_encoding_cp1252 = {
 	MBFL_ENCTYPE_SBCS
 };
 
+#define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
+
 /*
  * wchar => cp1252
  */

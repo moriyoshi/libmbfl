@@ -53,6 +53,8 @@ static const unsigned char mblen_table_html[] = { /* 0x00, 0x80 - 0xFF, only val
   6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6
 };
 
+#define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
+
 /*
  * any => HTML
  */

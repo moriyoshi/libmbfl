@@ -65,7 +65,6 @@ const mbfl_encoding mbfl_encoding_uhc = {
 	MBFL_ENCTYPE_MBCS
 };
 
-
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
 
 /*
