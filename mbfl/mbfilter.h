@@ -97,6 +97,15 @@
 #include "mbfl_convert.h"
 #include "mbfl_ident.h"
 
+#ifndef NULL
+#ifdef __cplusplus
+#define NULL (0L)
+#else
+#define NULL (void *)(0L)
+#endif
+#endif 
+
+
 /*
  * convert filter
  */
