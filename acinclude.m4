@@ -26,3 +26,17 @@ AC_DEFUN([MBFL_WIN32_NATIVE_THREADS],[
   ],[$2])
 ])
 
+AC_DEFUN([MBFL_GNUPTH], [
+  AC_CHECK_HEADER([pth.h], [
+    avail_gnupth_funcs=1
+    AC_CHECK_FUNC([pth_mutex_init], [], [avail_gnupth_funcs=0])
+    AC_CHECK_FUNC([pth_mutex_acquire], [], [avail_gnupth_funcs=0])
+    AC_CHECK_FUNC([pth_mutex_release], [], [avail_gnupth_funcs=0])
+    if test "$avail_gnupth_funcs"; then
+      AC_DEFINE([HAVE_GNUPTH], [1], [Define to 1 if GNUPth is available])
+      $1
+    fi
+  ],[$2])
+])
+
+

@@ -43,10 +43,19 @@ if test "$enable_threads" != "no"; then
     avail_win32_native_thread="no"
   ])
 
+  MBFL_GNUPTH([
+    avail_gnupth="yes"
+  ],[
+    avail_gnupth="no"
+  ])
+
   if test "$enable_threads" == "autodetect"; then
     enable_threads="no"
     if test "$avail_pthread" != "no"; then
       enable_threads="pthread"
+    fi
+    if test "$avail_gnupth" != "no"; then
+      enable_threads="gnupth"
     fi
   fi
 fi
@@ -77,6 +86,8 @@ if test "$enable_threads" != "no"; then
       ;;
     "win32native" [)]
       AC_DEFINE([USE_WIN32_NATIVE_THREAD],[1],[Define to 1 if win32 native thread is adopted for threading])
+    "gnupth" [)]
+      AC_DEFINE([USE_GNUPTH],[1],[Define to 1 if GNUPth is adopted for threading])
   esac
 fi
 

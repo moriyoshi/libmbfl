@@ -31,6 +31,10 @@
 #else
 #error "You can't enable win32 native thread support in this build" 
 #endif
+#elif USE_GNUPTH
+#if defined(HAVE_GNUPTH)
+#include <pth.h>
+#endif
 #endif
 
 #include <assert.h>
@@ -61,6 +65,13 @@ MBFLAPI mbfl_mutex *mbfl_mutex_new(void)
 	}
 
 	InitializeCriticalSection(mutex);
+#elif defined(USE_GNUPTH)
+	pth_mutex_t *mutex = NULL;
+
+	if ((mutex = mbfl_malloc(sizeof(pth_mutex_t))) == NULL) {
+		return NULL;
+	}
+	pth_mutex_init(mutex);
 #endif
 	return (mbfl_mutex *)mutex;
 }
@@ -77,6 +88,14 @@ MBFLAPI int mbfl_mutex_lock(mbfl_mutex *mutex)
 	EnterCriticalSection((CRITICAL_SECTION *)mutex);
 	if (GetLastError() == STATUS_INVALID_HANDLE) {
 		return -1;
+	}
+#elif defined(USE_GNUPTH)
+	switch (pth_mutex_acquire((pth_mutex_t *)mutex), 0, NULL) {
+		/* FIXME: paste proper errno handling code here */
+		case 0:
+			break;
+		default:
+			return -1;
 	}
 #endif
 	return 0;
@@ -98,6 +117,14 @@ MBFLAPI int mbfl_mutex_unlock(mbfl_mutex *mutex)
 	if (GetLastError() == STATUS_INVALID_HANDLE) {
 		return -1;
 	}
+#elif defined(USE_GNUPTH)
+	switch (pth_mutex_release((pth_mutex_t *)mutex)) {
+		/* FIXME: paste proper errno handling code here */
+		case 0:
+			break;
+		default:
+			return -1;
+	}
 #endif
 	return 0;
 }
@@ -108,6 +135,8 @@ MBFLAPI void mbfl_mutex_free(mbfl_mutex *mutex)
 	pthread_mutex_destroy((pthread_mutex_t *)mutex);
 #elif defined(USE_WIN32_NATIVE_THREAD)
 	DeleteCriticalSection((CRITICAL_SECTION *)mutex);
+#elif defined(USE_GNUPTH)
+	/* GNU Pth mutexes don't need destruction */
 #endif
 	mbfl_free(mutex);
 }
