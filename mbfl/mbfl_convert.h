@@ -52,7 +52,9 @@ struct _mbfl_convert_filter {
 	int illegal_substchar;
 };
 
-mbfl_convert_vtbl {
+typedef struct _mbfl_convert_vtbl mbfl_convert_vtbl;
+
+struct _mbfl_convert_vtbl {
 	enum mbfl_no_encoding from;
 	enum mbfl_no_encoding to;
 	void (*filter_ctor)(mbfl_convert_filter *filter);
