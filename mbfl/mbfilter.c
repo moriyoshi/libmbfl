@@ -557,7 +557,6 @@ mbfl_identify_encoding(mbfl_string *string, enum mbfl_no_encoding *elist, int el
 				if (filter->flag) {
 					bad++;
 				}
-				i++;
 			}
 			if ((num - 1) <= bad && strict) {
 				break;
