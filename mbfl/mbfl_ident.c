@@ -46,34 +46,27 @@ static const mbfl_identify_vtbl vtbl_identify_false = {
 	mbfl_filt_ident_false
 };
 
-/*
- * identify filter
- */
-MBFLAPI void mbfl_identify_filter_select_vtbl(mbfl_identify_filter *filter)
-{
-	const mbfl_identify_vtbl *vtbl;
-
-	assert(filter != NULL);
-
-	vtbl = filter->encoding->ident_vtbl;
-	if (vtbl == NULL) {
-		vtbl = &vtbl_identify_false;
-	}
-
-	filter->filter_ctor = vtbl->filter_ctor;
-	filter->filter_dtor = vtbl->filter_dtor;
-	filter->filter_function = vtbl->filter_function;
-}
-
 MBFLAPI mbfl_identify_filter *mbfl_identify_filter_new(mbfl_encoding *encoding)
 {
-	mbfl_identify_filter * filter;
+	mbfl_identify_filter *filter;
 
 	/* allocate */
 	filter = (mbfl_identify_filter *)mbfl_malloc(sizeof(mbfl_identify_filter));
 	if (filter == NULL) {
 		return NULL;
 	}
+
+	if (mbfl_identify_filter_ctor(filter, encoding)) {
+		mbfl_free(filter);
+		return NULL;
+	}
+
+	return filter;
+}
+
+MBFLAPI int mbfl_identify_filter_ctor(mbfl_identify_filter *filter, mbfl_encoding *encoding)
+{
+	const mbfl_identify_vtbl *vtbl;
 
 	/* encoding structure */
 	filter->encoding = encoding;
@@ -86,20 +79,32 @@ MBFLAPI mbfl_identify_filter *mbfl_identify_filter_new(mbfl_encoding *encoding)
 	filter->score = 0;
 
 	/* setup the function table */
-	mbfl_identify_filter_select_vtbl(filter);
+	vtbl = (filter->encoding->ident_vtbl == NULL ?
+			&vtbl_identify_false: filter->encoding->ident_vtbl);
+
+	filter->filter_ctor = vtbl->filter_ctor;
+	filter->filter_dtor = vtbl->filter_dtor;
+	filter->filter_function = vtbl->filter_function;
 
 	/* constructor */
 	(*filter->filter_ctor)(filter);
 
-	return filter;
+	return 0;
 }
 
 MBFLAPI void mbfl_identify_filter_delete(mbfl_identify_filter *filter)
 {
-	if (filter) {
-		(*filter->filter_dtor)(filter);
-		mbfl_free((void*)filter);
+	if (filter == NULL) {
+		return;
 	}
+
+	mbfl_identify_filter_dtor(filter);
+	mbfl_free((void*)filter);
+}
+
+MBFLAPI void mbfl_identify_filter_dtor(mbfl_identify_filter *filter)
+{
+	(*filter->filter_dtor)(filter);
 }
 
 MBFLAPI void mbfl_filt_ident_common_ctor(mbfl_identify_filter *filter)

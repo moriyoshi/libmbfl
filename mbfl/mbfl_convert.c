@@ -89,6 +89,8 @@
 #include "filters/mbfilter_ucs2.h"
 #include "filters/mbfilter_htmlent.h"
 
+static void mbfl_convert_filter_reset_vtbl(mbfl_convert_filter *filter);
+
 /* hex character table "0123456789ABCDEF" */
 static char mbfl_hexchar_table[] = {
 	0x30,0x31,0x32,0x33,0x34,0x35,0x36,0x37,0x38,0x39,0x41,0x42,0x43,0x44,0x45,0x46
@@ -246,7 +248,7 @@ mbfl_convert_filter * mbfl_convert_filter_new(
 	filter->illegal_substchar = 0x3f;		/* '?' */
 
 	/* setup the function table */
-	mbfl_convert_filter_select_vtbl(filter);
+	mbfl_convert_filter_reset_vtbl(filter);
 
 	/* constructor */
 	(*filter->filter_ctor)(filter);
@@ -283,7 +285,7 @@ void mbfl_convert_filter_reset(mbfl_convert_filter *filter, mbfl_encoding_id fro
 	filter->to = mbfl_get_encoding_by_id(to);
 
 	/* set the vtbl */
-	mbfl_convert_filter_select_vtbl(filter);
+	mbfl_convert_filter_reset_vtbl(filter);
 
 	/* construct new filter */
 	(*filter->filter_ctor)(filter);
@@ -448,7 +450,7 @@ const mbfl_convert_vtbl * mbfl_convert_filter_get_vtbl(mbfl_encoding_id from, mb
 }
 
 
-void mbfl_convert_filter_select_vtbl(mbfl_convert_filter *filter)
+static void mbfl_convert_filter_reset_vtbl(mbfl_convert_filter *filter)
 {
 	const mbfl_convert_vtbl *vtbl;
 

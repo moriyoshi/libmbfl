@@ -276,7 +276,7 @@ MBFLAPI mbfl_string * mbfl_convert_encoding(mbfl_string *string, mbfl_string *re
 /*
  * identify encoding
  */
-MBFLAPI const mbfl_encoding * mbfl_identify_encoding(mbfl_string *string, mbfl_encoding *elist, int eliztsz)
+MBFLAPI const mbfl_encoding * mbfl_identify_encoding(mbfl_string *string, mbfl_encoding *elist, int elistsz)
 {
 	int i, n, num, bad;
 	unsigned char *p;
@@ -284,85 +284,69 @@ MBFLAPI const mbfl_encoding * mbfl_identify_encoding(mbfl_string *string, mbfl_e
 	mbfl_identify_filter *flist, *filter;
 	const mbfl_encoding *encoding;
 
-	/* initialize */
-	flist = (mbfl_identify_filter *)mbfl_calloc(eliztsz, sizeof(mbfl_identify_filter));
+	/* flist is an array of mbfl_identify_filter instances */
+	flist = (mbfl_identify_filter *)mbfl_calloc(elistsz, sizeof(mbfl_identify_filter));
 	if (flist == NULL) {
 		return NULL;
 	}
-	i = 0;
+
 	num = 0;
 	if (elist != NULL) {
-		while (i < eliztsz) {
-			vtbl = elist[i].ident_vtbl;
-			if (vtbl != NULL) {
-				filter = &flist[num];
-				mbfl_identify_filter_set_vtbl(filter, vtbl);
-				filter->encoding = &elist[i];
-				(*filter->filter_ctor)(filter);
+		for (i = 0; i < elistsz; i++) {
+			if (!mbfl_identify_filter_ctor(&flist[num], &elist[i])) {
 				num++;
 			}
-			i++;
 		}
 	}
 
 	/* feed data */
 	n = string->len;
 	p = string->val;
-	if (p != NULL) {
-		while (n > 0) {
-			i = 0;
-			bad = 0;
-			while (i < num) {
-				filter = &flist[i];
-				(*filter->filter_function)(*p, filter);
-				if (filter->flag) {
-					bad++;
-				}
-				i++;
+
+	bad = 0;
+	while (n > 0) {
+		for (i = 0; i < num; i++) {
+			filter = &flist[i];
+			(*filter->filter_function)(*p, filter);
+			if (filter->flag) {
+				bad++;
 			}
-			if ((num - 1) <= bad) {
-				break;
-			}
-			p++;
-			n--;
+			i++;
 		}
+		if ((num - 1) <= bad) {
+			break;
+		}
+		p++;
+		n--;
 	}
 
 	/* judge */
-	i = num - 1;
-	bad = 1;
 	encoding = NULL;
-	while (i >= 0) {
-		filter = &flist[i];
-		if (filter->flag) {
-			bad++;
-		} else {
-			encoding = filter->encoding;
-		}
-		i--;
-	}
-#if 0
-	if (bad < num) {
-		encoding = NULL;
-	}
-#endif
 
-	i = 0;
-	while (i < num) {
+	for (i = 0; i < num; i++) {
 		filter = &flist[i];
-		(*filter->filter_dtor)(filter);
-		i++;
+		if (!filter->flag) {
+			encoding = filter->encoding;
+			break;
+		}
 	}
+
+	/* cleanup */
+	/* dtors should be called in reverse order */
+	i = num; while (--i >= 0) {
+		mbfl_identify_filter_dtor(&flist[i]);
+	}
+
 	mbfl_free((void *)flist);
 
 	return encoding;
 }
 
-MBFLAPI const char* mbfl_identify_encoding_name(mbfl_string *string, mbfl_encoding *elist, int eliztsz)
+MBFLAPI const char* mbfl_identify_encoding_name(mbfl_string *string, mbfl_encoding *elist, int elistsz)
 {
 	const mbfl_encoding *encoding;
 
-	encoding = mbfl_identify_encoding(string, elist, eliztsz);
+	encoding = mbfl_identify_encoding(string, elist, elistsz);
 	if (encoding != NULL &&
 	    encoding->no_encoding > mbfl_encoding_id_charset_min &&
 	    encoding->no_encoding < mbfl_encoding_id_charset_max) {
@@ -372,11 +356,11 @@ MBFLAPI const char* mbfl_identify_encoding_name(mbfl_string *string, mbfl_encodi
 	}
 }
 
-MBFLAPI const mbfl_encoding_id mbfl_identify_encoding_no(mbfl_string *string, mbfl_encoding *elist, int eliztsz)
+MBFLAPI const mbfl_encoding_id mbfl_identify_encoding_no(mbfl_string *string, mbfl_encoding *elist, int elistsz)
 {
 	const mbfl_encoding *encoding;
 
-	encoding = mbfl_identify_encoding(string, elist, eliztsz);
+	encoding = mbfl_identify_encoding(string, elist, elistsz);
 	if (encoding != NULL &&
 	    encoding->no_encoding > mbfl_encoding_id_charset_min &&
 	    encoding->no_encoding < mbfl_encoding_id_charset_max) {

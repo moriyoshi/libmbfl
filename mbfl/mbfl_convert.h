@@ -78,7 +78,6 @@ MBFLAPI int mbfl_convert_filter_flush(mbfl_convert_filter *filter);
 MBFLAPI void mbfl_convert_filter_reset(mbfl_convert_filter *filter, mbfl_encoding_id from, mbfl_encoding_id to);
 MBFLAPI void mbfl_convert_filter_copy(mbfl_convert_filter *src, mbfl_convert_filter *dist);
 MBFLAPI int mbfl_filt_conv_illegal_output(int c, mbfl_convert_filter *filter);
-MBFLAPI void mbfl_convert_filter_select_vtbl(mbfl_convert_filter *filter);
 MBFLAPI const mbfl_convert_vtbl * mbfl_convert_filter_get_vtbl(mbfl_encoding_id from, mbfl_encoding_id to);
 
 MBFLAPI void mbfl_filt_conv_common_ctor(mbfl_convert_filter *filter);
