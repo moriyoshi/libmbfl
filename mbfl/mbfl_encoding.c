@@ -44,7 +44,6 @@
 #include <strings.h>
 #endif
 
-#include "mbfl_compat.h"
 #include "mbfl_encoding.h"
 #include "mbfilter_pass.h"
 #include "mbfilter_8bit.h"

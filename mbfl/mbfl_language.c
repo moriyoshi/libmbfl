@@ -50,7 +50,6 @@
 
 #include "mbfl_encoding.h"
 #include "mbfl_language.h"
-#include "mbfl_compat.h"
 
 #include "nls/nls_ja.h"
 #include "nls/nls_kr.h"
