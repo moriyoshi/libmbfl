@@ -81,6 +81,6 @@ EXPORTS
 	 _mbfl_wchar_device_init @76
 	 _mbfl_wchar_device_output @77
 	 _mbfl_wchar_device_clear @78
-	 _mbfl_string_init @79
-	 _mbfl_string_init_set @89
-	 _mbfl_string_clear @81
+	 _mbfl_string_ctor @79
+	 _mbfl_string_ctor2 @89
+	 _mbfl_string_dtor @81

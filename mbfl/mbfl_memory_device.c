@@ -116,6 +116,7 @@ mbfl_string *mbfl_memory_device_result(mbfl_memory_device *device, mbfl_string *
 		result->len = device->pos;
 		mbfl_memory_device_output4('\0', device);
 		result->val = device->buffer;
+		result->val_allocated = 1;
 		device->buffer = (unsigned char *)0;
 		device->length = 0;
 		device->pos= 0;

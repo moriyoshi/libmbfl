@@ -36,41 +36,42 @@
 #include <stddef.h>
 #endif
 
+#include <assert.h>
+
 #include "mbfl_allocators.h"
 #include "mbfl_string.h"
 
 /*
  * string object
  */
-void mbfl_string_init(mbfl_string *string)
+void mbfl_string_ctor(mbfl_string *string)
 {
-	if (string) {
-		string->no_language = mbfl_language_id_uni;
-		string->no_encoding = mbfl_encoding_id_pass;
-		string->val = (unsigned char*)NULL;
-		string->len = 0;
-	}
+	assert(string != NULL);
+
+	mbfl_string_ctor2(string, mbfl_language_id_uni, mbfl_encoding_id_pass);
 }
 
-void mbfl_string_init_set(mbfl_string *string, mbfl_language_id no_language, mbfl_encoding_id no_encoding)
+void mbfl_string_ctor2(mbfl_string *string, mbfl_language_id no_language, mbfl_encoding_id no_encoding)
 {
-	if (string) {
-		string->no_language = no_language;
-		string->no_encoding = no_encoding;
-		string->val = (unsigned char*)NULL;
-		string->len = 0;
-	}
+	assert(string != NULL);
+
+	string->no_language = no_language;
+	string->no_encoding = no_encoding;
+	string->val = (unsigned char*)NULL;
+	string->val_allocated = 0;
+	string->len = 0;
 }
 
-void mbfl_string_clear(mbfl_string *string)
+void mbfl_string_dtor(mbfl_string *string)
 {
-	if (string) {
-		if (string->val != (unsigned char*)NULL) {
-			mbfl_free(string->val);
-		}
-		string->val = (unsigned char*)NULL;
-		string->len = 0;
+	assert(string != NULL);
+
+	if (string->val != (unsigned char*)NULL && string->val_allocated) {
+		mbfl_free(string->val);
 	}
+	string->val_allocated = 0;
+	string->val = (unsigned char*)NULL;
+	string->len = 0;
 }
 
 
