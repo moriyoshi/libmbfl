@@ -62,6 +62,17 @@ static const unsigned char mblen_table_html[] = { /* 0x00, 0x80 - 0xFF, only val
   6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6
 };
 
+static const char *mbfl_encoding_html_ent_aliases[] = {"HTML", "html", NULL};
+
+const mbfl_encoding mbfl_encoding_html_ent = {
+	mbfl_no_encoding_html_ent,
+	"HTML-ENTITIES",
+	"US-ASCII",
+	(const char *(*)[])&mbfl_encoding_html_ent_aliases,
+	NULL, /* mblen_table_html, Do not use table instead calulate length based on entities actually used */
+	MBFL_ENCTYPE_HTML_ENT
+};
+
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
 
 /*

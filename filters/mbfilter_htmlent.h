@@ -32,6 +32,8 @@
 
 #include "mbfilter.h"
 
+extern const mbfl_encoding mbfl_encoding_html_ent;
+
 void mbfl_filt_conv_html_dec_ctor(mbfl_convert_filter *filter);
 void mbfl_filt_conv_html_dec_dtor(mbfl_convert_filter *filter);
 int mbfl_filt_conv_html_enc(int c, mbfl_convert_filter *filter);

@@ -211,17 +211,6 @@ static const mbfl_encoding mbfl_encoding_wchar = {
 	MBFL_ENCTYPE_WCS4BE
 };
 
-static const char *mbfl_encoding_html_ent_aliases[] = {"HTML", "html", NULL};
-
-static const mbfl_encoding mbfl_encoding_html_ent = {
-	mbfl_no_encoding_html_ent,
-	"HTML-ENTITIES",
-	"US-ASCII",
-	(const char *(*)[])&mbfl_encoding_html_ent_aliases,
-	NULL, /* mblen_table_html, Do not use table instead calulate length based on entities actually used */
-	MBFL_ENCTYPE_HTML_ENT
-};
-
 static const mbfl_encoding mbfl_encoding_8bit = {
 	mbfl_no_encoding_8bit,
 	"8bit",
