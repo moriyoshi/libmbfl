@@ -105,7 +105,6 @@
 #endif
 #endif 
 
-
 /*
  * convert filter
  */
@@ -153,14 +152,6 @@ const mbfl_encoding_id mbfl_identify_encoding_no(mbfl_string *string, mbfl_encod
  */
 int
 mbfl_strlen(mbfl_string *string);
-
-#ifdef ZEND_MULTIBYTE
-/*
- * oddlen
- */
-int
-mbfl_oddlen(mbfl_string *string);
-#endif /* ZEND_MULTIBYTE */
 
 /*
  * strpos
