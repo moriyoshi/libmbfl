@@ -109,29 +109,6 @@
 /*
  * buffering converter
  */
-typedef struct _mbfl_buffer_converter mbfl_buffer_converter;
-
-struct _mbfl_buffer_converter {
-	mbfl_convert_filter *filter1;
-	mbfl_convert_filter *filter2;
-	mbfl_memory_device device;
-	const mbfl_encoding *from;
-	const mbfl_encoding *to;
-};
-
-mbfl_buffer_converter * mbfl_buffer_converter_new(mbfl_encoding_id from, mbfl_encoding_id to, int buf_initsz);
-void mbfl_buffer_converter_delete(mbfl_buffer_converter *convd);
-void mbfl_buffer_converter_reset(mbfl_buffer_converter *convd);
-int mbfl_buffer_converter_illegal_mode(mbfl_buffer_converter *convd, int mode);
-int mbfl_buffer_converter_illegal_substchar(mbfl_buffer_converter *convd, int substchar);
-int mbfl_buffer_converter_strncat(mbfl_buffer_converter *convd, const unsigned char *p, int n);
-int mbfl_buffer_converter_feed(mbfl_buffer_converter *convd, mbfl_string *string);
-int mbfl_buffer_converter_flush(mbfl_buffer_converter *convd);
-mbfl_string * mbfl_buffer_converter_getbuffer(mbfl_buffer_converter *convd, mbfl_string *result);
-mbfl_string * mbfl_buffer_converter_result(mbfl_buffer_converter *convd, mbfl_string *result);
-mbfl_string * mbfl_buffer_converter_feed_result(mbfl_buffer_converter *convd, mbfl_string *string, mbfl_string *result);
-
-
 /*
  * encoding detector
  */
