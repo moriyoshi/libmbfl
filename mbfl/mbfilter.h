@@ -89,8 +89,6 @@
 #ifndef MBFL_MBFILTER_H
 #define MBFL_MBFILTER_H
 
-#include <stddef.h>
-
 #include "mbfl_consts.h"
 #include "mbfl_allocators.h"
 #include "mbfl_encoding.h"
@@ -98,6 +96,14 @@
 #include "mbfl_string.h"
 #include "mbfl_convert.h"
 #include "mbfl_ident.h"
+
+#ifndef NULL
+#ifdef __cplusplus
+#define NULL (0L)
+#else
+#define NULL (void *)(0L)
+#endif
+#endif
 
 /*
  * convert filter
