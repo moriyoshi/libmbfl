@@ -35,6 +35,6 @@ typedef struct _mbfl_html_entity_entry {
 	int     code;
 } mbfl_html_entity_entry;
 
-extern mbfl_html_entity_entry *mbfl_html_entity_list;
+extern const mbfl_html_entity_entry mbfl_html_entity_list[];
 
 #endif /* MBFL_HTML_ENTITIES_H */

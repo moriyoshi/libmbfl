@@ -102,7 +102,7 @@ int mbfl_filt_conv_html_enc(int c, mbfl_convert_filter *filter)
 	int tmp[64];
 	int i;
 	unsigned int uc;
-	mbfl_html_entity_entry *e;
+	const mbfl_html_entity_entry *e;
 
 	if (c < sizeof(htmlentitifieds) / sizeof(htmlentitifieds[0]) &&
 				htmlentitifieds[c] != 1) {
