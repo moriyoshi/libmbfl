@@ -57,7 +57,6 @@ struct _mbfl_identify_vtbl {
 	int (*filter_function)(int c, mbfl_identify_filter *filter);
 };
 
-MBFLAPI void mbfl_identify_filter_set_vtbl(mbfl_identify_filter *filter, const mbfl_identify_vtbl *vtbl);
 MBFLAPI void mbfl_identify_filter_select_vtbl(mbfl_identify_filter *filter);
 MBFLAPI mbfl_identify_filter * mbfl_identify_filter_new(struct _mbfl_encoding *encoding);
 MBFLAPI void mbfl_identify_filter_delete(mbfl_identify_filter *filter);

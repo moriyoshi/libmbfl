@@ -422,17 +422,6 @@ int mbfl_filt_conv_illegal_output(int c, mbfl_convert_filter *filter)
 	return ret;
 }
 
-void mbfl_convert_filter_set_vtbl(mbfl_convert_filter *filter, const mbfl_convert_vtbl *vtbl)
-{
-	if (filter && vtbl) {
-		filter->filter_ctor = vtbl->filter_ctor;
-		filter->filter_dtor = vtbl->filter_dtor;
-		filter->filter_function = vtbl->filter_function;
-		filter->filter_flush = vtbl->filter_flush;
-	}
-}
-
-
 const mbfl_convert_vtbl * mbfl_convert_filter_get_vtbl(mbfl_encoding_id from, mbfl_encoding_id to)
 {
 	const mbfl_convert_vtbl *vtbl;
@@ -467,7 +456,11 @@ void mbfl_convert_filter_select_vtbl(mbfl_convert_filter *filter)
 	if (vtbl == NULL) {
 		vtbl = &vtbl_pass;
 	}
-	mbfl_convert_filter_set_vtbl(filter, vtbl);
+
+	filter->filter_ctor = vtbl->filter_ctor;
+	filter->filter_dtor = vtbl->filter_dtor;
+	filter->filter_function = vtbl->filter_function;
+	filter->filter_flush = vtbl->filter_flush;
 }
 
 /*

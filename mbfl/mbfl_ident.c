@@ -49,25 +49,20 @@ static const mbfl_identify_vtbl vtbl_identify_false = {
 /*
  * identify filter
  */
-
-MBFLAPI void mbfl_identify_filter_set_vtbl(mbfl_identify_filter *filter, const mbfl_identify_vtbl *vtbl)
-{
-	if (filter && vtbl) {
-		filter->filter_ctor = vtbl->filter_ctor;
-		filter->filter_dtor = vtbl->filter_dtor;
-		filter->filter_function = vtbl->filter_function;
-	}
-}
-
 MBFLAPI void mbfl_identify_filter_select_vtbl(mbfl_identify_filter *filter)
 {
 	const mbfl_identify_vtbl *vtbl;
+
+	assert(filter != NULL);
 
 	vtbl = filter->encoding->ident_vtbl;
 	if (vtbl == NULL) {
 		vtbl = &vtbl_identify_false;
 	}
-	mbfl_identify_filter_set_vtbl(filter, vtbl);
+
+	filter->filter_ctor = vtbl->filter_ctor;
+	filter->filter_dtor = vtbl->filter_dtor;
+	filter->filter_function = vtbl->filter_function;
 }
 
 MBFLAPI mbfl_identify_filter *mbfl_identify_filter_new(mbfl_encoding *encoding)
