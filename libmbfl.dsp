@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "Release"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "LIBMBFL_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MT /W3 /GX /O2 /I "mbfl" /I "." /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "LIBMBFL_EXPORTS" /YX /FD /c
+# ADD CPP /nologo /MT /W3 /GX /O2 /I "mbfl" /I "." /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "LIBMBFL_EXPORTS" /D "HAVE_CONFIG_H" /YX /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x411 /d "NDEBUG"
@@ -88,7 +88,7 @@ LINK32=link.exe
 # Name "libmbfl - Win32 Debug"
 # Begin Group "Source Files"
 
-# PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+# PROP Default_Filter "vc6"
 # Begin Source File
 
 SOURCE=.\filters\html_entities.c
@@ -384,6 +384,35 @@ SOURCE=.\nls\nls_zh.c
 # Begin Source File
 
 SOURCE=".\config-w32.h"
+# End Source File
+# Begin Source File
+
+SOURCE=.\config.h.vc6
+
+!IF  "$(CFG)" == "libmbfl - Win32 Release"
+
+# Begin Custom Build
+InputDir=.
+InputPath=.\config.h.vc6
+
+"$(InputDir)\config.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	copy $(InputDir)\config.h.vc6 "$(InputDir)\config.h"
+
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "libmbfl - Win32 Debug"
+
+# Begin Custom Build
+InputDir=.
+InputPath=.\config.h.vc6
+
+"$(InputDir)\config.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	copy $(InputDir)\config.h.vc6 "$(InputDir)\config.h"
+
+# End Custom Build
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
