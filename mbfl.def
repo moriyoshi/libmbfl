@@ -68,13 +68,15 @@ EXPORTS
 	_mbfl_memory_device_clear @63
 	_mbfl_memory_device_reset @64
 	_mbfl_memory_device_result @65
-	_mbfl_memory_device_output @66
-	_mbfl_memory_device_output2 @67
-	_mbfl_memory_device_output4 @68
-	_mbfl_memory_device_strcat @69
-	_mbfl_memory_device_devcat @70
-	_mbfl_wchar_device_init @71
-	_mbfl_wchar_device_output @72
-	_mbfl_string_init @73
-	_mbfl_string_init_set @74
-	_mbfl_string_clear @75
+	_mbfl_memory_device_unput @66
+	_mbfl_memory_device_output @67
+	_mbfl_memory_device_output2 @68
+	_mbfl_memory_device_output4 @69
+	_mbfl_memory_device_strcat @70
+	_mbfl_memory_device_devcat @71
+	_mbfl_wchar_device_init @72
+	_mbfl_wchar_device_output @73
+	_mbfl_wchar_device_clear @74
+	_mbfl_string_init @75
+	_mbfl_string_init_set @76
+	_mbfl_string_clear @77

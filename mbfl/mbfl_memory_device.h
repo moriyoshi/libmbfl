@@ -54,6 +54,7 @@ void mbfl_memory_device_realloc(mbfl_memory_device *device, int initsz, int allo
 void mbfl_memory_device_clear(mbfl_memory_device *device);
 void mbfl_memory_device_reset(mbfl_memory_device *device);
 mbfl_string * mbfl_memory_device_result(mbfl_memory_device *device, mbfl_string *result);
+void mbfl_memory_device_unput(mbfl_memory_device *device);
 int mbfl_memory_device_output(int c, void *data);
 int mbfl_memory_device_output2(int c, void *data);
 int mbfl_memory_device_output4(int c, void *data);
@@ -63,6 +64,7 @@ int mbfl_memory_device_devcat(mbfl_memory_device *dest, mbfl_memory_device *src)
 
 void mbfl_wchar_device_init(mbfl_wchar_device *device);
 int mbfl_wchar_device_output(int c, void *data);
+void mbfl_wchar_device_clear(mbfl_wchar_device *device);
 
 
 
