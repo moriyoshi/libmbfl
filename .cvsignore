@@ -31,3 +31,4 @@ mkinstalldirs
 *.res
 *.obj
 *.tds
+*~
