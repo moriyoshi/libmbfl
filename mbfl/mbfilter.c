@@ -107,6 +107,8 @@
 #include "mbfilter_pass.h"
 #include "private.h"
 
+#include "eaw_table.h"
+
 /* hex character table "0123456789ABCDEF" */
 static char mbfl_hexchar_table[] = {
 	0x30,0x31,0x32,0x33,0x34,0x35,0x36,0x37,0x38,0x39,0x41,0x42,0x43,0x44,0x45,0x46
@@ -1024,16 +1026,26 @@ MBFLAPI mbfl_string * mbfl_strcut(mbfl_string *string, mbfl_string *result, int 
 /*
  *  strwidth
  */
-static int filter_count_width(int c, void* data)
+static int is_fullwidth(int c)
 {
-	if (c >= 0x20) {
-		if (c < 0x2000 || (c > 0xff60 && c < 0xffa0)) {
-			(*(int *)data)++;
-		} else {
-			(*(int *)data) += 2;
+	int i;
+
+	if (c < mbfl_eaw_table[0].begin) {
+		return 0;
+	}
+
+	for (i = 0; i < sizeof(mbfl_eaw_table) / sizeof(mbfl_eaw_table[0]); i++) {
+		if (mbfl_eaw_table[i].begin <= c && c <= mbfl_eaw_table[i].end) {
+			return 1;
 		}
 	}
 
+	return 0;
+}
+
+static int filter_count_width(int c, void* data)
+{
+	(*(int *)data) += (is_fullwidth(c) ? 2: 1);
 	return c;
 }
 

@@ -99,6 +99,11 @@ if test "$enable_threads" != "no"; then
   esac
 fi
 
+AC_CHECK_PROGS([FETCH_VIA_FTP], [wget curl ncftpget])
+
+if test "$FETCH_VIA_FTP" = "curl"; then
+  FETCH_VIA_FTP="curl -O"
+fi
 
 AC_CONFIG_FILES([Makefile mbfl/Makefile filters/Makefile nls/Makefile])
 AC_OUTPUT
