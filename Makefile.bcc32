@@ -10,7 +10,7 @@ mbfl.lib: mbfl.dll
 mbfl.dll: compile mbfl.def mbfl.res
 	@if exist linker.rsp del linker.rsp
 	@for %i in ($(SUBDIRS)) do @for %j in (%i\*.obj) do @echo %j+ >> linker.rsp
-	ilink32 $(LDFLAGS) @linker.rsp,mbfl.dll,,$(LIBS),mbfl.def,mbfl.res
+	ilink32 $(LDFLAGS) @linker.rsp,mbfl.dll,,$(LIBS),,mbfl.res
 	del linker.rsp
 
 mbfl.res: mbfl.rc
