@@ -27,3 +27,7 @@ mkinstalldirs
 *.o
 *.la
 *.a
+*.RES
+*.res
+*.obj
+*.tds
