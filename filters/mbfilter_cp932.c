@@ -60,20 +60,20 @@ static const unsigned char mblen_table_sjis[] = { /* 0x80-0x9f,0xE0-0xFF */
 
 static const char *mbfl_encoding_sjis_win_aliases[] = {"SJIS-open", "CP932", "Windows-31J", "MS_Kanji", NULL};
 
+static const mbfl_identify_vtbl vtbl_identify_sjiswin = {
+	mbfl_filt_ident_common_ctor,
+	mbfl_filt_ident_common_dtor,
+	mbfl_filt_ident_sjiswin
+};
+
 const mbfl_encoding mbfl_encoding_sjis_win = {
 	mbfl_encoding_id_sjis_win,
 	"SJIS-win",
 	"Shift_JIS",
 	(const char *(*)[])&mbfl_encoding_sjis_win_aliases,
 	mblen_table_sjis,
-	MBFL_ENCTYPE_MBCS
-};
-
-const mbfl_identify_vtbl vtbl_identify_sjiswin = {
-	mbfl_encoding_id_sjis_win,
-	mbfl_filt_ident_common_ctor,
-	mbfl_filt_ident_common_dtor,
-	mbfl_filt_ident_sjiswin
+	MBFL_ENCTYPE_MBCS,
+	&vtbl_identify_sjiswin
 };
 
 const mbfl_convert_vtbl vtbl_sjiswin_wchar = {

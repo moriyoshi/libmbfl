@@ -39,20 +39,20 @@ static int mbfl_filt_ident_koi8r(int c, mbfl_identify_filter *filter);
 
 static const char *mbfl_encoding_koi8r_aliases[] = {"KOI8-R", "KOI8R", NULL};
 
+static const mbfl_identify_vtbl vtbl_identify_koi8r = {
+	mbfl_filt_ident_common_ctor,
+	mbfl_filt_ident_common_dtor,
+	mbfl_filt_ident_koi8r
+};
+
 const mbfl_encoding mbfl_encoding_koi8r = {
 	mbfl_encoding_id_koi8r,
 	"KOI8-R",
 	"KOI8-R",
 	(const char *(*)[])&mbfl_encoding_koi8r_aliases,
 	NULL,
-	MBFL_ENCTYPE_SBCS
-};
-
-const mbfl_identify_vtbl vtbl_identify_koi8r = {
-	mbfl_encoding_id_koi8r,
-	mbfl_filt_ident_common_ctor,
-	mbfl_filt_ident_common_dtor,
-	mbfl_filt_ident_koi8r
+	MBFL_ENCTYPE_SBCS,
+	&vtbl_identify_koi8r
 };
 
 const mbfl_convert_vtbl vtbl_wchar_koi8r = {

@@ -40,7 +40,8 @@ const mbfl_encoding mbfl_encoding_uuencode = {
 	"x-uuencode",
 	NULL,
 	NULL,
-	MBFL_ENCTYPE_SBCS
+	MBFL_ENCTYPE_SBCS,
+	NULL
 };
 
 const mbfl_convert_vtbl vtbl_uuencode_8bit = {

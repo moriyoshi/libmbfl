@@ -37,20 +37,20 @@
 
 static const char *mbfl_encoding_8859_13_aliases[] = {"ISO_8859-13", NULL};
 
+static const mbfl_identify_vtbl vtbl_identify_8859_13 = {
+	mbfl_filt_ident_common_ctor,
+	mbfl_filt_ident_common_dtor,
+	mbfl_filt_ident_true
+};
+
 const mbfl_encoding mbfl_encoding_8859_13 = {
 	mbfl_encoding_id_8859_13,
 	"ISO-8859-13",
 	"ISO-8859-13",
 	(const char *(*)[])&mbfl_encoding_8859_13_aliases,
 	NULL,
-	MBFL_ENCTYPE_SBCS
-};
-
-const mbfl_identify_vtbl vtbl_identify_8859_13 = {
-	mbfl_encoding_id_8859_13,
-	mbfl_filt_ident_common_ctor,
-	mbfl_filt_ident_common_dtor,
-	mbfl_filt_ident_true
+	MBFL_ENCTYPE_SBCS,
+	&vtbl_identify_8859_13
 };
 
 const mbfl_convert_vtbl vtbl_8859_13_wchar = {

@@ -110,6 +110,7 @@ typedef struct _mbfl_encoding {
 	const char *(*aliases)[];
 	const unsigned char *mblen_table;
 	unsigned int flag;
+	const struct _mbfl_identify_vtbl *ident_vtbl;
 } mbfl_encoding;
 
 extern const mbfl_encoding *mbfl_get_encoding_by_name(const char *name);

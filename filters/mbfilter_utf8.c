@@ -57,20 +57,20 @@ static const unsigned char mblen_table_utf8[] = {
 
 static const char *mbfl_encoding_utf8_aliases[] = {"utf8", NULL};
 
+static const mbfl_identify_vtbl vtbl_identify_utf8 = {
+	mbfl_filt_ident_common_ctor,
+	mbfl_filt_ident_common_dtor,
+	mbfl_filt_ident_utf8
+};
+
 const mbfl_encoding mbfl_encoding_utf8 = {
 	mbfl_encoding_id_utf8,
 	"UTF-8",
 	"UTF-8",
 	(const char *(*)[])&mbfl_encoding_utf8_aliases,
 	mblen_table_utf8,
-	MBFL_ENCTYPE_MBCS
-};
-
-const mbfl_identify_vtbl vtbl_identify_utf8 = {
-	mbfl_encoding_id_utf8,
-	mbfl_filt_ident_common_ctor,
-	mbfl_filt_ident_common_dtor,
-	mbfl_filt_ident_utf8
+	MBFL_ENCTYPE_MBCS,
+	&vtbl_identify_utf8
 };
 
 const mbfl_convert_vtbl vtbl_utf8_wchar = {

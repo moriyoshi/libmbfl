@@ -60,20 +60,20 @@ static const unsigned char mblen_table_eucjp[] = { /* 0xA1-0xFE */
 
 static const char *mbfl_encoding_euc_jp_aliases[] = {"EUC", "EUC_JP", "eucJP", "x-euc-jp", NULL};
 
+static const mbfl_identify_vtbl vtbl_identify_eucjp = {
+	mbfl_filt_ident_common_ctor,
+	mbfl_filt_ident_common_dtor,
+	mbfl_filt_ident_eucjp
+};
+
 const mbfl_encoding mbfl_encoding_euc_jp = {
 	mbfl_encoding_id_euc_jp,
 	"EUC-JP",
 	"EUC-JP",
 	(const char *(*)[])&mbfl_encoding_euc_jp_aliases,
 	mblen_table_eucjp,
-	MBFL_ENCTYPE_MBCS
-};
-
-const mbfl_identify_vtbl vtbl_identify_eucjp = {
-	mbfl_encoding_id_euc_jp,
-	mbfl_filt_ident_common_ctor,
-	mbfl_filt_ident_common_dtor,
-	mbfl_filt_ident_eucjp
+	MBFL_ENCTYPE_MBCS,
+	&vtbl_identify_eucjp
 };
 
 const mbfl_convert_vtbl vtbl_eucjp_wchar = {

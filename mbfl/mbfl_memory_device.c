@@ -298,8 +298,7 @@ void mbfl_wchar_device_init(mbfl_wchar_device *device)
 	}
 }
 
-void
-mbfl_wchar_device_clear(mbfl_wchar_device *device)
+void mbfl_wchar_device_clear(mbfl_wchar_device *device)
 {
 	if (device) {
 		if (device->buffer) {

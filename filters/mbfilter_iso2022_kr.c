@@ -37,20 +37,20 @@
 
 static int mbfl_filt_ident_2022kr(int c, mbfl_identify_filter *filter);
 
+static const mbfl_identify_vtbl vtbl_identify_2022kr = {
+	mbfl_filt_ident_common_ctor,
+	mbfl_filt_ident_common_dtor,
+	mbfl_filt_ident_2022kr
+};
+
 const mbfl_encoding mbfl_encoding_2022kr = {
 	mbfl_encoding_id_2022kr,
 	"ISO-2022-KR",
 	"ISO-2022-KR",
 	NULL,
 	NULL,
-	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_SHFTCODE
-};
-
-const mbfl_identify_vtbl vtbl_identify_2022kr = {
-	mbfl_encoding_id_2022kr,
-	mbfl_filt_ident_common_ctor,
-	mbfl_filt_ident_common_dtor,
-	mbfl_filt_ident_2022kr
+	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_SHFTCODE,
+	&vtbl_identify_2022kr
 };
 
 const mbfl_convert_vtbl vtbl_wchar_2022kr = {

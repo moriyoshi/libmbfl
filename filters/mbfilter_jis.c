@@ -40,13 +40,26 @@
 static int mbfl_filt_ident_jis(int c, mbfl_identify_filter *filter);
 static int mbfl_filt_ident_2022jp(int c, mbfl_identify_filter *filter);
 
+static const mbfl_identify_vtbl vtbl_identify_jis = {
+	mbfl_filt_ident_common_ctor,
+	mbfl_filt_ident_common_dtor,
+	mbfl_filt_ident_jis
+};
+
+static const mbfl_identify_vtbl vtbl_identify_2022jp = {
+	mbfl_filt_ident_common_ctor,
+	mbfl_filt_ident_common_dtor,
+	mbfl_filt_ident_2022jp
+};
+
 const mbfl_encoding mbfl_encoding_jis = {
 	mbfl_encoding_id_jis,
 	"JIS",
 	"ISO-2022-JP",
 	NULL,
 	NULL,
-	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_SHFTCODE
+	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_SHFTCODE,
+	&vtbl_identify_jis
 };
 
 const mbfl_encoding mbfl_encoding_2022jp = {
@@ -55,21 +68,8 @@ const mbfl_encoding mbfl_encoding_2022jp = {
 	"ISO-2022-JP",
 	NULL,
 	NULL,
-	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_SHFTCODE
-};
-
-const mbfl_identify_vtbl vtbl_identify_jis = {
-	mbfl_encoding_id_jis,
-	mbfl_filt_ident_common_ctor,
-	mbfl_filt_ident_common_dtor,
-	mbfl_filt_ident_jis
-};
-
-const mbfl_identify_vtbl vtbl_identify_2022jp = {
-	mbfl_encoding_id_2022jp,
-	mbfl_filt_ident_common_ctor,
-	mbfl_filt_ident_common_dtor,
-	mbfl_filt_ident_2022jp
+	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_SHFTCODE,
+	&vtbl_identify_jis
 };
 
 const mbfl_convert_vtbl vtbl_jis_wchar = {

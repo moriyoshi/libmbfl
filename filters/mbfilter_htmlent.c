@@ -70,7 +70,8 @@ const mbfl_encoding mbfl_encoding_html_ent = {
 	"US-ASCII",
 	(const char *(*)[])&mbfl_encoding_html_ent_aliases,
 	NULL, /* mblen_table_html, Do not use table instead calulate length based on entities actually used */
-	MBFL_ENCTYPE_HTML_ENT
+	MBFL_ENCTYPE_HTML_ENT,
+	NULL
 };
 
 const mbfl_convert_vtbl vtbl_wchar_html = {

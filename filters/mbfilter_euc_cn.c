@@ -59,20 +59,20 @@ static const unsigned char mblen_table_euccn[] = { /* 0xA1-0xFE */
 
 static const char *mbfl_encoding_euc_cn_aliases[] = {"CN-GB", "EUC_CN", "eucCN", "x-euc-cn", "gb2312", NULL};
 
+static const mbfl_identify_vtbl vtbl_identify_euccn = {
+	mbfl_filt_ident_common_ctor,
+	mbfl_filt_ident_common_dtor,
+	mbfl_filt_ident_euccn
+};
+
 const mbfl_encoding mbfl_encoding_euc_cn = {
 	mbfl_encoding_id_euc_cn,
 	"EUC-CN",
 	"CN-GB",
 	(const char *(*)[])&mbfl_encoding_euc_cn_aliases,
 	mblen_table_euccn,
-	MBFL_ENCTYPE_MBCS
-};
-
-const mbfl_identify_vtbl vtbl_identify_euccn = {
-	mbfl_encoding_id_euc_cn,
-	mbfl_filt_ident_common_ctor,
-	mbfl_filt_ident_common_dtor,
-	mbfl_filt_ident_euccn
+	MBFL_ENCTYPE_MBCS,
+	&vtbl_identify_euccn
 };
 
 const mbfl_convert_vtbl vtbl_euccn_wchar = {

@@ -31,11 +31,10 @@
 #ifndef MBFL_IDENT_H
 #define MBFL_IDENT_H
 
-#include "mbfl_encoding.h"
-
 /*
  * identify filter
  */
+
 typedef struct _mbfl_identify_filter mbfl_identify_filter;
 
 struct _mbfl_identify_filter {
@@ -45,22 +44,20 @@ struct _mbfl_identify_filter {
 	int status;
 	int flag;
 	int score;
-	const mbfl_encoding *encoding;
+	struct _mbfl_encoding *encoding;
 };
 
 typedef struct _mbfl_identify_vtbl mbfl_identify_vtbl;
 
 struct _mbfl_identify_vtbl {
-	mbfl_encoding_id encoding;
 	void (*filter_ctor)(mbfl_identify_filter *filter);
 	void (*filter_dtor)(mbfl_identify_filter *filter);
 	int (*filter_function)(int c, mbfl_identify_filter *filter);
 };
 
 void mbfl_identify_filter_set_vtbl(mbfl_identify_filter *filter, const mbfl_identify_vtbl *vtbl);
-const mbfl_identify_vtbl * mbfl_identify_filter_get_vtbl(mbfl_encoding_id encoding);
 void mbfl_identify_filter_select_vtbl(mbfl_identify_filter *filter);
-mbfl_identify_filter * mbfl_identify_filter_new(mbfl_encoding_id encoding);
+mbfl_identify_filter * mbfl_identify_filter_new(struct _mbfl_encoding *encoding);
 void mbfl_identify_filter_delete(mbfl_identify_filter *filter);
 
 void mbfl_filt_ident_common_ctor(mbfl_identify_filter *filter);

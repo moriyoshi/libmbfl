@@ -60,20 +60,20 @@ static const unsigned char mblen_table_euctw[] = { /* 0xA1-0xFE */
 
 static const char *mbfl_encoding_euc_tw_aliases[] = {"EUC_TW", "eucTW", "x-euc-tw", NULL};
 
+static const mbfl_identify_vtbl vtbl_identify_euctw = {
+	mbfl_filt_ident_common_ctor,
+	mbfl_filt_ident_common_dtor,
+	mbfl_filt_ident_euctw
+};
+
 const mbfl_encoding mbfl_encoding_euc_tw = {
 	mbfl_encoding_id_euc_tw,
 	"EUC-TW",
 	"EUC-TW",
 	(const char *(*)[])&mbfl_encoding_euc_tw_aliases,
 	mblen_table_euctw,
-	MBFL_ENCTYPE_MBCS
-};
-
-const mbfl_identify_vtbl vtbl_identify_euctw = {
-	mbfl_encoding_id_euc_tw,
-	mbfl_filt_ident_common_ctor,
-	mbfl_filt_ident_common_dtor,
-	mbfl_filt_ident_euctw
+	MBFL_ENCTYPE_MBCS,
+	&vtbl_identify_euctw
 };
 
 const mbfl_convert_vtbl vtbl_euctw_wchar = {

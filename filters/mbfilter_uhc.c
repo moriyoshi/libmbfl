@@ -58,20 +58,20 @@ static const unsigned char mblen_table_uhc[] = { /* 0x81-0xFE */
 
 static const char *mbfl_encoding_uhc_aliases[] = {"CP949", NULL};
 
+static const mbfl_identify_vtbl vtbl_identify_uhc = {
+	mbfl_filt_ident_common_ctor,
+	mbfl_filt_ident_common_dtor,
+	mbfl_filt_ident_uhc
+};
+
 const mbfl_encoding mbfl_encoding_uhc = {
 	mbfl_encoding_id_uhc,
 	"UHC",
 	"UHC",
 	(const char *(*)[])&mbfl_encoding_uhc_aliases,
 	mblen_table_uhc,
-	MBFL_ENCTYPE_MBCS
-};
-
-const mbfl_identify_vtbl vtbl_identify_uhc = {
-	mbfl_encoding_id_uhc,
-	mbfl_filt_ident_common_ctor,
-	mbfl_filt_ident_common_dtor,
-	mbfl_filt_ident_uhc
+	MBFL_ENCTYPE_MBCS,
+	&vtbl_identify_uhc
 };
 
 const mbfl_convert_vtbl vtbl_uhc_wchar = {

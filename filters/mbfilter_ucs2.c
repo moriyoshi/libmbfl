@@ -42,7 +42,8 @@ const mbfl_encoding mbfl_encoding_ucs2 = {
 	"UCS-2",
 	(const char *(*)[])&mbfl_encoding_ucs2_aliases,
 	NULL,
-	MBFL_ENCTYPE_WCS2BE
+	MBFL_ENCTYPE_WCS2BE,
+	NULL
 };
 
 const mbfl_encoding mbfl_encoding_ucs2be = {
@@ -51,7 +52,8 @@ const mbfl_encoding mbfl_encoding_ucs2be = {
 	"UCS-2BE",
 	NULL,
 	NULL,
-	MBFL_ENCTYPE_WCS2BE
+	MBFL_ENCTYPE_WCS2BE,
+	NULL
 };
 
 const mbfl_encoding mbfl_encoding_ucs2le = {
@@ -60,7 +62,8 @@ const mbfl_encoding mbfl_encoding_ucs2le = {
 	"UCS-2LE",
 	NULL,
 	NULL,
-	MBFL_ENCTYPE_WCS2LE
+	MBFL_ENCTYPE_WCS2LE,
+	NULL
 };
 
 const mbfl_convert_vtbl vtbl_ucs2_wchar = {

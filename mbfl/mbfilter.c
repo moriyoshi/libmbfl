@@ -315,7 +315,7 @@ mbfl_string * mbfl_buffer_converter_feed_result(mbfl_buffer_converter *convd, mb
 /*
  * encoding detector
  */
-mbfl_encoding_detector * mbfl_encoding_detector_new(mbfl_encoding_id *elist, int eliztsz)
+mbfl_encoding_detector * mbfl_encoding_detector_new(mbfl_encoding *elist, int eliztsz)
 {
 	mbfl_encoding_detector *identd;
 
@@ -341,7 +341,7 @@ mbfl_encoding_detector * mbfl_encoding_detector_new(mbfl_encoding_id *elist, int
 	i = 0;
 	num = 0;
 	while (i < eliztsz) {
-		filter = mbfl_identify_filter_new(elist[i]);
+		filter = mbfl_identify_filter_new(&elist[i]);
 		if (filter != NULL) {
 			identd->filter_list[num] = filter;
 			num++;
@@ -492,7 +492,7 @@ mbfl_string * mbfl_convert_encoding(mbfl_string *string, mbfl_string *result, mb
 /*
  * identify encoding
  */
-const mbfl_encoding * mbfl_identify_encoding(mbfl_string *string, mbfl_encoding_id *elist, int eliztsz)
+const mbfl_encoding * mbfl_identify_encoding(mbfl_string *string, mbfl_encoding *elist, int eliztsz)
 {
 	int i, n, num, bad;
 	unsigned char *p;
@@ -509,11 +509,11 @@ const mbfl_encoding * mbfl_identify_encoding(mbfl_string *string, mbfl_encoding_
 	num = 0;
 	if (elist != NULL) {
 		while (i < eliztsz) {
-			vtbl = mbfl_identify_filter_get_vtbl(elist[i]);
+			vtbl = elist[i].ident_vtbl;
 			if (vtbl != NULL) {
 				filter = &flist[num];
 				mbfl_identify_filter_set_vtbl(filter, vtbl);
-				filter->encoding = mbfl_get_encoding_by_id(vtbl->encoding);
+				filter->encoding = &elist[i];
 				(*filter->filter_ctor)(filter);
 				num++;
 			}
@@ -574,7 +574,7 @@ const mbfl_encoding * mbfl_identify_encoding(mbfl_string *string, mbfl_encoding_
 	return encoding;
 }
 
-const char* mbfl_identify_encoding_name(mbfl_string *string, mbfl_encoding_id *elist, int eliztsz)
+const char* mbfl_identify_encoding_name(mbfl_string *string, mbfl_encoding *elist, int eliztsz)
 {
 	const mbfl_encoding *encoding;
 
@@ -588,7 +588,7 @@ const char* mbfl_identify_encoding_name(mbfl_string *string, mbfl_encoding_id *e
 	}
 }
 
-const mbfl_encoding_id mbfl_identify_encoding_no(mbfl_string *string, mbfl_encoding_id *elist, int eliztsz)
+const mbfl_encoding_id mbfl_identify_encoding_no(mbfl_string *string, mbfl_encoding *elist, int eliztsz)
 {
 	const mbfl_encoding *encoding;
 

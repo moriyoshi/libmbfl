@@ -51,20 +51,20 @@ static const unsigned char mbfl_base64_table[] = {
 
 static const char *mbfl_encoding_utf7_aliases[] = {"utf7", NULL};
 
+static const mbfl_identify_vtbl vtbl_identify_utf7 = {
+	mbfl_filt_ident_common_ctor,
+	mbfl_filt_ident_common_dtor,
+	mbfl_filt_ident_utf7
+};
+
 const mbfl_encoding mbfl_encoding_utf7 = {
 	mbfl_encoding_id_utf7,
 	"UTF-7",
 	"UTF-7",
 	(const char *(*)[])&mbfl_encoding_utf7_aliases,
 	NULL,
-	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_SHFTCODE
-};
-
-const mbfl_identify_vtbl vtbl_identify_utf7 = {
-	mbfl_encoding_id_utf7,
-	mbfl_filt_ident_common_ctor,
-	mbfl_filt_ident_common_dtor,
-	mbfl_filt_ident_utf7
+	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_SHFTCODE,
+	&vtbl_identify_utf7
 };
 
 const mbfl_convert_vtbl vtbl_utf7_wchar = {

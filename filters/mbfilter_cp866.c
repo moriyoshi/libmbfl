@@ -39,20 +39,20 @@ static int mbfl_filt_ident_cp866(int c, mbfl_identify_filter *filter);
 
 static const char *mbfl_encoding_cp866_aliases[] = {"CP866", "CP-866", "IBM-866", NULL};
 
+static const mbfl_identify_vtbl vtbl_identify_cp866 = {
+	mbfl_filt_ident_common_ctor,
+	mbfl_filt_ident_common_dtor,
+	mbfl_filt_ident_cp866
+};
+
 const mbfl_encoding mbfl_encoding_cp866 = {
 	mbfl_encoding_id_cp866,
 	"CP866",
 	"CP866",
 	(const char *(*)[])&mbfl_encoding_cp866_aliases,
 	NULL,
-	MBFL_ENCTYPE_SBCS
-};
-
-const mbfl_identify_vtbl vtbl_identify_cp866 = {
-	mbfl_encoding_id_cp866,
-	mbfl_filt_ident_common_ctor,
-	mbfl_filt_ident_common_dtor,
-	mbfl_filt_ident_cp866
+	MBFL_ENCTYPE_SBCS,
+	&vtbl_identify_cp866
 };
 
 const mbfl_convert_vtbl vtbl_wchar_cp866 = {
