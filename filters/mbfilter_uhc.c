@@ -72,21 +72,21 @@ const mbfl_encoding mbfl_encoding_uhc = {
  * UHC => wchar
  */
 int
-mbfl_filt_conv_uhc_wchar(int c, mbfl_convert_filter *filter TSRMLS_DC)
+mbfl_filt_conv_uhc_wchar(int c, mbfl_convert_filter *filterg)
 {
 	int c1, w, flag;
 
 	switch (filter->status) {
 	case 0:
 		if (c >= 0 && c < 0x80) {	/* latin */
-			CK((*filter->output_function)(c, filter->data TSRMLS_CC));
+			CK((*filter->output_function)(c, filter->datag));
 		} else if (c > 0x80 && c < 0xff && c != 0xc9) {	/* dbcs lead byte */
 			filter->status = 1;
 			filter->cache = c;
 		} else {
 			w = c & MBFL_WCSGROUP_MASK;
 			w |= MBFL_WCSGROUP_THROUGH;
-			CK((*filter->output_function)(w, filter->data TSRMLS_CC));
+			CK((*filter->output_function)(w, filter->datag));
 		}
 		break;
 
@@ -122,15 +122,15 @@ mbfl_filt_conv_uhc_wchar(int c, mbfl_convert_filter *filter TSRMLS_DC)
 				w &= MBFL_WCSPLANE_MASK;
 				w |= MBFL_WCSPLANE_UHC;
 			}
-			CK((*filter->output_function)(w, filter->data TSRMLS_CC));
+			CK((*filter->output_function)(w, filter->datag));
 		} else {
 			if ((c >= 0 && c < 0x21) || c == 0x7f) {		/* CTLs */
-				CK((*filter->output_function)(c, filter->data TSRMLS_CC));
+				CK((*filter->output_function)(c, filter->datag));
 			} else {
 				w = (c1 << 8) | c;
 				w &= MBFL_WCSGROUP_MASK;
 				w |= MBFL_WCSGROUP_THROUGH;
-				CK((*filter->output_function)(w, filter->data TSRMLS_CC));
+				CK((*filter->output_function)(w, filter->datag));
 			}
 		}
 		break;
@@ -147,7 +147,7 @@ mbfl_filt_conv_uhc_wchar(int c, mbfl_convert_filter *filter TSRMLS_DC)
  * wchar => UHC
  */
 int
-mbfl_filt_conv_wchar_uhc(int c, mbfl_convert_filter *filter TSRMLS_DC)
+mbfl_filt_conv_wchar_uhc(int c, mbfl_convert_filter *filterg)
 {
 	int c1, s;
 
@@ -180,14 +180,14 @@ mbfl_filt_conv_wchar_uhc(int c, mbfl_convert_filter *filter TSRMLS_DC)
 	}
 	if (s >= 0) {
 		if (s < 0x80) {	/* latin */
-			CK((*filter->output_function)(s, filter->data TSRMLS_CC));
+			CK((*filter->output_function)(s, filter->datag));
 		} else {
-			CK((*filter->output_function)((s >> 8) & 0xff, filter->data TSRMLS_CC));
-			CK((*filter->output_function)(s & 0xff, filter->data TSRMLS_CC));
+			CK((*filter->output_function)((s >> 8) & 0xff, filter->datag));
+			CK((*filter->output_function)(s & 0xff, filter->datag));
 		}
 	} else {
 		if (filter->illegal_mode != MBFL_OUTPUTFILTER_ILLEGAL_MODE_NONE) {
-			CK(mbfl_filt_conv_illegal_output(c, filter TSRMLS_CC));
+			CK(mbfl_filt_conv_illegal_output(c, filterg));
 		}
 	}
 

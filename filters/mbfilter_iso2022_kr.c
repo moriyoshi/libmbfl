@@ -48,7 +48,7 @@ const mbfl_encoding mbfl_encoding_2022kr = {
  * ISO-2022-KR => wchar
  */
 int
-mbfl_filt_conv_2022kr_wchar(int c, mbfl_convert_filter *filter TSRMLS_DC)
+mbfl_filt_conv_2022kr_wchar(int c, mbfl_convert_filter *filterg)
 {
 	int c1, w, flag;
 
@@ -69,11 +69,11 @@ retry:
 			filter->status += 1;
 		} else if ((filter->status & 0x10) == 0 &&  c >= 0 && c < 0x80) {
 			/* latin, CTLs */
-			CK((*filter->output_function)(c, filter->data TSRMLS_CC));
+			CK((*filter->output_function)(c, filter->datag));
 		} else {
 			w = c & MBFL_WCSGROUP_MASK;
 			w |= MBFL_WCSGROUP_THROUGH;
-			CK((*filter->output_function)(w, filter->data TSRMLS_CC));
+			CK((*filter->output_function)(w, filter->datag));
 		}
 		break;
 
@@ -108,16 +108,16 @@ retry:
 				w &= MBFL_WCSPLANE_MASK;
 				w |= MBFL_WCSPLANE_KSC5601;
 			}
-			CK((*filter->output_function)(w, filter->data TSRMLS_CC));
+			CK((*filter->output_function)(w, filter->datag));
 		} else if (c == 0x1b) {	 /* ESC */
 			filter->status++;
 		} else if ((c >= 0 && c < 0x21) || c == 0x7f) {		/* CTLs */
-			CK((*filter->output_function)(c, filter->data TSRMLS_CC));
+			CK((*filter->output_function)(c, filter->datag));
 		} else {
 			w = (c1 << 8) | c;
 			w &= MBFL_WCSGROUP_MASK;
 			w |= MBFL_WCSGROUP_THROUGH;
-			CK((*filter->output_function)(w, filter->data TSRMLS_CC));
+			CK((*filter->output_function)(w, filter->datag));
 		}
 		break;
 
@@ -126,7 +126,7 @@ retry:
 			filter->status++;
 		} else {
 			filter->status &= ~0xf;
-			CK((*filter->output_function)(0x1b, filter->data TSRMLS_CC));
+			CK((*filter->output_function)(0x1b, filter->datag));
 			goto retry;
 		}
 		break;
@@ -135,8 +135,8 @@ retry:
 			filter->status++;
 		} else {
 			filter->status &= ~0xf;
-			CK((*filter->output_function)(0x1b, filter->data TSRMLS_CC));
-			CK((*filter->output_function)(0x24, filter->data TSRMLS_CC));
+			CK((*filter->output_function)(0x1b, filter->datag));
+			CK((*filter->output_function)(0x24, filter->datag));
 			goto retry;
 		}
 		break;
@@ -146,9 +146,9 @@ retry:
 			filter->status |= 0x100;
 		} else {
 			filter->status &= ~0xf;
-			CK((*filter->output_function)(0x1b, filter->data TSRMLS_CC));
-			CK((*filter->output_function)(0x24, filter->data TSRMLS_CC));
-			CK((*filter->output_function)(0x29, filter->data TSRMLS_CC));
+			CK((*filter->output_function)(0x1b, filter->datag));
+			CK((*filter->output_function)(0x24, filter->datag));
+			CK((*filter->output_function)(0x29, filter->datag));
 			goto retry;
 		}
 		break;
@@ -164,7 +164,7 @@ retry:
  * wchar => ISO-2022-KR
  */
 int
-mbfl_filt_conv_wchar_2022kr(int c, mbfl_convert_filter *filter TSRMLS_DC)
+mbfl_filt_conv_wchar_2022kr(int c, mbfl_convert_filter *filterg)
 {
 	int c1, c2, s;
 
@@ -212,28 +212,28 @@ mbfl_filt_conv_wchar_2022kr(int c, mbfl_convert_filter *filter TSRMLS_DC)
 	if (s >= 0) {
 		if (s < 0x80 && s > 0) {	/* ASCII */
 			if ((filter->status & 0x10) != 0) {
-				CK((*filter->output_function)(0x0f, filter->data TSRMLS_CC));		/* SI */
+				CK((*filter->output_function)(0x0f, filter->datag));		/* SI */
 				filter->status &= ~0x10;
 			}
-			CK((*filter->output_function)(s, filter->data TSRMLS_CC));
+			CK((*filter->output_function)(s, filter->datag));
 		} else {
 			if ( (filter->status & 0x100) == 0) {
-				CK((*filter->output_function)(0x1b, filter->data TSRMLS_CC));		/* ESC */
-				CK((*filter->output_function)(0x24, filter->data TSRMLS_CC));		/* '$' */
-				CK((*filter->output_function)(0x29, filter->data TSRMLS_CC));		/* ')' */
-				CK((*filter->output_function)(0x43, filter->data TSRMLS_CC));		/* 'C' */
+				CK((*filter->output_function)(0x1b, filter->datag));		/* ESC */
+				CK((*filter->output_function)(0x24, filter->datag));		/* '$' */
+				CK((*filter->output_function)(0x29, filter->datag));		/* ')' */
+				CK((*filter->output_function)(0x43, filter->datag));		/* 'C' */
 				filter->status |= 0x100;
 			}
 			if ((filter->status & 0x10) == 0) {
-				CK((*filter->output_function)(0x0e, filter->data TSRMLS_CC));		/* SO */
+				CK((*filter->output_function)(0x0e, filter->datag));		/* SO */
 				filter->status |= 0x10;
 			}
-			CK((*filter->output_function)((s >> 8) & 0xff, filter->data TSRMLS_CC));
-			CK((*filter->output_function)(s & 0xff, filter->data TSRMLS_CC));
+			CK((*filter->output_function)((s >> 8) & 0xff, filter->datag));
+			CK((*filter->output_function)(s & 0xff, filter->datag));
 		}
 	} else {
 		if (filter->illegal_mode != MBFL_OUTPUTFILTER_ILLEGAL_MODE_NONE) {
-			CK(mbfl_filt_conv_illegal_output(c, filter TSRMLS_CC));
+			CK(mbfl_filt_conv_illegal_output(c, filterg));
 		}
 	}
 
@@ -241,11 +241,11 @@ mbfl_filt_conv_wchar_2022kr(int c, mbfl_convert_filter *filter TSRMLS_DC)
 }
 
 int
-mbfl_filt_conv_any_2022kr_flush(mbfl_convert_filter *filter TSRMLS_DC)
+mbfl_filt_conv_any_2022kr_flush(mbfl_convert_filter *filterg)
 {
 	/* back to ascii */
 	if ((filter->status & 0xff00) != 0) {
-		CK((*filter->output_function)(0x0f, filter->data TSRMLS_CC));		/* SI */
+		CK((*filter->output_function)(0x0f, filter->datag));		/* SI */
 	}
 	filter->status &= 0xff;
 	return 0;
