@@ -224,24 +224,14 @@ MBFLAPI mbfl_string *mbfl_mime_header_decode(
     mbfl_string *result,
     mbfl_encoding_id outcode);
 
-
 /*
  * convert HTML numeric entity
  */
 MBFLAPI mbfl_string *mbfl_html_numeric_entity(mbfl_string *string, mbfl_string *result, int *convmap, int mapsize, int type);
 
-
 /*
  * convert of harfwidth and fullwidth for japanese
  */
 MBFLAPI mbfl_string *mbfl_ja_jp_hantozen(mbfl_string *string, mbfl_string *result, int mode);
-
-/*
- * HTML Entity table
- */
-typedef struct _mbfl_html_entity {
-	char *  name;
-	int     code;
-} mbfl_html_entity;
 
 #endif	/* MBFL_MBFILTER_H */
