@@ -179,6 +179,12 @@ int
 mbfl_strlen(mbfl_string *string);
 
 /*
+ * oddlen
+ */
+int
+mbfl_oddlen(mbfl_string *string);
+
+/*
  * strpos
  */
 int
