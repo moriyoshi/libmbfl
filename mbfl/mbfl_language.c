@@ -61,6 +61,12 @@
 #include "nls/nls_en.h"
 #include "nls/nls_neutral.h"
 
+#ifndef HAVE_STRCASECMP
+#ifdef HAVE_STRICMP
+#define strcasecmp stricmp
+#endif
+#endif 
+
 static const mbfl_language *mbfl_language_ptr_table[] = {
 	&mbfl_language_uni,
 	&mbfl_language_japanese,

@@ -96,6 +96,13 @@
 #include "filters/mbfilter_ucs2.h"
 #include "filters/mbfilter_htmlent.h"
 
+#ifndef HAVE_STRCASECMP
+#ifdef HAVE_STRICMP
+#define strcasecmp stricmp
+#endif
+#endif 
+
+
 static const char *mbfl_encoding_auto_aliases[] = {"unknown", NULL};
 
 static const mbfl_encoding mbfl_encoding_auto = {
