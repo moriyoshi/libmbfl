@@ -184,39 +184,29 @@ const mbfl_encoding *
 mbfl_name2encoding(const char *name)
 {
 	const mbfl_encoding *encoding;
-	int i, j;
+	int i;
 
 	if (name == NULL) {
 		return NULL;
 	}
 
-	i = 0;
-	while ((encoding = mbfl_encoding_ptr_list[i++]) != NULL){
+	for (i = 0; encoding = mbfl_encoding_ptr_list[i] != NULL; i++){
 		if (strcasecmp(encoding->name, name) == 0) {
 			return encoding;
 		}
-	}
 
-	/* serch MIME charset name */
-	i = 0;
-	while ((encoding = mbfl_encoding_ptr_list[i++]) != NULL) {
 		if (encoding->mime_name != NULL) {
 			if (strcasecmp(encoding->mime_name, name) == 0) {
 				return encoding;
 			}
 		}
-	}
 
-	/* serch aliases */
-	i = 0;
-	while ((encoding = mbfl_encoding_ptr_list[i++]) != NULL) {
 		if (encoding->aliases != NULL) {
-			j = 0;
-			while ((*encoding->aliases)[j] != NULL) {
+			int j;
+			for (j = 0; (*encoding->aliases)[j] != NULL; j++) {
 				if (strcasecmp((*encoding->aliases)[j], name) == 0) {
 					return encoding;
 				}
-				j++;
 			}
 		}
 	}
