@@ -7,13 +7,15 @@ all: mbfl.dll mbfl.lib
 mbfl.lib: mbfl.dll
 	implib mbfl.lib mbfl.dll
 
-mbfl.dll: compile mbfl.def
+mbfl.dll: compile mbfl.def mbfl.res
 	@if exist linker.rsp del linker.rsp
-	@echo $(LDFLAGS) /embfl.dll /tWD > linker.rsp
-	@for %i in ($(SUBDIRS)) do @for %j in (%i\*.obj) do @echo %j >> linker.rsp
-	bcc32 @linker.rsp
+	@for %i in ($(SUBDIRS)) do @for %j in (%i\*.obj) do @echo %j+ >> linker.rsp
+	ilink32 $(LDFLAGS) @linker.rsp,mbfl.dll,,$(LIBS),mbfl.def,mbfl.res
 	del linker.rsp
-  
+
+mbfl.res: mbfl.rc
+	brcc32 -r mbfl.rc
+ 
 prepare: config.h.bcc32
 	@if exist linker.rsp del linker.rsp
 	@copy config.h.bcc32 config.h
