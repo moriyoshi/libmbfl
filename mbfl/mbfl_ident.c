@@ -83,7 +83,7 @@ mbfl_identify_filter *mbfl_identify_filter_new(mbfl_encoding *encoding)
 	/* encoding structure */
 	filter->encoding = encoding;
 	if (filter->encoding == NULL) {
-		filter->encoding = &mbfl_encoding_pass;
+		filter->encoding = (mbfl_encoding *)&mbfl_encoding_pass;
 	}
 
 	filter->status = 0;
