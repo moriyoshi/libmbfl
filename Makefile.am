@@ -1,1 +1,2 @@
-SUBDIRS = mbfl nls filters
+EXTRA_DIST=AUTHORS DISCLAIMER 
+SUBDIRS = nls filters mbfl
