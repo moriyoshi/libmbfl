@@ -33,7 +33,6 @@
 #include "mbfilter.h"
 
 extern const mbfl_encoding mbfl_encoding_big5;
-extern const mbfl_identify_vtbl vtbl_identify_big5;
 extern const mbfl_convert_vtbl vtbl_big5_wchar;
 extern const mbfl_convert_vtbl vtbl_wchar_big5;
 
