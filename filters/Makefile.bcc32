@@ -1,0 +1,53 @@
+!include ..\rules.mak.bcc32
+
+INCLUDES=$(INCLUDES) -I../mbfl
+
+all: mbfilter_cp936.obj mbfilter_hz.obj mbfilter_euc_tw.obj mbfilter_big5.obj mbfilter_euc_jp.obj mbfilter_jis.obj mbfilter_iso8859_1.obj mbfilter_iso8859_2.obj mbfilter_cp1252.obj mbfilter_cp1251.obj mbfilter_ascii.obj mbfilter_iso8859_3.obj mbfilter_iso8859_4.obj mbfilter_iso8859_5.obj mbfilter_iso8859_6.obj mbfilter_iso8859_7.obj mbfilter_iso8859_8.obj mbfilter_iso8859_9.obj mbfilter_iso8859_10.obj mbfilter_iso8859_13.obj mbfilter_iso8859_14.obj mbfilter_iso8859_15.obj mbfilter_htmlent.obj mbfilter_byte2.obj mbfilter_byte4.obj mbfilter_uuencode.obj mbfilter_base64.obj mbfilter_sjis.obj mbfilter_7bit.obj mbfilter_qprint.obj mbfilter_ucs4.obj mbfilter_ucs2.obj mbfilter_utf32.obj mbfilter_utf16.obj mbfilter_utf8.obj mbfilter_utf7.obj mbfilter_utf7imap.obj mbfilter_euc_jp_win.obj mbfilter_cp932.obj mbfilter_euc_cn.obj mbfilter_euc_kr.obj mbfilter_uhc.obj mbfilter_iso2022_kr.obj mbfilter_cp866.obj mbfilter_koi8r.obj html_entities.obj 
+
+clean:
+	@if exist mbfilter_cp936.obj del mbfilter_cp936.obj
+	@if exist mbfilter_hz.obj del mbfilter_hz.obj
+	@if exist mbfilter_euc_tw.obj del mbfilter_euc_tw.obj
+	@if exist mbfilter_big5.obj del mbfilter_big5.obj
+	@if exist mbfilter_euc_jp.obj del mbfilter_euc_jp.obj
+	@if exist mbfilter_jis.obj del mbfilter_jis.obj
+	@if exist mbfilter_iso8859_1.obj del mbfilter_iso8859_1.obj
+	@if exist mbfilter_iso8859_2.obj del mbfilter_iso8859_2.obj
+	@if exist mbfilter_cp1252.obj del mbfilter_cp1252.obj
+	@if exist mbfilter_cp1251.obj del mbfilter_cp1251.obj
+	@if exist mbfilter_ascii.obj del mbfilter_ascii.obj
+	@if exist mbfilter_iso8859_3.obj del mbfilter_iso8859_3.obj
+	@if exist mbfilter_iso8859_4.obj del mbfilter_iso8859_4.obj
+	@if exist mbfilter_iso8859_5.obj del mbfilter_iso8859_5.obj
+	@if exist mbfilter_iso8859_6.obj del mbfilter_iso8859_6.obj
+	@if exist mbfilter_iso8859_7.obj del mbfilter_iso8859_7.obj
+	@if exist mbfilter_iso8859_8.obj del mbfilter_iso8859_8.obj
+	@if exist mbfilter_iso8859_9.obj del mbfilter_iso8859_9.obj
+	@if exist mbfilter_iso8859_10.obj del mbfilter_iso8859_10.obj
+	@if exist mbfilter_iso8859_13.obj del mbfilter_iso8859_13.obj
+	@if exist mbfilter_iso8859_14.obj del mbfilter_iso8859_14.obj
+	@if exist mbfilter_iso8859_15.obj del mbfilter_iso8859_15.obj
+	@if exist mbfilter_htmlent.obj del mbfilter_htmlent.obj
+	@if exist mbfilter_byte2.obj del mbfilter_byte2.obj
+	@if exist mbfilter_byte4.obj del mbfilter_byte4.obj
+	@if exist mbfilter_uuencode.obj del mbfilter_uuencode.obj
+	@if exist mbfilter_base64.obj del mbfilter_base64.obj
+	@if exist mbfilter_sjis.obj del mbfilter_sjis.obj
+	@if exist mbfilter_7bit.obj del mbfilter_7bit.obj
+	@if exist mbfilter_qprint.obj del mbfilter_qprint.obj
+	@if exist mbfilter_ucs4.obj del mbfilter_ucs4.obj
+	@if exist mbfilter_ucs2.obj del mbfilter_ucs2.obj
+	@if exist mbfilter_utf32.obj del mbfilter_utf32.obj
+	@if exist mbfilter_utf16.obj del mbfilter_utf16.obj
+	@if exist mbfilter_utf8.obj del mbfilter_utf8.obj
+	@if exist mbfilter_utf7.obj del mbfilter_utf7.obj
+	@if exist mbfilter_utf7imap.obj del mbfilter_utf7imap.obj
+	@if exist mbfilter_euc_jp_win.obj del mbfilter_euc_jp_win.obj
+	@if exist mbfilter_cp932.obj del mbfilter_cp932.obj
+	@if exist mbfilter_euc_cn.obj del mbfilter_euc_cn.obj
+	@if exist mbfilter_euc_kr.obj del mbfilter_euc_kr.obj
+	@if exist mbfilter_uhc.obj del mbfilter_uhc.obj
+	@if exist mbfilter_iso2022_kr.obj del mbfilter_iso2022_kr.obj
+	@if exist mbfilter_cp866.obj del mbfilter_cp866.obj
+	@if exist mbfilter_koi8r.obj del mbfilter_koi8r.obj
+	@if exist html_entities.obj del html_entities.obj

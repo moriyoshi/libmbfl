@@ -1,0 +1,18 @@
+!include ..\rules.mak.bcc32
+
+all: mbfilter.obj mbfl_string.obj mbfl_language.obj mbfl_encoding.obj mbfl_convert.obj mbfl_ident.obj mbfl_memory_device.obj mbfl_allocators.obj mbfl_filter_output.obj mbfilter_pass.obj mbfilter_wchar.obj mbfilter_8bit.obj mbfl_buffer_converter.obj
+
+clean:
+	@if exist mbfilter.obj              del mbfilter.obj
+	@if exist mbfl_string.obj           del mbfl_string.obj
+	@if exist mbfl_language.obj         del mbfl_language.obj
+	@if exist mbfl_encoding.obj         del mbfl_encoding.obj
+	@if exist mbfl_convert.obj          del mbfl_convert.obj
+	@if exist mbfl_ident.obj            del mbfl_ident.obj
+	@if exist mbfl_memory_device.obj    del mbfl_memory_device.obj
+	@if exist mbfl_allocators.obj       del mbfl_allocators.obj
+	@if exist mbfl_filter_output.obj    del mbfl_filter_output.obj
+	@if exist mbfilter_pass.obj         del mbfilter_pass.obj
+	@if exist mbfilter_wchar.obj        del mbfilter_wchar.obj
+	@if exist mbfilter_8bit.obj         del mbfilter_8bit.obj
+	@if exist mbfl_buffer_converter.obj del mbfl_buffer_converter.obj

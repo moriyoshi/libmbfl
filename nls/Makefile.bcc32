@@ -1,0 +1,12 @@
+!include ..\rules.mak.bcc32
+INCLUDES=$(INCLUDES) -I..\mbfl
+all: nls_ja.obj nls_de.obj nls_en.obj nls_kr.obj nls_ru.obj nls_zh.obj nls_uni.obj
+
+clean:
+	@if exist nls_ja.obj  del nls_ja.obj
+	@if exist nls_de.obj  del nls_de.obj
+	@if exist nls_en.obj  del nls_en.obj
+	@if exist nls_kr.obj  del nls_kr.obj
+	@if exist nls_ru.obj  del nls_ru.obj
+	@if exist nls_zh.obj  del nls_zh.obj
+	@if exist nls_uni.obj del nls_uni.obj

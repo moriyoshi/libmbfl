@@ -18,6 +18,8 @@ stamp-h1
 mkinstalldirs
 .deps
 .libs
+*.dll
+*.lib
 *.lo
 *.tar
 *.tar.gz
