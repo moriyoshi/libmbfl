@@ -311,7 +311,6 @@ MBFLAPI const mbfl_encoding * mbfl_identify_encoding(mbfl_string *string, mbfl_e
 				if (filter->flag) {
 					bad++;
 				}
-				i++;
 			}
 			p++;
 			n--;
