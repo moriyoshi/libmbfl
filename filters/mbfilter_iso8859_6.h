@@ -33,6 +33,7 @@
 #include "mbfilter.h"
 
 extern const mbfl_encoding mbfl_encoding_8859_6;
+extern const struct mbfl_identify_vtbl vtbl_identify_8859_6;
 
 int mbfl_filt_conv_8859_6_wchar(int c, mbfl_convert_filter *filter);
 int mbfl_filt_conv_wchar_8859_6(int c, mbfl_convert_filter *filter);

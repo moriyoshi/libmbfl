@@ -36,6 +36,8 @@
 
 #include "unicode_table_cp936.h"
 
+static int mbfl_filt_ident_euccn(int c, mbfl_identify_filter *filter);
+
 static const unsigned char mblen_table_euccn[] = { /* 0xA1-0xFE */
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -64,6 +66,13 @@ const mbfl_encoding mbfl_encoding_euc_cn = {
 	(const char *(*)[])&mbfl_encoding_euc_cn_aliases,
 	mblen_table_euccn,
 	MBFL_ENCTYPE_MBCS
+};
+
+const struct mbfl_identify_vtbl vtbl_identify_euccn = {
+	mbfl_no_encoding_euc_cn,
+	mbfl_filt_ident_common_ctor,
+	mbfl_filt_ident_common_dtor,
+	mbfl_filt_ident_euccn
 };
 
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
@@ -173,6 +182,34 @@ mbfl_filt_conv_wchar_euccn(int c, mbfl_convert_filter *filter)
 		if (filter->illegal_mode != MBFL_OUTPUTFILTER_ILLEGAL_MODE_NONE) {
 			CK(mbfl_filt_conv_illegal_output(c, filter));
 		}
+	}
+
+	return c;
+}
+
+static int mbfl_filt_ident_euccn(int c, mbfl_identify_filter *filter)
+{
+	switch (filter->status) {
+	case  0:	/* latin */
+		if (c >= 0 && c < 0x80) {	/* ok */
+			;
+		} else if (c > 0xa0 && c < 0xff) {	/* DBCS lead byte */
+			filter->status = 1;
+		} else {							/* bad */
+			filter->flag = 1;
+		}
+		break;
+
+	case  1:	/* got lead byte */
+		if (c < 0xa1 || c > 0xfe) {		/* bad */
+			filter->flag = 1;
+		}
+		filter->status = 0;
+		break;
+
+	default:
+		filter->status = 0;
+		break;
 	}
 
 	return c;

@@ -34,7 +34,9 @@
 
 extern const mbfl_encoding mbfl_encoding_jis;
 extern const mbfl_encoding mbfl_encoding_2022jp;
-
+extern const struct mbfl_identify_vtbl vtbl_identify_2022jp;
+extern const struct mbfl_identify_vtbl vtbl_identify_jis;
+ 
 int mbfl_filt_conv_jis_wchar(int c, mbfl_convert_filter *filter);
 int mbfl_filt_conv_wchar_jis(int c, mbfl_convert_filter *filter);
 int mbfl_filt_conv_wchar_2022jp(int c, mbfl_convert_filter *filter);

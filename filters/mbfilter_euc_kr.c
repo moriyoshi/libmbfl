@@ -35,6 +35,8 @@
 #include "mbfilter_euc_kr.h"
 #include "unicode_table_uhc.h"
 
+static int mbfl_filt_ident_euckr(int c, mbfl_identify_filter *filter);
+
 static const unsigned char mblen_table_euckr[] = { /* 0xA1-0xFE */
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -64,6 +66,14 @@ const mbfl_encoding mbfl_encoding_euc_kr = {
 	mblen_table_euckr,
 	MBFL_ENCTYPE_MBCS
 };
+
+const struct mbfl_identify_vtbl vtbl_identify_euckr = {
+	mbfl_no_encoding_euc_kr,
+	mbfl_filt_ident_common_ctor,
+	mbfl_filt_ident_common_dtor,
+	mbfl_filt_ident_euckr
+};
+
 
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
 
@@ -199,3 +209,30 @@ mbfl_filt_conv_wchar_euckr(int c, mbfl_convert_filter *filter)
 	return c;
 }
 
+static int mbfl_filt_ident_euckr(int c, mbfl_identify_filter *filter)
+{
+	switch (filter->status) {
+	case  0:	/* latin */
+		if (c >= 0 && c < 0x80) {	/* ok */
+			;
+		} else if (c > 0xa0 && c < 0xff) {	/* DBCS lead byte */
+			filter->status = 1;
+		} else {							/* bad */
+			filter->flag = 1;
+		}
+		break;
+
+	case  1:	/* got lead byte */
+		if (c < 0xa1 || c > 0xfe) {		/* bad */
+			filter->flag = 1;
+		}
+		filter->status = 0;
+		break;
+
+	default:
+		filter->status = 0;
+		break;
+	}
+
+	return c;
+}

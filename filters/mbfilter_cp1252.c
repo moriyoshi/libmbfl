@@ -35,6 +35,8 @@
 #include "mbfilter_cp1252.h"
 #include "unicode_table_cp1252.h"
 
+static int mbfl_filt_ident_cp1252(int c, mbfl_identify_filter *filter);
+
 static const char *mbfl_encoding_cp1252_aliases[] = {"cp1252", NULL};
 
 const mbfl_encoding mbfl_encoding_cp1252 = {
@@ -44,6 +46,13 @@ const mbfl_encoding mbfl_encoding_cp1252 = {
 	(const char *(*)[])&mbfl_encoding_cp1252_aliases,
 	NULL,
 	MBFL_ENCTYPE_SBCS
+};
+
+const struct mbfl_identify_vtbl vtbl_identify_cp1252 = {
+	mbfl_no_encoding_cp1252,
+	mbfl_filt_ident_common_ctor,
+	mbfl_filt_ident_common_dtor,
+	mbfl_filt_ident_cp1252
 };
 
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
@@ -100,6 +109,21 @@ int mbfl_filt_conv_cp1252_wchar(int c, mbfl_convert_filter *filter)
 	CK((*filter->output_function)(s, filter->data));
 
 	return c;
+}
+
+/* We only distinguish the MS extensions to ISO-8859-1.
+ * Actually, this is pretty much a NO-OP, since the identification
+ * system doesn't allow us to discriminate between a positive match,
+ * a possible match and a definite non-match.
+ * The problem here is that cp1252 looks like SJIS for certain chars.
+ * */
+static int mbfl_filt_ident_cp1252(int c, mbfl_identify_filter *filter)
+{
+	if (c >= 0x80 && c < 0xa0)
+		filter->flag = 0;
+	else
+		filter->flag = 1; /* not it */
+	return c;	
 }
 
 

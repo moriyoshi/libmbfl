@@ -37,6 +37,8 @@
 #include "unicode_table_cp932_ext.h"
 #include "unicode_table_jis.h"
 
+static int mbfl_filt_ident_eucjp(int c, mbfl_identify_filter *filter);
+
 static const unsigned char mblen_table_eucjp[] = { /* 0xA1-0xFE */
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -65,6 +67,13 @@ const mbfl_encoding mbfl_encoding_euc_jp = {
 	(const char *(*)[])&mbfl_encoding_euc_jp_aliases,
 	mblen_table_eucjp,
 	MBFL_ENCTYPE_MBCS
+};
+
+const struct mbfl_identify_vtbl vtbl_identify_eucjp = {
+	mbfl_no_encoding_euc_jp,
+	mbfl_filt_ident_common_ctor,
+	mbfl_filt_ident_common_dtor,
+	mbfl_filt_ident_eucjp
 };
 
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
@@ -243,6 +252,58 @@ mbfl_filt_conv_wchar_eucjp(int c, mbfl_convert_filter *filter)
 		if (filter->illegal_mode != MBFL_OUTPUTFILTER_ILLEGAL_MODE_NONE) {
 			CK(mbfl_filt_conv_illegal_output(c, filter));
 		}
+	}
+
+	return c;
+}
+
+static int mbfl_filt_ident_eucjp(int c, mbfl_identify_filter *filter)
+{
+	switch (filter->status) {
+	case  0:	/* latin */
+		if (c >= 0 && c < 0x80) {	/* ok */
+			;
+		} else if (c > 0xa0 && c < 0xff) {	/* kanji first char */
+			filter->status = 1;
+		} else if (c == 0x8e) {				/* kana first char */
+			filter->status = 2;
+		} else if (c == 0x8f) {				/* X 0212 first char */
+			filter->status = 3;
+		} else {							/* bad */
+			filter->flag = 1;
+		}
+		break;
+
+	case  1:	/* got first half */
+		if (c < 0xa1 || c > 0xfe) {		/* bad */
+			filter->flag = 1;
+		}
+		filter->status = 0;
+		break;
+
+	case  2:	/* got 0x8e */
+		if (c < 0xa1 || c > 0xdf) {		/* bad */
+			filter->flag = 1;
+		}
+		filter->status = 0;
+		break;
+
+	case  3:	/* got 0x8f */
+		if (c < 0xa1 || c > 0xfe) {		/* bad */
+			filter->flag = 1;
+		}
+		filter->status++;
+		break;
+	case  4:	/* got 0x8f */
+		if (c < 0xa1 || c > 0xfe) {		/* bad */
+			filter->flag = 1;
+		}
+		filter->status = 0;
+		break;
+
+	default:
+		filter->status = 0;
+		break;
 	}
 
 	return c;

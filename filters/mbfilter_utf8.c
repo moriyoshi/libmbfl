@@ -34,6 +34,8 @@
 #include "mbfilter.h"
 #include "mbfilter_utf8.h"
 
+static int mbfl_filt_ident_utf8(int c, mbfl_identify_filter *filter);
+
 static const unsigned char mblen_table_utf8[] = {
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -62,6 +64,13 @@ const mbfl_encoding mbfl_encoding_utf8 = {
 	(const char *(*)[])&mbfl_encoding_utf8_aliases,
 	mblen_table_utf8,
 	MBFL_ENCTYPE_MBCS
+};
+
+const struct mbfl_identify_vtbl vtbl_identify_utf8 = {
+	mbfl_no_encoding_utf8,
+	mbfl_filt_ident_common_ctor,
+	mbfl_filt_ident_common_dtor,
+	mbfl_filt_ident_utf8
 };
 
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
@@ -177,6 +186,64 @@ int mbfl_filt_conv_wchar_utf8(int c, mbfl_convert_filter *filter)
 	} else {
 		if (filter->illegal_mode != MBFL_OUTPUTFILTER_ILLEGAL_MODE_NONE) {
 			CK(mbfl_filt_conv_illegal_output(c, filter));
+		}
+	}
+
+	return c;
+}
+
+static int mbfl_filt_ident_utf8(int c, mbfl_identify_filter *filter)
+{
+	if (c < 0x80) {
+		if (c < 0) { 
+			filter->flag = 1;	/* bad */
+		} else if (c != 0 && filter->status) {
+			filter->flag = 1;	/* bad */
+		}
+		filter->status = 0;
+	} else if (c < 0xc0) {
+		switch (filter->status) {
+		case 0x20: /* 3 byte code 2nd char */
+		case 0x30: /* 4 byte code 2nd char */
+		case 0x31: /* 4 byte code 3rd char */
+		case 0x40: /* 5 byte code 2nd char */
+		case 0x41: /* 5 byte code 3rd char */
+		case 0x42: /* 5 byte code 4th char */
+		case 0x50: /* 6 byte code 2nd char */
+		case 0x51: /* 6 byte code 3rd char */
+		case 0x52: /* 6 byte code 4th char */
+		case 0x53: /* 6 byte code 5th char */
+			filter->status++;
+			break;
+		case 0x10: /* 2 byte code 2nd char */
+		case 0x21: /* 3 byte code 3rd char */
+		case 0x32: /* 4 byte code 4th char */
+		case 0x43: /* 5 byte code 5th char */
+		case 0x54: /* 6 byte code 6th char */
+			filter->status = 0;
+			break;
+		default:
+			filter->flag = 1;	/* bad */
+			filter->status = 0;
+			break;
+		}
+	} else {
+		if (filter->status) {
+			filter->flag = 1;	/* bad */
+		}
+		filter->status = 0;
+		if (c < 0xe0) {				/* 2 byte code first char */
+			filter->status = 0x10;
+		} else if (c < 0xf0) {		/* 3 byte code 1st char */
+			filter->status = 0x20;
+		} else if (c < 0xf8) {		/* 4 byte code 1st char */
+			filter->status = 0x30;
+		} else if (c < 0xfc) {		/* 5 byte code 1st char */
+			filter->status = 0x40;
+		} else if (c < 0xfe) {		/* 6 byte code 1st char */
+			filter->status = 0x50;
+		} else {
+			filter->flag = 1;	/* bad */
 		}
 	}
 

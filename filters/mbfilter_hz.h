@@ -33,6 +33,7 @@
 #include "mbfilter.h"
 
 extern const mbfl_encoding mbfl_encoding_hz;
+extern const struct mbfl_identify_vtbl vtbl_identify_hz;
 
 int mbfl_filt_conv_hz_wchar(int c, mbfl_convert_filter *filter);
 int mbfl_filt_conv_wchar_hz(int c, mbfl_convert_filter *filter);

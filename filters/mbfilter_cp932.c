@@ -37,6 +37,8 @@
 #include "unicode_table_cp932_ext.h"
 #include "unicode_table_jis.h"
 
+static int mbfl_filt_ident_sjiswin(int c, mbfl_identify_filter *filter);
+
 static const unsigned char mblen_table_sjis[] = { /* 0x80-0x9f,0xE0-0xFF */
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -67,6 +69,12 @@ const mbfl_encoding mbfl_encoding_sjis_win = {
 	MBFL_ENCTYPE_MBCS
 };
 
+const struct mbfl_identify_vtbl vtbl_identify_sjiswin = {
+	mbfl_no_encoding_sjis_win,
+	mbfl_filt_ident_common_ctor,
+	mbfl_filt_ident_common_dtor,
+	mbfl_filt_ident_sjiswin
+};
 
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
 
@@ -301,5 +309,24 @@ mbfl_filt_conv_wchar_sjiswin(int c, mbfl_convert_filter *filter)
 	return c;
 }
 
+static int mbfl_filt_ident_sjiswin(int c, mbfl_identify_filter *filter)
+{
+	if (filter->status) {		/* kanji second char */
+		if (c < 0x40 || c > 0xfc || c == 0x7f) {	/* bad */
+		    filter->flag = 1;
+		}
+		filter->status = 0;
+	} else if (c >= 0 && c < 0x80) {	/* latin  ok */
+		;
+	} else if (c > 0xa0 && c < 0xe0) {	/* kana  ok */
+		;
+	} else if (c > 0x80 && c < 0xfd && c != 0xa0) {	/* kanji first char */
+		filter->status = 1;
+	} else {							/* bad */
+		filter->flag = 1;
+	}
+
+	return c;
+}
 
 

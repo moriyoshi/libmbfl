@@ -612,4 +612,17 @@ extern mbfl_allocators *__mbfl_allocators;
 #define mbfl_prealloc __mbfl_allocators->preallloc
 #define mbfl_pfree __mbfl_allocators->pfree
 
+/* common filters */
+void mbfl_filt_conv_common_ctor(mbfl_convert_filter *filter);
+int mbfl_filt_conv_common_flush(mbfl_convert_filter *filter);
+void mbfl_filt_conv_common_dtor(mbfl_convert_filter *filter);
+
+void mbfl_filt_ident_common_ctor(mbfl_identify_filter *filter);
+void mbfl_filt_ident_common_dtor(mbfl_identify_filter *filter);
+void mbfl_filt_ident_false_ctor(mbfl_identify_filter *filter);
+
+int mbfl_filt_ident_false(int c, mbfl_identify_filter *filter);
+int mbfl_filt_ident_true(int c, mbfl_identify_filter *filter);
+
+
 #endif	/* MBFL_MBFILTER_H */

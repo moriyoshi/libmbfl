@@ -46,6 +46,14 @@ const mbfl_encoding mbfl_encoding_8859_8 = {
 	MBFL_ENCTYPE_SBCS
 };
 
+const struct mbfl_identify_vtbl vtbl_identify_8859_8 = {
+	mbfl_no_encoding_8859_8,
+	mbfl_filt_ident_common_ctor,
+	mbfl_filt_ident_common_dtor,
+	mbfl_filt_ident_true
+};
+
+
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
 
 /*

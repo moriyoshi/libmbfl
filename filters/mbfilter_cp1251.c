@@ -35,6 +35,8 @@
 #include "mbfilter_cp1251.h"
 #include "unicode_table_cp1251.h"
 
+static int mbfl_filt_ident_cp1251(int c, mbfl_identify_filter *filter);
+
 static const char *mbfl_encoding_cp1251_aliases[] = {"CP1251", "CP-1251", "WINDOWS-1251", NULL};
 
 const mbfl_encoding mbfl_encoding_cp1251 = {
@@ -45,6 +47,14 @@ const mbfl_encoding mbfl_encoding_cp1251 = {
 	NULL,
 	MBFL_ENCTYPE_SBCS
 };
+
+const struct mbfl_identify_vtbl vtbl_identify_cp1251 = {
+	mbfl_no_encoding_cp1251,
+	mbfl_filt_ident_common_ctor,
+	mbfl_filt_ident_common_dtor,
+	mbfl_filt_ident_cp1251
+};
+
 
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
 
@@ -111,3 +121,15 @@ mbfl_filt_conv_wchar_cp1251(int c, mbfl_convert_filter *filter)
 
 	return c;
 }
+
+/* all of this is so ugly now! */
+static int mbfl_filt_ident_cp1251(int c, mbfl_identify_filter *filter)
+{
+	if (c >= 0x80 && c < 0xff)
+		filter->flag = 0;
+	else
+		filter->flag = 1; /* not it */
+	return c;	
+}
+
+
