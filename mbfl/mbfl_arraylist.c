@@ -82,7 +82,7 @@ MBFLAPI int mbfl_arraylist_ctor(mbfl_arraylist *al_d)
 	if ((err = mbfl_list_ctor(&(al_d->_super))) != 0) {
 		return err;
 	}
-#ifdef _REENTRANT
+#ifdef ENABLE_THREADS
 	if ((al_d->mutex = mbfl_mutex_new()) == NULL) {
 		return -1;
 	}
@@ -105,7 +105,7 @@ MBFLAPI void _mbfl_arraylist_dtor(mbfl_arraylist *al_d)
 {
 	assert(al_d != NULL);
 
-#ifdef _REENTRANT
+#ifdef ENABLE_THREADS
 	assert(al_d->mutex != NULL);
 	mbfl_mutex_free(al_d->mutex);
 #endif
@@ -124,12 +124,12 @@ static int _mbfl_arraylist_insert_item_at(mbfl_arraylist *al_d, void *obj, unsig
 	int err = 0;
 	mbfl_arraylist_entry *new_entry;
 
-#ifdef _REENTRANT
+#ifdef ENABLE_THREADS
 	int mutex_locked = 0;
 #endif
 
 	assert(al_d != NULL);
-#ifdef _REENTRANT
+#ifdef ENABLE_THREADS
 	assert(al_d->mutex != NULL);
 #endif
 
@@ -141,7 +141,7 @@ static int _mbfl_arraylist_insert_item_at(mbfl_arraylist *al_d, void *obj, unsig
 		unsigned int i;
 		unsigned int new_ent_size;
 		unsigned int required_size;
-#ifdef _REENTRANT
+#ifdef ENABLE_THREADS
 		if (mbfl_mutex_lock(al_d->mutex) != 0) {
 			err = -1;
 			goto out;
@@ -188,7 +188,7 @@ static int _mbfl_arraylist_insert_item_at(mbfl_arraylist *al_d, void *obj, unsig
 		unsigned int new_size;
 		void *new_entries;
 
-#ifdef _REENTRANT
+#ifdef ENABLE_THREADS
 		if (!mutex_locked) {
 			if (mbfl_mutex_lock(al_d->mutex) != 0) {
 				err = -1;
@@ -211,7 +211,7 @@ static int _mbfl_arraylist_insert_item_at(mbfl_arraylist *al_d, void *obj, unsig
 		al_d->allocated_size = new_size;
 	}
 
-#ifdef _REENTRANT
+#ifdef ENABLE_THREADS
 	if (!mutex_locked) {
 		if (mbfl_mutex_lock(al_d->mutex) != 0) {
 			return -1;
@@ -231,7 +231,7 @@ static int _mbfl_arraylist_insert_item_at(mbfl_arraylist *al_d, void *obj, unsig
 	al_d->_super._super.num_items++;
 
 out:
-#ifdef _REENTRANT
+#ifdef ENABLE_THREADS
 	if (mutex_locked && mbfl_mutex_unlock(al_d->mutex) != 0) {
 		return -1;
 	}
@@ -244,7 +244,7 @@ static int _mbfl_arraylist_remove_item_at(mbfl_arraylist *al_d, int idx)
 	mbfl_arraylist_entry *entry;
 	unsigned int ent_size;
 
-#ifdef _REENTRANT
+#ifdef ENABLE_THREADS
 	if (mbfl_mutex_lock(al_d->mutex) != 0) {
 		return -1;
 	}
@@ -261,7 +261,7 @@ static int _mbfl_arraylist_remove_item_at(mbfl_arraylist *al_d, int idx)
 	al_d->entries_size -= ent_size;
 	al_d->_super._super.num_items--;
 
-#ifdef _REENTRANT
+#ifdef ENABLE_THREADS
 	if (mbfl_mutex_unlock(al_d->mutex) != 0) {
 		return -1;
 	}
@@ -282,7 +282,7 @@ static int _mbfl_arraylist_get_item_at(mbfl_arraylist *al_d, void **pobj, unsign
 		return 1;
 	}
 
-#ifdef _REENTRANT
+#ifdef ENABLE_THREADS
 	if (mbfl_mutex_lock(al_d->mutex) != 0) {
 		return -1;
 	}
@@ -298,7 +298,7 @@ static int _mbfl_arraylist_get_item_at(mbfl_arraylist *al_d, void **pobj, unsign
 	*pobj_size = entry->size;
 
 out:
-#ifdef _REENTRANT
+#ifdef ENABLE_THREADS
 	if (mbfl_mutex_unlock(al_d->mutex) != 0) {
 		return -1;
 	}
@@ -314,13 +314,13 @@ static int _mbfl_arraylist_index_of(mbfl_arraylist *al_d, int *pretval, void *ob
 
 	assert(al_d != NULL);
 	assert(pretval != NULL);
-#ifdef _REENTRANT
+#ifdef ENABLE_THREADS
 	assert(al_d->mutex != NULL);
 #endif
 
 	entry = (mbfl_arraylist_entry *)al_d->entries;
 
-#ifdef _REENTRANT
+#ifdef ENABLE_THREADS
 	if (mbfl_mutex_lock(al_d->mutex) != 0) {
 		return -1;
 	}
@@ -335,7 +335,7 @@ static int _mbfl_arraylist_index_of(mbfl_arraylist *al_d, int *pretval, void *ob
 		}
 		((char *)entry) += MBFL_AL_ENT_SIZE(al_d->max_obj_size);
 	}
-#ifdef _REENTRANT
+#ifdef ENABLE_THREADS
 	if (mbfl_mutex_unlock(al_d->mutex) != 0) {
 		return -1;
 	}
