@@ -41,16 +41,8 @@
 /*
  *  buffering converter
  */
-mbfl_buffer_converter * mbfl_buffer_converter_new(mbfl_encoding_id from, mbfl_encoding_id to, int buf_initsz)
+int mbfl_buffer_converter_ctor(mbfl_buffer_converter *convd, mbfl_encoding_id from, mbfl_encoding_id to, int buf_initsz)
 {
-	mbfl_buffer_converter *convd;
-
-	/* allocate */
-	convd = (mbfl_buffer_converter*)mbfl_malloc(sizeof (mbfl_buffer_converter));
-	if (convd == NULL) {
-		return NULL;
-	}
-
 	/* initialize */
 	convd->from = mbfl_get_encoding_by_id(from);
 	convd->to = mbfl_get_encoding_by_id(to);
@@ -76,11 +68,28 @@ mbfl_buffer_converter * mbfl_buffer_converter_new(mbfl_encoding_id from, mbfl_en
 		}
 	}
 	if (convd->filter1 == NULL) {
-		return NULL;
+		return 1;
 	}
 
 	mbfl_memory_device_init(&convd->device, buf_initsz, buf_initsz/4);
 
+	return 0;
+}
+
+mbfl_buffer_converter * mbfl_buffer_converter_new(mbfl_encoding_id from, mbfl_encoding_id to, int buf_initsz)
+{
+	mbfl_buffer_converter *convd;
+
+	/* allocate */
+	convd = (mbfl_buffer_converter*)mbfl_malloc(sizeof(mbfl_buffer_converter));
+	if (convd == NULL) {
+		return NULL;
+	}
+
+	if (mbfl_buffer_converter_ctor(convd, from, to, buf_initsz)) {
+		mbfl_free(convd);
+		convd = NULL;
+	}
 	return convd;
 }
 
