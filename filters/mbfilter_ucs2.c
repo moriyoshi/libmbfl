@@ -63,7 +63,7 @@ const mbfl_encoding mbfl_encoding_ucs2le = {
 	MBFL_ENCTYPE_WCS2LE
 };
 
-const struct mbfl_convert_vtbl vtbl_ucs2_wchar = {
+const mbfl_convert_vtbl vtbl_ucs2_wchar = {
 	mbfl_no_encoding_ucs2,
 	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
@@ -72,7 +72,7 @@ const struct mbfl_convert_vtbl vtbl_ucs2_wchar = {
 	mbfl_filt_conv_common_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_wchar_ucs2 = {
+const mbfl_convert_vtbl vtbl_wchar_ucs2 = {
 	mbfl_no_encoding_wchar,
 	mbfl_no_encoding_ucs2,
 	mbfl_filt_conv_common_ctor,
@@ -81,7 +81,7 @@ const struct mbfl_convert_vtbl vtbl_wchar_ucs2 = {
 	mbfl_filt_conv_common_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_ucs2be_wchar = {
+const mbfl_convert_vtbl vtbl_ucs2be_wchar = {
 	mbfl_no_encoding_ucs2be,
 	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
@@ -90,7 +90,7 @@ const struct mbfl_convert_vtbl vtbl_ucs2be_wchar = {
 	mbfl_filt_conv_common_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_wchar_ucs2be = {
+const mbfl_convert_vtbl vtbl_wchar_ucs2be = {
 	mbfl_no_encoding_wchar,
 	mbfl_no_encoding_ucs2be,
 	mbfl_filt_conv_common_ctor,
@@ -99,7 +99,7 @@ const struct mbfl_convert_vtbl vtbl_wchar_ucs2be = {
 	mbfl_filt_conv_common_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_ucs2le_wchar = {
+const mbfl_convert_vtbl vtbl_ucs2le_wchar = {
 	mbfl_no_encoding_ucs2le,
 	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
@@ -108,7 +108,7 @@ const struct mbfl_convert_vtbl vtbl_ucs2le_wchar = {
 	mbfl_filt_conv_common_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_wchar_ucs2le = {
+const mbfl_convert_vtbl vtbl_wchar_ucs2le = {
 	mbfl_no_encoding_wchar,
 	mbfl_no_encoding_ucs2le,
 	mbfl_filt_conv_common_ctor,

@@ -90,7 +90,7 @@ static char mbfl_hexchar_table[] = {
 	0x30,0x31,0x32,0x33,0x34,0x35,0x36,0x37,0x38,0x39,0x41,0x42,0x43,0x44,0x45,0x46
 };
 
-const struct mbfl_convert_vtbl *mbfl_convert_filter_list[] = {
+const mbfl_convert_vtbl *mbfl_convert_filter_list[] = {
 	&vtbl_utf8_wchar,
 	&vtbl_wchar_utf8,
 	&vtbl_eucjp_wchar,
@@ -430,7 +430,7 @@ mbfl_filt_conv_illegal_output(int c, mbfl_convert_filter *filter)
 	return ret;
 }
 
-void mbfl_convert_filter_set_vtbl(mbfl_convert_filter *filter, const struct mbfl_convert_vtbl *vtbl)
+void mbfl_convert_filter_set_vtbl(mbfl_convert_filter *filter, const mbfl_convert_vtbl *vtbl)
 {
 	if (filter && vtbl) {
 		filter->filter_ctor = vtbl->filter_ctor;
@@ -441,9 +441,9 @@ void mbfl_convert_filter_set_vtbl(mbfl_convert_filter *filter, const struct mbfl
 }
 
 
-const struct mbfl_convert_vtbl * mbfl_convert_filter_get_vtbl(enum mbfl_no_encoding from, enum mbfl_no_encoding to)
+const mbfl_convert_vtbl * mbfl_convert_filter_get_vtbl(enum mbfl_no_encoding from, enum mbfl_no_encoding to)
 {
-	const struct mbfl_convert_vtbl *vtbl;
+	const mbfl_convert_vtbl *vtbl;
 	int i;
 
 	if (to == mbfl_no_encoding_base64 ||
@@ -469,7 +469,7 @@ const struct mbfl_convert_vtbl * mbfl_convert_filter_get_vtbl(enum mbfl_no_encod
 
 void mbfl_convert_filter_select_vtbl(mbfl_convert_filter *filter)
 {
-	const struct mbfl_convert_vtbl *vtbl;
+	const mbfl_convert_vtbl *vtbl;
 
 	vtbl = mbfl_convert_filter_get_vtbl(filter->from->no_encoding, filter->to->no_encoding);
 	if (vtbl == NULL) {

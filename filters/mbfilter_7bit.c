@@ -44,7 +44,7 @@ const mbfl_encoding mbfl_encoding_7bit = {
 	MBFL_ENCTYPE_SBCS
 };
 
-const struct mbfl_convert_vtbl vtbl_8bit_7bit = {
+const mbfl_convert_vtbl vtbl_8bit_7bit = {
 	mbfl_no_encoding_8bit,
 	mbfl_no_encoding_7bit,
 	mbfl_filt_conv_common_ctor,
@@ -53,7 +53,7 @@ const struct mbfl_convert_vtbl vtbl_8bit_7bit = {
 	mbfl_filt_conv_common_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_7bit_8bit = {
+const mbfl_convert_vtbl vtbl_7bit_8bit = {
 	mbfl_no_encoding_7bit,
 	mbfl_no_encoding_8bit,
 	mbfl_filt_conv_common_ctor,

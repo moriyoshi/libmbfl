@@ -68,14 +68,14 @@ const mbfl_encoding mbfl_encoding_big5 = {
 	MBFL_ENCTYPE_MBCS
 };
 
-const struct mbfl_identify_vtbl vtbl_identify_big5 = {
+const mbfl_identify_vtbl vtbl_identify_big5 = {
 	mbfl_no_encoding_big5,
 	mbfl_filt_ident_common_ctor,
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_big5
 };
 
-const struct mbfl_convert_vtbl vtbl_big5_wchar = {
+const mbfl_convert_vtbl vtbl_big5_wchar = {
 	mbfl_no_encoding_big5,
 	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
@@ -84,7 +84,7 @@ const struct mbfl_convert_vtbl vtbl_big5_wchar = {
 	mbfl_filt_conv_common_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_wchar_big5 = {
+const mbfl_convert_vtbl vtbl_wchar_big5 = {
 	mbfl_no_encoding_wchar,
 	mbfl_no_encoding_big5,
 	mbfl_filt_conv_common_ctor,

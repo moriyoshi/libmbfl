@@ -63,7 +63,7 @@ const mbfl_encoding mbfl_encoding_utf32le = {
 	MBFL_ENCTYPE_WCS4LE
 };
 
-const struct mbfl_convert_vtbl vtbl_utf32_wchar = {
+const mbfl_convert_vtbl vtbl_utf32_wchar = {
 	mbfl_no_encoding_utf32,
 	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
@@ -72,7 +72,7 @@ const struct mbfl_convert_vtbl vtbl_utf32_wchar = {
 	mbfl_filt_conv_common_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_wchar_utf32 = {
+const mbfl_convert_vtbl vtbl_wchar_utf32 = {
 	mbfl_no_encoding_wchar,
 	mbfl_no_encoding_utf32,
 	mbfl_filt_conv_common_ctor,
@@ -81,7 +81,7 @@ const struct mbfl_convert_vtbl vtbl_wchar_utf32 = {
 	mbfl_filt_conv_common_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_utf32be_wchar = {
+const mbfl_convert_vtbl vtbl_utf32be_wchar = {
 	mbfl_no_encoding_utf32be,
 	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
@@ -90,7 +90,7 @@ const struct mbfl_convert_vtbl vtbl_utf32be_wchar = {
 	mbfl_filt_conv_common_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_wchar_utf32be = {
+const mbfl_convert_vtbl vtbl_wchar_utf32be = {
 	mbfl_no_encoding_wchar,
 	mbfl_no_encoding_utf32be,
 	mbfl_filt_conv_common_ctor,
@@ -99,7 +99,7 @@ const struct mbfl_convert_vtbl vtbl_wchar_utf32be = {
 	mbfl_filt_conv_common_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_utf32le_wchar = {
+const mbfl_convert_vtbl vtbl_utf32le_wchar = {
 	mbfl_no_encoding_utf32le,
 	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
@@ -108,7 +108,7 @@ const struct mbfl_convert_vtbl vtbl_utf32le_wchar = {
 	mbfl_filt_conv_common_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_wchar_utf32le = {
+const mbfl_convert_vtbl vtbl_wchar_utf32le = {
 	mbfl_no_encoding_wchar,
 	mbfl_no_encoding_utf32le,
 	mbfl_filt_conv_common_ctor,

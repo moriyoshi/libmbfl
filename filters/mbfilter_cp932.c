@@ -69,14 +69,14 @@ const mbfl_encoding mbfl_encoding_sjis_win = {
 	MBFL_ENCTYPE_MBCS
 };
 
-const struct mbfl_identify_vtbl vtbl_identify_sjiswin = {
+const mbfl_identify_vtbl vtbl_identify_sjiswin = {
 	mbfl_no_encoding_sjis_win,
 	mbfl_filt_ident_common_ctor,
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_sjiswin
 };
 
-const struct mbfl_convert_vtbl vtbl_sjiswin_wchar = {
+const mbfl_convert_vtbl vtbl_sjiswin_wchar = {
 	mbfl_no_encoding_sjis_win,
 	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
@@ -85,7 +85,7 @@ const struct mbfl_convert_vtbl vtbl_sjiswin_wchar = {
 	mbfl_filt_conv_common_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_wchar_sjiswin = {
+const mbfl_convert_vtbl vtbl_wchar_sjiswin = {
 	mbfl_no_encoding_wchar,
 	mbfl_no_encoding_sjis_win,
 	mbfl_filt_conv_common_ctor,

@@ -33,9 +33,9 @@
 #include "mbfilter.h"
 
 extern const mbfl_encoding mbfl_encoding_sjis_win;
-extern const struct mbfl_identify_vtbl vtbl_identify_sjiswin;
-extern const struct mbfl_convert_vtbl vtbl_sjiswin_wchar;
-extern const struct mbfl_convert_vtbl vtbl_wchar_sjiswin;
+extern const mbfl_identify_vtbl vtbl_identify_sjiswin;
+extern const mbfl_convert_vtbl vtbl_sjiswin_wchar;
+extern const mbfl_convert_vtbl vtbl_wchar_sjiswin;
 
 int mbfl_filt_conv_sjiswin_wchar(int c, mbfl_convert_filter *filter);
 int mbfl_filt_conv_wchar_sjiswin(int c, mbfl_convert_filter *filter);

@@ -52,7 +52,7 @@ struct _mbfl_convert_filter {
 	int illegal_substchar;
 };
 
-struct mbfl_convert_vtbl {
+mbfl_convert_vtbl {
 	enum mbfl_no_encoding from;
 	enum mbfl_no_encoding to;
 	void (*filter_ctor)(mbfl_convert_filter *filter);
@@ -61,7 +61,7 @@ struct mbfl_convert_vtbl {
 	int (*filter_flush)(mbfl_convert_filter *filter);
 };
 
-extern const struct mbfl_convert_vtbl *mbfl_convert_filter_list[];
+extern const mbfl_convert_vtbl *mbfl_convert_filter_list[];
 
 mbfl_convert_filter *mbfl_convert_filter_new(
     enum mbfl_no_encoding from,
@@ -76,7 +76,7 @@ void mbfl_convert_filter_reset(mbfl_convert_filter *filter, enum mbfl_no_encodin
 void mbfl_convert_filter_copy(mbfl_convert_filter *src, mbfl_convert_filter *dist);
 int mbfl_filt_conv_illegal_output(int c, mbfl_convert_filter *filter);
 void mbfl_convert_filter_select_vtbl(mbfl_convert_filter *filter);
-const struct mbfl_convert_vtbl * mbfl_convert_filter_get_vtbl(enum mbfl_no_encoding from, enum mbfl_no_encoding to);
+const mbfl_convert_vtbl * mbfl_convert_filter_get_vtbl(enum mbfl_no_encoding from, enum mbfl_no_encoding to);
 
 void mbfl_filt_conv_common_ctor(mbfl_convert_filter *filter);
 int mbfl_filt_conv_common_flush(mbfl_convert_filter *filter);

@@ -68,14 +68,14 @@ const mbfl_encoding mbfl_encoding_euc_cn = {
 	MBFL_ENCTYPE_MBCS
 };
 
-const struct mbfl_identify_vtbl vtbl_identify_euccn = {
+const mbfl_identify_vtbl vtbl_identify_euccn = {
 	mbfl_no_encoding_euc_cn,
 	mbfl_filt_ident_common_ctor,
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_euccn
 };
 
-const struct mbfl_convert_vtbl vtbl_euccn_wchar = {
+const mbfl_convert_vtbl vtbl_euccn_wchar = {
 	mbfl_no_encoding_euc_cn,
 	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
@@ -84,7 +84,7 @@ const struct mbfl_convert_vtbl vtbl_euccn_wchar = {
 	mbfl_filt_conv_common_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_wchar_euccn = {
+const mbfl_convert_vtbl vtbl_wchar_euccn = {
 	mbfl_no_encoding_wchar,
 	mbfl_no_encoding_euc_cn,
 	mbfl_filt_conv_common_ctor,

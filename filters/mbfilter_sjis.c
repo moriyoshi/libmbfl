@@ -69,14 +69,14 @@ const mbfl_encoding mbfl_encoding_sjis = {
 	MBFL_ENCTYPE_MBCS
 };
 
-const struct mbfl_identify_vtbl vtbl_identify_sjis = {
+const mbfl_identify_vtbl vtbl_identify_sjis = {
 	mbfl_no_encoding_sjis,
 	mbfl_filt_ident_common_ctor,
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_sjis
 };
 
-const struct mbfl_convert_vtbl vtbl_sjis_wchar = {
+const mbfl_convert_vtbl vtbl_sjis_wchar = {
 	mbfl_no_encoding_sjis,
 	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
@@ -85,7 +85,7 @@ const struct mbfl_convert_vtbl vtbl_sjis_wchar = {
 	mbfl_filt_conv_common_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_wchar_sjis = {
+const mbfl_convert_vtbl vtbl_wchar_sjis = {
 	mbfl_no_encoding_wchar,
 	mbfl_no_encoding_sjis,
 	mbfl_filt_conv_common_ctor,

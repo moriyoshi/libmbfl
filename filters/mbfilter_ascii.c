@@ -48,14 +48,14 @@ const mbfl_encoding mbfl_encoding_ascii = {
 	MBFL_ENCTYPE_SBCS
 };
 
-const struct mbfl_identify_vtbl vtbl_identify_ascii = {
+const mbfl_identify_vtbl vtbl_identify_ascii = {
 	mbfl_no_encoding_ascii,
 	mbfl_filt_ident_common_ctor,
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_ascii
 };
 
-const struct mbfl_convert_vtbl vtbl_ascii_wchar = {
+const mbfl_convert_vtbl vtbl_ascii_wchar = {
 	mbfl_no_encoding_ascii,
 	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
@@ -64,7 +64,7 @@ const struct mbfl_convert_vtbl vtbl_ascii_wchar = {
 	mbfl_filt_conv_common_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_wchar_ascii = {
+const mbfl_convert_vtbl vtbl_wchar_ascii = {
 	mbfl_no_encoding_wchar,
 	mbfl_no_encoding_ascii,
 	mbfl_filt_conv_common_ctor,

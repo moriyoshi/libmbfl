@@ -48,14 +48,14 @@ const mbfl_encoding mbfl_encoding_cp1251 = {
 	MBFL_ENCTYPE_SBCS
 };
 
-const struct mbfl_identify_vtbl vtbl_identify_cp1251 = {
+const mbfl_identify_vtbl vtbl_identify_cp1251 = {
 	mbfl_no_encoding_cp1251,
 	mbfl_filt_ident_common_ctor,
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_cp1251
 };
 
-const struct mbfl_convert_vtbl vtbl_wchar_cp1251 = {
+const mbfl_convert_vtbl vtbl_wchar_cp1251 = {
 	mbfl_no_encoding_wchar,
 	mbfl_no_encoding_cp1251,
 	mbfl_filt_conv_common_ctor,
@@ -64,7 +64,7 @@ const struct mbfl_convert_vtbl vtbl_wchar_cp1251 = {
 	mbfl_filt_conv_common_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_cp1251_wchar = {
+const mbfl_convert_vtbl vtbl_cp1251_wchar = {
 	mbfl_no_encoding_cp1251,
 	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,

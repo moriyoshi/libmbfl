@@ -43,7 +43,7 @@ const mbfl_encoding mbfl_encoding_utf7imap = {
 	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_SHFTCODE
 };
 
-const struct mbfl_convert_vtbl vtbl_utf7imap_wchar = {
+const mbfl_convert_vtbl vtbl_utf7imap_wchar = {
 	mbfl_no_encoding_utf7imap,
 	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
@@ -51,7 +51,7 @@ const struct mbfl_convert_vtbl vtbl_utf7imap_wchar = {
 	mbfl_filt_conv_utf7imap_wchar,
 	mbfl_filt_conv_common_flush };
 
-const struct mbfl_convert_vtbl vtbl_wchar_utf7imap = {
+const mbfl_convert_vtbl vtbl_wchar_utf7imap = {
 	mbfl_no_encoding_wchar,
 	mbfl_no_encoding_utf7imap,
 	mbfl_filt_conv_common_ctor,

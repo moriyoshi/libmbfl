@@ -16,9 +16,9 @@
 #include "mbfilter.h"
 
 extern const mbfl_encoding mbfl_encoding_8859_14;
-extern const struct mbfl_identify_vtbl vtbl_identify_8859_14;
-extern const struct mbfl_convert_vtbl vtbl_8859_14_wchar;
-extern const struct mbfl_convert_vtbl vtbl_wchar_8859_14;
+extern const mbfl_identify_vtbl vtbl_identify_8859_14;
+extern const mbfl_convert_vtbl vtbl_8859_14_wchar;
+extern const mbfl_convert_vtbl vtbl_wchar_8859_14;
 
 int mbfl_filt_conv_8859_14_wchar(int c, mbfl_convert_filter *filter);
 int mbfl_filt_conv_wchar_8859_14(int c, mbfl_convert_filter *filter);

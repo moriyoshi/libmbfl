@@ -73,7 +73,7 @@ const mbfl_encoding mbfl_encoding_html_ent = {
 	MBFL_ENCTYPE_HTML_ENT
 };
 
-const struct mbfl_convert_vtbl vtbl_wchar_html = {
+const mbfl_convert_vtbl vtbl_wchar_html = {
 	mbfl_no_encoding_wchar,
 	mbfl_no_encoding_html_ent,
 	mbfl_filt_conv_common_ctor,
@@ -82,7 +82,7 @@ const struct mbfl_convert_vtbl vtbl_wchar_html = {
 	mbfl_filt_conv_html_enc_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_html_wchar = {
+const mbfl_convert_vtbl vtbl_html_wchar = {
 	mbfl_no_encoding_html_ent,
 	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_html_dec_ctor,

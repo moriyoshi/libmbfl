@@ -33,9 +33,9 @@
 #include "mbfilter.h"
 
 extern const mbfl_encoding mbfl_encoding_cp1251;
-extern const struct mbfl_identify_vtbl vtbl_identify_cp1251;
-extern const struct mbfl_convert_vtbl vtbl_wchar_cp1251;
-extern const struct mbfl_convert_vtbl vtbl_cp1251_wchar;
+extern const mbfl_identify_vtbl vtbl_identify_cp1251;
+extern const mbfl_convert_vtbl vtbl_wchar_cp1251;
+extern const mbfl_convert_vtbl vtbl_cp1251_wchar;
 
 int mbfl_filt_conv_wchar_cp1251(int c, mbfl_convert_filter *filter);
 int mbfl_filt_conv_cp1251_wchar(int c, mbfl_convert_filter *filter);

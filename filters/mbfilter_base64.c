@@ -44,7 +44,7 @@ const mbfl_encoding mbfl_encoding_base64 = {
 	MBFL_ENCTYPE_SBCS
 };
 
-const struct mbfl_convert_vtbl vtbl_8bit_b64 = {
+const mbfl_convert_vtbl vtbl_8bit_b64 = {
 	mbfl_no_encoding_8bit,
 	mbfl_no_encoding_base64,
 	mbfl_filt_conv_common_ctor,
@@ -53,7 +53,7 @@ const struct mbfl_convert_vtbl vtbl_8bit_b64 = {
 	mbfl_filt_conv_base64enc_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_b64_8bit = {
+const mbfl_convert_vtbl vtbl_b64_8bit = {
 	mbfl_no_encoding_base64,
 	mbfl_no_encoding_8bit,
 	mbfl_filt_conv_common_ctor,

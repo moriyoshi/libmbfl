@@ -62,7 +62,7 @@ static const unsigned char mblen_table_eucjp[] = { /* 0xA1-0xFE */
 
 static const char *mbfl_encoding_eucjp_win_aliases[] = {"eucJP-open", NULL};
 
-const struct mbfl_identify_vtbl vtbl_identify_eucjpwin = {
+const mbfl_identify_vtbl vtbl_identify_eucjpwin = {
 	mbfl_no_encoding_eucjp_win,
 	mbfl_filt_ident_common_ctor,
 	mbfl_filt_ident_common_dtor,
@@ -78,7 +78,7 @@ const mbfl_encoding mbfl_encoding_eucjp_win = {
 	MBFL_ENCTYPE_MBCS
 };
 
-const struct mbfl_convert_vtbl vtbl_eucjpwin_wchar = {
+const mbfl_convert_vtbl vtbl_eucjpwin_wchar = {
 	mbfl_no_encoding_eucjp_win,
 	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
@@ -87,7 +87,7 @@ const struct mbfl_convert_vtbl vtbl_eucjpwin_wchar = {
 	mbfl_filt_conv_common_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_wchar_eucjpwin = {
+const mbfl_convert_vtbl vtbl_wchar_eucjpwin = {
 	mbfl_no_encoding_wchar,
 	mbfl_no_encoding_eucjp_win,
 	mbfl_filt_conv_common_ctor,

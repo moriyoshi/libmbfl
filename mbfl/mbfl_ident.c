@@ -86,14 +86,14 @@
 #include "filters/mbfilter_ucs2.h"
 #include "filters/mbfilter_htmlent.h"
 
-static const struct mbfl_identify_vtbl vtbl_identify_false = {
+static const mbfl_identify_vtbl vtbl_identify_false = {
 	mbfl_no_encoding_pass,
 	mbfl_filt_ident_false_ctor,
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_false };
 
 
-static const struct mbfl_identify_vtbl *mbfl_identify_filter_list[] = {
+static const mbfl_identify_vtbl *mbfl_identify_filter_list[] = {
 	&vtbl_identify_utf8,
 	&vtbl_identify_utf7,
 	&vtbl_identify_ascii,
@@ -138,7 +138,7 @@ static const struct mbfl_identify_vtbl *mbfl_identify_filter_list[] = {
  * identify filter
  */
 
-void mbfl_identify_filter_set_vtbl(mbfl_identify_filter *filter, const struct mbfl_identify_vtbl *vtbl)
+void mbfl_identify_filter_set_vtbl(mbfl_identify_filter *filter, const mbfl_identify_vtbl *vtbl)
 {
 	if (filter && vtbl) {
 		filter->filter_ctor = vtbl->filter_ctor;
@@ -147,9 +147,9 @@ void mbfl_identify_filter_set_vtbl(mbfl_identify_filter *filter, const struct mb
 	}
 }
 
-const struct mbfl_identify_vtbl * mbfl_identify_filter_get_vtbl(enum mbfl_no_encoding encoding)
+const mbfl_identify_vtbl * mbfl_identify_filter_get_vtbl(enum mbfl_no_encoding encoding)
 {
-	const struct mbfl_identify_vtbl * vtbl;
+	const mbfl_identify_vtbl * vtbl;
 	int i;
 
 	i = 0;
@@ -164,7 +164,7 @@ const struct mbfl_identify_vtbl * mbfl_identify_filter_get_vtbl(enum mbfl_no_enc
 
 void mbfl_identify_filter_select_vtbl(mbfl_identify_filter *filter)
 {
-	const struct mbfl_identify_vtbl *vtbl;
+	const mbfl_identify_vtbl *vtbl;
 
 	vtbl = mbfl_identify_filter_get_vtbl(filter->encoding->no_encoding);
 	if (vtbl == NULL) {

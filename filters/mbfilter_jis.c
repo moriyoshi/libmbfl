@@ -58,21 +58,21 @@ const mbfl_encoding mbfl_encoding_2022jp = {
 	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_SHFTCODE
 };
 
-const struct mbfl_identify_vtbl vtbl_identify_jis = {
+const mbfl_identify_vtbl vtbl_identify_jis = {
 	mbfl_no_encoding_jis,
 	mbfl_filt_ident_common_ctor,
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_jis
 };
 
-const struct mbfl_identify_vtbl vtbl_identify_2022jp = {
+const mbfl_identify_vtbl vtbl_identify_2022jp = {
 	mbfl_no_encoding_2022jp,
 	mbfl_filt_ident_common_ctor,
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_2022jp
 };
 
-const struct mbfl_convert_vtbl vtbl_jis_wchar = {
+const mbfl_convert_vtbl vtbl_jis_wchar = {
 	mbfl_no_encoding_jis,
 	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
@@ -81,7 +81,7 @@ const struct mbfl_convert_vtbl vtbl_jis_wchar = {
 	mbfl_filt_conv_common_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_wchar_jis = {
+const mbfl_convert_vtbl vtbl_wchar_jis = {
 	mbfl_no_encoding_wchar,
 	mbfl_no_encoding_jis,
 	mbfl_filt_conv_common_ctor,
@@ -90,7 +90,7 @@ const struct mbfl_convert_vtbl vtbl_wchar_jis = {
 	mbfl_filt_conv_any_jis_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_2022jp_wchar = {
+const mbfl_convert_vtbl vtbl_2022jp_wchar = {
 	mbfl_no_encoding_2022jp,
 	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
@@ -99,7 +99,7 @@ const struct mbfl_convert_vtbl vtbl_2022jp_wchar = {
 	mbfl_filt_conv_common_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_wchar_2022jp = {
+const mbfl_convert_vtbl vtbl_wchar_2022jp = {
 	mbfl_no_encoding_wchar,
 	mbfl_no_encoding_2022jp,
 	mbfl_filt_conv_common_ctor,

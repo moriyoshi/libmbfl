@@ -34,8 +34,8 @@
 #include "mbfilter.h"
 
 extern const mbfl_encoding mbfl_encoding_base64;
-extern const struct mbfl_convert_vtbl vtbl_b64_8bit;
-extern const struct mbfl_convert_vtbl vtbl_8bit_b64;
+extern const mbfl_convert_vtbl vtbl_b64_8bit;
+extern const mbfl_convert_vtbl vtbl_8bit_b64;
 
 int mbfl_filt_conv_base64enc(int c, mbfl_convert_filter *filter);
 int mbfl_filt_conv_base64enc_flush(mbfl_convert_filter *filter);

@@ -48,15 +48,15 @@ struct _mbfl_identify_filter {
 	const mbfl_encoding *encoding;
 };
 
-struct mbfl_identify_vtbl {
+mbfl_identify_vtbl {
 	enum mbfl_no_encoding encoding;
 	void (*filter_ctor)(mbfl_identify_filter *filter);
 	void (*filter_dtor)(mbfl_identify_filter *filter);
 	int (*filter_function)(int c, mbfl_identify_filter *filter);
 };
 
-void mbfl_identify_filter_set_vtbl(mbfl_identify_filter *filter, const struct mbfl_identify_vtbl *vtbl);
-const struct mbfl_identify_vtbl * mbfl_identify_filter_get_vtbl(enum mbfl_no_encoding encoding);
+void mbfl_identify_filter_set_vtbl(mbfl_identify_filter *filter, const mbfl_identify_vtbl *vtbl);
+const mbfl_identify_vtbl * mbfl_identify_filter_get_vtbl(enum mbfl_no_encoding encoding);
 void mbfl_identify_filter_select_vtbl(mbfl_identify_filter *filter);
 mbfl_identify_filter * mbfl_identify_filter_new(enum mbfl_no_encoding encoding);
 void mbfl_identify_filter_delete(mbfl_identify_filter *filter);

@@ -46,14 +46,14 @@ const mbfl_encoding mbfl_encoding_8859_14 = {
 	MBFL_ENCTYPE_SBCS
 };
 
-const struct mbfl_identify_vtbl vtbl_identify_8859_14 = {
+const mbfl_identify_vtbl vtbl_identify_8859_14 = {
 	mbfl_no_encoding_8859_14,
 	mbfl_filt_ident_common_ctor,
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_true
 };
 
-const struct mbfl_convert_vtbl vtbl_8859_14_wchar = {
+const mbfl_convert_vtbl vtbl_8859_14_wchar = {
 	mbfl_no_encoding_8859_14,
 	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
@@ -62,7 +62,7 @@ const struct mbfl_convert_vtbl vtbl_8859_14_wchar = {
 	mbfl_filt_conv_common_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_wchar_8859_14 = {
+const mbfl_convert_vtbl vtbl_wchar_8859_14 = {
 	mbfl_no_encoding_wchar,
 	mbfl_no_encoding_8859_14,
 	mbfl_filt_conv_common_ctor,

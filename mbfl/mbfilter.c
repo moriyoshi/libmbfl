@@ -518,7 +518,7 @@ mbfl_identify_encoding(mbfl_string *string, enum mbfl_no_encoding *elist, int el
 {
 	int i, n, num, bad;
 	unsigned char *p;
-	const struct mbfl_identify_vtbl *vtbl;
+	const mbfl_identify_vtbl *vtbl;
 	mbfl_identify_filter *flist, *filter;
 	const mbfl_encoding *encoding;
 

@@ -33,9 +33,9 @@
 #include "mbfilter.h"
 
 extern const mbfl_encoding mbfl_encoding_euc_jp;
-extern const struct mbfl_identify_vtbl vtbl_identify_eucjp;
-extern const struct mbfl_convert_vtbl vtbl_eucjp_wchar;
-extern const struct mbfl_convert_vtbl vtbl_wchar_eucjp;
+extern const mbfl_identify_vtbl vtbl_identify_eucjp;
+extern const mbfl_convert_vtbl vtbl_eucjp_wchar;
+extern const mbfl_convert_vtbl vtbl_wchar_eucjp;
 
 int mbfl_filt_conv_eucjp_wchar(int c, mbfl_convert_filter *filter);
 int mbfl_filt_conv_wchar_eucjp(int c, mbfl_convert_filter *filter);

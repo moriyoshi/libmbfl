@@ -45,7 +45,7 @@ const mbfl_encoding mbfl_encoding_pass = {
 	0
 };
 
-const struct mbfl_convert_vtbl vtbl_pass = {
+const mbfl_convert_vtbl vtbl_pass = {
 	mbfl_no_encoding_pass,
 	mbfl_no_encoding_pass,
 	mbfl_filt_conv_common_ctor,
