@@ -230,7 +230,7 @@ mbfl_string * mbfl_convert_encoding(mbfl_string *string, mbfl_string *result, mb
 	}
 	filter2->illegal_mode = MBFL_OUTPUTFILTER_ILLEGAL_MODE_CHAR;
 	filter2->illegal_substchar = 0x3f;		/* '?' */
-	mbfl_memory_device_init(&device, string->len, (string->len >> 2) + 8);
+	mbfl_memory_device_ctor(&device, string->len, (string->len >> 2) + 8);
 
 	/* feed data */
 	n = string->len;
@@ -786,7 +786,7 @@ mbfl_string *mbfl_substr(mbfl_string *string, mbfl_string *result, int from, int
 		mbfl_convert_filter *decoder;
 		mbfl_convert_filter *encoder;
 
-		mbfl_memory_device_init(&device, length + 1, 0);
+		mbfl_memory_device_ctor(&device, length + 1, 0);
 		mbfl_string_ctor(result);
 		result->no_language = string->no_language;
 		result->no_encoding = string->no_encoding;
@@ -962,7 +962,7 @@ mbfl_string * mbfl_strcut(mbfl_string *string, mbfl_string *result, int from, in
 			mbfl_convert_filter_delete(decoder_tmp);
 			return NULL;
 		}
-		mbfl_memory_device_init(&device, length + 8, 0);
+		mbfl_memory_device_ctor(&device, length + 8, 0);
 		k = 0;
 		n = 0;
 		p = string->val;
@@ -1136,7 +1136,7 @@ mbfl_string * mbfl_strimwidth(mbfl_string *string, mbfl_string *marker, mbfl_str
 	mbfl_string_ctor(result);
 	result->no_language = string->no_language;
 	result->no_encoding = string->no_encoding;
-	mbfl_memory_device_init(&pc.device, width, 0);
+	mbfl_memory_device_ctor(&pc.device, width, 0);
 
 	/* output code filter */
 	pc.decoder = mbfl_convert_filter_new(
@@ -1504,7 +1504,7 @@ mbfl_string *mbfl_ja_jp_hantozen(mbfl_string *string, mbfl_string *result, int m
 	if (encoding == NULL) {
 		return NULL;
 	}
-	mbfl_memory_device_init(&device, string->len, 0);
+	mbfl_memory_device_ctor(&device, string->len, 0);
 	mbfl_string_ctor(result);
 	result->no_language = string->no_language;
 	result->no_encoding = string->no_encoding;
@@ -1706,8 +1706,8 @@ struct mime_header_encoder_data* mime_header_encoder_new(mbfl_encoding_id incode
 		return NULL;
 	}
 
-	mbfl_memory_device_init(&pe->outdev, 0, 0);
-	mbfl_memory_device_init(&pe->tmpdev, 0, 0);
+	mbfl_memory_device_ctor(&pe->outdev, 0, 0);
+	mbfl_memory_device_ctor(&pe->tmpdev, 0, 0);
 	pe->prevpos = 0;
 	pe->linehead = 0;
 	pe->firstindent = 0;
@@ -1783,8 +1783,8 @@ void mime_header_encoder_delete(struct mime_header_encoder_data *pe)
 		mbfl_convert_filter_delete(pe->conv2_filter_backup);
 		mbfl_convert_filter_delete(pe->encod_filter);
 		mbfl_convert_filter_delete(pe->encod_filter_backup);
-		mbfl_memory_device_clear(&pe->outdev);
-		mbfl_memory_device_clear(&pe->tmpdev);
+		mbfl_memory_device_dtor(&pe->outdev);
+		mbfl_memory_device_dtor(&pe->tmpdev);
 		mbfl_free((void*)pe);
 	}
 }
@@ -2044,8 +2044,8 @@ struct mime_header_decoder_data *mime_header_decoder_new(mbfl_encoding_id outcod
 		return NULL;
 	}
 
-	mbfl_memory_device_init(&pd->outdev, 0, 0);
-	mbfl_memory_device_init(&pd->tmpdev, 0, 0);
+	mbfl_memory_device_ctor(&pd->outdev, 0, 0);
+	mbfl_memory_device_ctor(&pd->tmpdev, 0, 0);
 	pd->cspos = 0;
 	pd->status = 0;
 	pd->encoding = mbfl_encoding_id_pass;
@@ -2072,8 +2072,8 @@ mime_header_decoder_delete(struct mime_header_decoder_data *pd)
 		mbfl_convert_filter_delete(pd->conv2_filter);
 		mbfl_convert_filter_delete(pd->conv1_filter);
 		mbfl_convert_filter_delete(pd->deco_filter);
-		mbfl_memory_device_clear(&pd->outdev);
-		mbfl_memory_device_clear(&pd->tmpdev);
+		mbfl_memory_device_dtor(&pd->outdev);
+		mbfl_memory_device_dtor(&pd->tmpdev);
 		mbfl_free((void*)pd);
 	}
 }
@@ -2277,7 +2277,7 @@ mbfl_string *mbfl_html_numeric_entity(mbfl_string *string, mbfl_string *result, 
 	mbfl_string_ctor(result);
 	result->no_language = string->no_language;
 	result->no_encoding = string->no_encoding;
-	mbfl_memory_device_init(&device, string->len, 0);
+	mbfl_memory_device_ctor(&device, string->len, 0);
 
 	/* output code filter */
 	pc.decoder = mbfl_convert_filter_new(

@@ -98,6 +98,8 @@
 #include "mbfl_convert.h"
 #include "mbfl_ident.h"
 #include "mbfl_buffer_converter.h"
+#include "mbfl_memory_device.h"
+#include "mbfl_wchar_device.h"
 
 /*
  * convert filter

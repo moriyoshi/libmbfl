@@ -66,9 +66,9 @@ EXPORTS
 	 _mbfl_get_language_by_id @61
 	 _mbfl_language_get_id_by_name @62
 	 _mbfl_language_get_name_by_id @63
-	 _mbfl_memory_device_init @64
+	 _mbfl_memory_device_ctor @64
 	 _mbfl_memory_device_realloc @65
-	 _mbfl_memory_device_clear @66
+	 _mbfl_memory_device_dtor @66
 	 _mbfl_memory_device_reset @67
 	 _mbfl_memory_device_result @68
 	 _mbfl_memory_device_unput @69
@@ -78,9 +78,9 @@ EXPORTS
 	 _mbfl_memory_device_strcat @73
 	 _mbfl_memory_device_strncat @74
 	 _mbfl_memory_device_devcat @75
-	 _mbfl_wchar_device_init @76
+	 _mbfl_wchar_device_ctor @76
 	 _mbfl_wchar_device_output @77
-	 _mbfl_wchar_device_clear @78
+	 _mbfl_wchar_device_dtor @78
 	 _mbfl_string_ctor @79
 	 _mbfl_string_ctor2 @89
 	 _mbfl_string_dtor @81

@@ -43,7 +43,7 @@
 /*
  * memory device output functions
  */
-void mbfl_memory_device_init(mbfl_memory_device *device, int initsz, int allocsz)
+void mbfl_memory_device_ctor(mbfl_memory_device *device, int initsz, int allocsz)
 {
 	if (device) {
 		device->length = 0;
@@ -83,20 +83,19 @@ void mbfl_memory_device_realloc(mbfl_memory_device *device, int initsz, int allo
 	}
 }
 
-void mbfl_memory_device_clear(mbfl_memory_device *device)
+void mbfl_memory_device_dtor(mbfl_memory_device *device)
 {
-	if (device) {
-		if (device->buffer) {
-			mbfl_free(device->buffer);
-		}
-		device->buffer = (unsigned char *)0;
-		device->length = 0;
-		device->pos = 0;
+	assert(device != NULL);
+
+	if (device->buffer) {
+		mbfl_free(device->buffer);
 	}
+	device->buffer = (unsigned char *)0;
+	device->length = 0;
+	device->pos = 0;
 }
 
-void
-mbfl_memory_device_reset(mbfl_memory_device *device)
+void mbfl_memory_device_reset(mbfl_memory_device *device)
 {
 	if (device) {
 		device->pos = 0;
@@ -291,47 +290,3 @@ int mbfl_memory_device_devcat(mbfl_memory_device *dest, mbfl_memory_device *src)
 	return n;
 }
 
-void mbfl_wchar_device_init(mbfl_wchar_device *device)
-{
-	if (device) {
-		device->buffer = (unsigned int *)0;
-		device->length = 0;
-		device->pos= 0;
-		device->allocsz = MBFL_MEMORY_DEVICE_ALLOC_SIZE;
-	}
-}
-
-void mbfl_wchar_device_clear(mbfl_wchar_device *device)
-{
-	if (device) {
-		if (device->buffer) {
-			mbfl_free(device->buffer);
-		}
-		device->buffer = (unsigned int*)0;
-		device->length = 0;
-		device->pos = 0;
-	}
-}
-
-int mbfl_wchar_device_output(int c, void *data)
-{
-	mbfl_wchar_device *device = (mbfl_wchar_device *)data;
-
-	if (device->pos >= device->length) {
-		/* reallocate buffer */
-		int newlen;
-		unsigned int *tmp;
-
-		newlen = device->length + device->allocsz;
-		tmp = (unsigned int *)mbfl_realloc((void *)device->buffer, newlen*sizeof(int));
-		if (tmp == NULL) {
-			return -1;
-		}
-		device->length = newlen;
-		device->buffer = tmp;
-	}
-
-	device->buffer[device->pos++] = c;
-
-	return c;
-}
