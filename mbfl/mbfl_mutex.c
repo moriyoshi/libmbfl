@@ -1,5 +1,9 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
+#else
+#if defined(WIN32) || defined(__WIN32__)
+#include "config-w32.h"
+#endif
 #endif
 
 #ifdef ENABLE_THREADS
@@ -23,7 +27,7 @@
 #error "pthread is not available"
 #endif
 #elif USE_WIN32_NATIVE_THREAD
-#if defined(__WIN32__)
+#if defined(WIN32) || defined(__WIN32__)
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
 #endif
