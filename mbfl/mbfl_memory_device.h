@@ -47,7 +47,7 @@ MBFLAPI void mbfl_memory_device_ctor(mbfl_memory_device *device, int initsz, int
 #define mbfl_memory_device_init mbfl_memory_device_ctor
 /* destructor */
 MBFLAPI void mbfl_memory_device_dtor(mbfl_memory_device *device);
-#define mbfl_memory_device_dtor mbfl_memory_device_clear
+#define mbfl_memory_device_clear mbfl_memory_device_dtor
 
 MBFLAPI void mbfl_memory_device_realloc(mbfl_memory_device *device, int initsz, int allocsz);
 MBFLAPI void mbfl_memory_device_reset(mbfl_memory_device *device);

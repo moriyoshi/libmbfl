@@ -43,7 +43,7 @@ typedef struct _mbfl_wchar_device {
 } mbfl_wchar_device;
 
 MBFLAPI void mbfl_wchar_device_ctor(mbfl_wchar_device *device);
-#define mbfl_wchar_device_ctor mbfl_wchar_device_init
+#define mbfl_wchar_device_init mbfl_wchar_device_ctor
 MBFLAPI void mbfl_wchar_device_dtor(mbfl_wchar_device *device);
 #define mbfl_wchar_device_clear mbfl_wchar_device_dtor
 
