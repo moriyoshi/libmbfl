@@ -31,6 +31,8 @@
 #ifndef MBFL_ENCODING_H
 #define MBFL_ENCODING_H
 
+#include "mbfl_defs.h"
+
 enum _mbfl_encoding_id {
 	mbfl_encoding_id_invalid = -1,
 	mbfl_encoding_id_pass,
@@ -113,11 +115,11 @@ typedef struct _mbfl_encoding {
 	const struct _mbfl_identify_vtbl *ident_vtbl;
 } mbfl_encoding;
 
-extern const mbfl_encoding *mbfl_get_encoding_by_name(const char *name);
-extern const mbfl_encoding *mbfl_get_encoding_by_id(mbfl_encoding_id no_encoding);
-extern mbfl_encoding_id mbfl_encoding_get_id_by_name(const char *name);
-extern const char *mbfl_encoding_get_name_by_id(mbfl_encoding_id no_encoding);
-extern const char * mbfl_encoding_get_mime_preferred_name_by_id(mbfl_encoding_id no_encoding);
-extern int mbfl_is_supported_encoding(const char *name);
+MBFLAPI extern const mbfl_encoding *mbfl_get_encoding_by_name(const char *name);
+MBFLAPI extern const mbfl_encoding *mbfl_get_encoding_by_id(mbfl_encoding_id no_encoding);
+MBFLAPI extern mbfl_encoding_id mbfl_encoding_get_id_by_name(const char *name);
+MBFLAPI extern const char *mbfl_encoding_get_name_by_id(mbfl_encoding_id no_encoding);
+MBFLAPI extern const char * mbfl_encoding_get_mime_preferred_name_by_id(mbfl_encoding_id no_encoding);
+MBFLAPI extern int mbfl_is_supported_encoding(const char *name);
 
 #endif /* MBFL_ENCODING_H */

@@ -31,6 +31,7 @@
 #ifndef MBFL_MEMORY_DEVICE_H
 #define MBFL_MEMORY_DEVICE_H
 
+#include "mbfl_defs.h"
 #include "mbfl_string.h"
 
 #define MBFL_MEMORY_DEVICE_ALLOC_SIZE	64
@@ -49,22 +50,22 @@ typedef struct _mbfl_wchar_device {
 	int allocsz;
 } mbfl_wchar_device;
 
-void mbfl_memory_device_init(mbfl_memory_device *device, int initsz, int allocsz);
-void mbfl_memory_device_realloc(mbfl_memory_device *device, int initsz, int allocsz);
-void mbfl_memory_device_clear(mbfl_memory_device *device);
-void mbfl_memory_device_reset(mbfl_memory_device *device);
-mbfl_string * mbfl_memory_device_result(mbfl_memory_device *device, mbfl_string *result);
-void mbfl_memory_device_unput(mbfl_memory_device *device);
-int mbfl_memory_device_output(int c, void *data);
-int mbfl_memory_device_output2(int c, void *data);
-int mbfl_memory_device_output4(int c, void *data);
-int mbfl_memory_device_strcat(mbfl_memory_device *device, const char *psrc);
-int mbfl_memory_device_strncat(mbfl_memory_device *device, const char *psrc, int len);
-int mbfl_memory_device_devcat(mbfl_memory_device *dest, mbfl_memory_device *src);
+MBFLAPI void mbfl_memory_device_init(mbfl_memory_device *device, int initsz, int allocsz);
+MBFLAPI void mbfl_memory_device_realloc(mbfl_memory_device *device, int initsz, int allocsz);
+MBFLAPI void mbfl_memory_device_clear(mbfl_memory_device *device);
+MBFLAPI void mbfl_memory_device_reset(mbfl_memory_device *device);
+MBFLAPI mbfl_string * mbfl_memory_device_result(mbfl_memory_device *device, mbfl_string *result);
+MBFLAPI void mbfl_memory_device_unput(mbfl_memory_device *device);
+MBFLAPI int mbfl_memory_device_output(int c, void *data);
+MBFLAPI int mbfl_memory_device_output2(int c, void *data);
+MBFLAPI int mbfl_memory_device_output4(int c, void *data);
+MBFLAPI int mbfl_memory_device_strcat(mbfl_memory_device *device, const char *psrc);
+MBFLAPI int mbfl_memory_device_strncat(mbfl_memory_device *device, const char *psrc, int len);
+MBFLAPI int mbfl_memory_device_devcat(mbfl_memory_device *dest, mbfl_memory_device *src);
 
-void mbfl_wchar_device_init(mbfl_wchar_device *device);
-int mbfl_wchar_device_output(int c, void *data);
-void mbfl_wchar_device_clear(mbfl_wchar_device *device);
+MBFLAPI void mbfl_wchar_device_init(mbfl_wchar_device *device);
+MBFLAPI int mbfl_wchar_device_output(int c, void *data);
+MBFLAPI void mbfl_wchar_device_clear(mbfl_wchar_device *device);
 
 #endif /* MBFL_MEMORY_DEVICE_H */
 

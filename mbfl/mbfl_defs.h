@@ -28,12 +28,25 @@
  *
  */
 
-#ifndef MBFL_FILTER_OUTPUT_H
-#define MBFL_FILTER_OUTPUT_H
+#ifndef MBFL_DEFS_H
+#define MBFL_DEFS_H
 
-#include "mbfl_defs.h"
+#ifndef NULL
+#ifdef __cplusplus
+#define NULL (0L)
+#else
+#define NULL (void *)(0L)
+#endif
+#endif 
 
-MBFLAPI int mbfl_filter_output_pipe(int c, void* data);
-MBFLAPI int mbfl_filter_output_null(int c, void* data);
+#ifdef __WIN32__
+#ifdef MBFL_DLL_EXPORT
+#define MBFLAPI __declspec(dllexport)
+#else
+#define MBFLAPI __declspec(dllimport)
+#endif
+#else
+#define MBFLAPI
+#endif
 
-#endif /* MBFL_FILTER_OUTPUT_H */
+#endif /* MBFL_DEFS_H */
