@@ -23,22 +23,53 @@
  */
 /*
  * The source code included in this files was separated from mbfilter.c
- * by moriyoshi koizumi <moriyoshi@php.net> on 4 dec 2002.
- * 
+ * by Moriyoshi Koizumi <moriyoshi@php.net> on 20 Dec 2002. The file
+ * mbfilter.c is included in this package .
+ *
  */
 
-#ifndef MBFL_MBFILTER_QPRINT_H
-#define MBFL_MBFILTER_QPRINT_H
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
-#include "mbfilter.h"
+#include "mbfl_allocators.h"
+#include "mbfl_string.h"
 
-extern const mbfl_encoding mbfl_encoding_qprint;
-extern const struct mbfl_convert_vtbl vtbl_8bit_qprint;
-extern const struct mbfl_convert_vtbl vtbl_qprint_8bit;
+/*
+ * string object
+ */
+void
+mbfl_string_init(mbfl_string *string)
+{
+	if (string) {
+		string->no_language = mbfl_no_language_uni;
+		string->no_encoding = mbfl_no_encoding_pass;
+		string->val = (unsigned char*)0;
+		string->len = 0;
+	}
+}
 
-int mbfl_filt_conv_qprintenc(int c, mbfl_convert_filter *filter);
-int mbfl_filt_conv_qprintenc_flush(mbfl_convert_filter *filter);
-int mbfl_filt_conv_qprintdec(int c, mbfl_convert_filter *filter);
-int mbfl_filt_conv_qprintdec_flush(mbfl_convert_filter *filter);
+void
+mbfl_string_init_set(mbfl_string *string, enum mbfl_no_language no_language, enum mbfl_no_encoding no_encoding)
+{
+	if (string) {
+		string->no_language = no_language;
+		string->no_encoding = no_encoding;
+		string->val = (unsigned char*)0;
+		string->len = 0;
+	}
+}
 
-#endif /* MBFL_MBFILTER_ASCII_H */
+void
+mbfl_string_clear(mbfl_string *string)
+{
+	if (string) {
+		if (string->val != (unsigned char*)0) {
+			mbfl_free(string->val);
+		}
+		string->val = (unsigned char*)0;
+		string->len = 0;
+	}
+}
+
+

@@ -23,17 +23,27 @@
  */
 /*
  * The source code included in this files was separated from mbfilter.c
- * by moriyoshi koizumi <moriyoshi@php.net> on 4 dec 2002.
- * 
+ * by Moriyoshi Koizumi <moriyoshi@php.net> on 20 Dec 2002. The file
+ * mbfilter.c is included in this package .
+ *
  */
 
-#ifndef MBFL_MBFILTER_PASS_H
-#define MBFL_MBFILTER_PASS_H
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
-#include "mbfilter.h"
+#include "mbfl_convert.h"
+#include "mbfl_filter_output.h"
 
-extern const mbfl_encoding mbfl_encoding_pass; 
+int mbfl_filter_output_pipe(int c, void* data)
+{
+	mbfl_convert_filter *filter = (mbfl_convert_filter*)data;
+	return (*filter->filter_function)(c, filter);
+}
 
-int mbfl_filt_conv_pass(int c, mbfl_convert_filter *filter);
+int mbfl_filter_output_null(int c, void* data)
+{
+	return c;
+}
 
-#endif /* MBFL_MBFILTER_PASS_H */
+

@@ -27,18 +27,35 @@
  * 
  */
 
-#ifndef MBFL_MBFILTER_QPRINT_H
-#define MBFL_MBFILTER_QPRINT_H
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 #include "mbfilter.h"
+#include "mbfilter_pass.h"
 
-extern const mbfl_encoding mbfl_encoding_qprint;
-extern const struct mbfl_convert_vtbl vtbl_8bit_qprint;
-extern const struct mbfl_convert_vtbl vtbl_qprint_8bit;
+static const char *mbfl_encoding_pass_aliases[] = {"none", NULL};
 
-int mbfl_filt_conv_qprintenc(int c, mbfl_convert_filter *filter);
-int mbfl_filt_conv_qprintenc_flush(mbfl_convert_filter *filter);
-int mbfl_filt_conv_qprintdec(int c, mbfl_convert_filter *filter);
-int mbfl_filt_conv_qprintdec_flush(mbfl_convert_filter *filter);
+const mbfl_encoding mbfl_encoding_pass = {
+	mbfl_no_encoding_pass,
+	"pass",
+	NULL,
+	(const char *(*)[])&mbfl_encoding_pass_aliases,
+	NULL,
+	0
+};
 
-#endif /* MBFL_MBFILTER_ASCII_H */
+const struct mbfl_convert_vtbl vtbl_pass = {
+	mbfl_no_encoding_pass,
+	mbfl_no_encoding_pass,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_pass,
+	mbfl_filt_conv_common_flush
+};
+
+int mbfl_filt_conv_pass(int c, mbfl_convert_filter *filter)
+{
+	return (*filter->output_function)(c, filter->data);
+}
+

@@ -30,6 +30,8 @@
 #ifndef MBFL_MBFILTER_EUC_CN_H
 #define MBFL_MBFILTER_EUC_CN_H
 
+#include "mbfilter.h"
+
 extern const mbfl_encoding mbfl_encoding_euc_cn;
 extern const struct mbfl_identify_vtbl vtbl_identify_euccn;
 extern const struct mbfl_convert_vtbl vtbl_euccn_wchar;

@@ -92,44 +92,12 @@
 #include <stddef.h>
 
 #include "mbfl_consts.h"
+#include "mbfl_allocators.h"
 #include "mbfl_encoding.h"
 #include "mbfl_language.h"
 #include "mbfl_string.h"
-
-/*
- * memory output function
- */
-#define MBFL_MEMORY_DEVICE_ALLOC_SIZE	64
-
-typedef struct _mbfl_memory_device {
-	unsigned char *buffer;
-	int length;
-	int pos;
-	int allocsz;
-} mbfl_memory_device;
-
-typedef struct _mbfl_wchar_device {
-	unsigned int *buffer;
-	int length;
-	int pos;
-	int allocsz;
-} mbfl_wchar_device;
-
-void mbfl_memory_device_init(mbfl_memory_device *device, int initsz, int allocsz);
-void mbfl_memory_device_realloc(mbfl_memory_device *device, int initsz, int allocsz);
-void mbfl_memory_device_clear(mbfl_memory_device *device);
-void mbfl_memory_device_reset(mbfl_memory_device *device);
-mbfl_string * mbfl_memory_device_result(mbfl_memory_device *device, mbfl_string *result);
-int mbfl_memory_device_output(int c, void *data);
-int mbfl_memory_device_output2(int c, void *data);
-int mbfl_memory_device_output4(int c, void *data);
-int mbfl_memory_device_strcat(mbfl_memory_device *device, const char *psrc);
-int mbfl_memory_device_strncat(mbfl_memory_device *device, const char *psrc, int len);
-int mbfl_memory_device_devcat(mbfl_memory_device *dest, mbfl_memory_device *src);
-
-void mbfl_wchar_device_init(mbfl_wchar_device *device);
-int mbfl_wchar_device_output(int c, void *data);
-
+#include "mbfl_convert.h"
+#include "mbfl_ident.h"
 
 /*
  * convert filter
@@ -137,74 +105,6 @@ int mbfl_wchar_device_output(int c, void *data);
 #define MBFL_OUTPUTFILTER_ILLEGAL_MODE_NONE 0
 #define MBFL_OUTPUTFILTER_ILLEGAL_MODE_CHAR 1
 #define MBFL_OUTPUTFILTER_ILLEGAL_MODE_LONG 2
-
-typedef struct _mbfl_convert_filter mbfl_convert_filter;
-
-struct _mbfl_convert_filter {
-	void (*filter_ctor)(mbfl_convert_filter *filter);
-	void (*filter_dtor)(mbfl_convert_filter *filter);
-	int (*filter_function)(int c, mbfl_convert_filter *filter);
-	int (*filter_flush)(mbfl_convert_filter *filter);
-	int (*output_function)(int c, void *data);
-	int (*flush_function)(void *data);
-	void *data;
-	int status;
-	int cache;
-	const mbfl_encoding *from;
-	const mbfl_encoding *to;
-	int illegal_mode;
-	int illegal_substchar;
-};
-
-struct mbfl_convert_vtbl {
-	enum mbfl_no_encoding from;
-	enum mbfl_no_encoding to;
-	void (*filter_ctor)(mbfl_convert_filter *filter);
-	void (*filter_dtor)(mbfl_convert_filter *filter);
-	int (*filter_function)(int c, mbfl_convert_filter *filter);
-	int (*filter_flush)(mbfl_convert_filter *filter);
-};
-
-mbfl_convert_filter *
-mbfl_convert_filter_new(
-    enum mbfl_no_encoding from,
-    enum mbfl_no_encoding to,
-    int (*output_function)(int, void *),
-    int (*flush_function)(void *),
-    void *data);
-void mbfl_convert_filter_delete(mbfl_convert_filter *filter);
-int mbfl_convert_filter_feed(int c, mbfl_convert_filter *filter);
-int mbfl_convert_filter_flush(mbfl_convert_filter *filter);
-void mbfl_convert_filter_reset(mbfl_convert_filter *filter, enum mbfl_no_encoding from, enum mbfl_no_encoding to);
-void mbfl_convert_filter_copy(mbfl_convert_filter *src, mbfl_convert_filter *dist);
-int mbfl_filt_conv_illegal_output(int c, mbfl_convert_filter *filter);
-
-
-/*
- * identify filter
- */
-typedef struct _mbfl_identify_filter mbfl_identify_filter;
-
-struct _mbfl_identify_filter {
-	void (*filter_ctor)(mbfl_identify_filter *filter);
-	void (*filter_dtor)(mbfl_identify_filter *filter);
-	int (*filter_function)(int c, mbfl_identify_filter *filter);
-	int status;
-	int flag;
-	int score;
-	const mbfl_encoding *encoding;
-};
-
-struct mbfl_identify_vtbl {
-	enum mbfl_no_encoding encoding;
-	void (*filter_ctor)(mbfl_identify_filter *filter);
-	void (*filter_dtor)(mbfl_identify_filter *filter);
-	int (*filter_function)(int c, mbfl_identify_filter *filter);
-};
-
-mbfl_identify_filter * mbfl_identify_filter_new(enum mbfl_no_encoding encoding);
-void mbfl_identify_filter_delete(mbfl_identify_filter *filter);
-
 
 /*
  * buffering converter
@@ -390,39 +290,5 @@ typedef struct _mbfl_html_entity {
 	char *  name;
 	int     code;
 } mbfl_html_entity;
-
-/* allocators */
-typedef struct _mbfl_allocators {
-	void *(*malloc)(size_t);
-	void *(*realloc)(void *, size_t);
-	void *(*calloc)(unsigned int, size_t);
-	void (*free)(void *);
-	void *(*pmalloc)(size_t); 
-	void *(*prealloc)(void *, size_t);
-	void (*pfree)(void *);
-} mbfl_allocators;
-
-extern mbfl_allocators *__mbfl_allocators; 
-
-#define mbfl_malloc __mbfl_allocators->malloc
-#define mbfl_realloc __mbfl_allocators->realloc
-#define mbfl_calloc __mbfl_allocators->calloc
-#define mbfl_free __mbfl_allocators->free
-#define mbfl_pmalloc __mbfl_allocators->pmalloc
-#define mbfl_prealloc __mbfl_allocators->preallloc
-#define mbfl_pfree __mbfl_allocators->pfree
-
-/* common filters */
-void mbfl_filt_conv_common_ctor(mbfl_convert_filter *filter);
-int mbfl_filt_conv_common_flush(mbfl_convert_filter *filter);
-void mbfl_filt_conv_common_dtor(mbfl_convert_filter *filter);
-
-void mbfl_filt_ident_common_ctor(mbfl_identify_filter *filter);
-void mbfl_filt_ident_common_dtor(mbfl_identify_filter *filter);
-void mbfl_filt_ident_false_ctor(mbfl_identify_filter *filter);
-
-int mbfl_filt_ident_false(int c, mbfl_identify_filter *filter);
-int mbfl_filt_ident_true(int c, mbfl_identify_filter *filter);
-
 
 #endif	/* MBFL_MBFILTER_H */

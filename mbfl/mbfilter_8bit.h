@@ -23,22 +23,16 @@
  */
 /*
  * The source code included in this files was separated from mbfilter.c
- * by moriyoshi koizumi <moriyoshi@php.net> on 4 dec 2002.
- * 
+ * by Moriyoshi Koizumi <moriyoshi@php.net> on 20 Dec 2002. The file
+ * mbfilter.c is included in this package .
+ *
  */
 
-#ifndef MBFL_MBFILTER_QPRINT_H
-#define MBFL_MBFILTER_QPRINT_H
+#ifndef MBFL_MBFILTER_8BIT_H
+#define MBFL_MBFILTER_8BIT_H
 
 #include "mbfilter.h"
 
-extern const mbfl_encoding mbfl_encoding_qprint;
-extern const struct mbfl_convert_vtbl vtbl_8bit_qprint;
-extern const struct mbfl_convert_vtbl vtbl_qprint_8bit;
+extern const mbfl_encoding mbfl_encoding_8bit;
 
-int mbfl_filt_conv_qprintenc(int c, mbfl_convert_filter *filter);
-int mbfl_filt_conv_qprintenc_flush(mbfl_convert_filter *filter);
-int mbfl_filt_conv_qprintdec(int c, mbfl_convert_filter *filter);
-int mbfl_filt_conv_qprintdec_flush(mbfl_convert_filter *filter);
-
-#endif /* MBFL_MBFILTER_ASCII_H */
+#endif /* MBFL_MBFILTER_8BIT_H */

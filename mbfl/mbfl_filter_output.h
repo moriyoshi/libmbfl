@@ -22,31 +22,16 @@
  *
  */
 /*
- * The source code included in this files was separated from mbfilter.c
- * by moriyoshi koizumi <moriyoshi@php.net> on 4 dec 2002.
- * 
+ * The source code included in this files was separated from mbfilter.h
+ * by Moriyoshi Koizumi <moriyoshi@php.net> on 20 Dec 2002. The file
+ * mbfilter.h is included in this package .
+ *
  */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
+#ifndef MBFL_FILTER_OUTPUT_H
+#define MBFL_FILTER_OUTPUT_H
 
-#include "mbfilter.h"
-#include "mbfilter_pass.h"
+int mbfl_filter_output_pipe(int c, void* data);
+int mbfl_filter_output_null(int c, void* data);
 
-static const char *mbfl_encoding_pass_aliases[] = {"none", NULL};
-
-const mbfl_encoding mbfl_encoding_pass = {
-	mbfl_no_encoding_pass,
-	"pass",
-	NULL,
-	(const char *(*)[])&mbfl_encoding_pass_aliases,
-	NULL,
-	0
-};
-
-int mbfl_filt_conv_pass(int c, mbfl_convert_filter *filter)
-{
-	return (*filter->output_function)(c, filter->data);
-}
-
+#endif /* MBFL_FILTER_OUTPUT_H */

@@ -23,23 +23,59 @@
  */
 /*
  * The source code included in this files was separated from mbfilter.c
- * by Moriyoshi Koizumi <moriyoshi@php.net> on 4 Dec 2002. The file
+ * by Moriyoshi Koizumi <moriyoshi@php.net> on 20 Dec 2002. The file
  * mbfilter.c is included in this package .
  *
  */
 
-#ifndef MBFL_MBFILTER_BASE64_H
-#define MBFL_MBFILTER_BASE64_H
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
-#include "mbfilter.h"
+#ifdef HAVE_STDLIB_H
+#include <stdlib.h>
+#endif
 
-extern const mbfl_encoding mbfl_encoding_base64;
-extern const struct mbfl_convert_vtbl vtbl_b64_8bit;
-extern const struct mbfl_convert_vtbl vtbl_8bit_b64;
+#ifdef HAVE_MEMORY_H
+#include <memory.h>
+#endif
 
-int mbfl_filt_conv_base64enc(int c, mbfl_convert_filter *filter);
-int mbfl_filt_conv_base64enc_flush(mbfl_convert_filter *filter);
-int mbfl_filt_conv_base64dec(int c, mbfl_convert_filter *filter);
-int mbfl_filt_conv_base64dec_flush(mbfl_convert_filter *filter);
+#include "mbfl_allocators.h"
 
-#endif /* MBFL_MBFILTER_BASE64_H */
+static void *__mbfl__malloc(size_t);
+static void *__mbfl__realloc(void *, size_t);
+static void *__mbfl__calloc(unsigned int, size_t);
+static void __mbfl__free(void *);
+
+static mbfl_allocators default_allocators = {
+	__mbfl__malloc,
+	__mbfl__realloc,
+	__mbfl__calloc,
+	__mbfl__free,
+	__mbfl__malloc,
+	__mbfl__realloc,
+	__mbfl__free
+};
+
+mbfl_allocators *__mbfl_allocators = &default_allocators;
+
+static void *__mbfl__malloc(size_t sz)
+{
+	return malloc(sz);
+}
+
+static void *__mbfl__realloc(void *ptr, size_t sz)
+{
+	return realloc(ptr, sz);
+}
+
+static void *__mbfl__calloc(unsigned int nelems, size_t szelem)
+{
+	return calloc(nelems, szelem);
+}
+
+static void __mbfl__free(void *ptr)
+{
+	free(ptr);
+} 
+
