@@ -64,6 +64,8 @@ const mbfl_encoding mbfl_encoding_utf8 = {
 	MBFL_ENCTYPE_MBCS
 };
 
+#define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
+
 /*
  * UTF-8 => wchar
  */

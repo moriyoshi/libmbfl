@@ -63,6 +63,7 @@ const mbfl_encoding mbfl_encoding_utf16le = {
 	MBFL_ENCTYPE_MWC2LE
 };
 
+#define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
 
 /*
  * UTF-16 => wchar

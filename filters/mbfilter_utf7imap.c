@@ -43,6 +43,7 @@ const mbfl_encoding mbfl_encoding_utf7imap = {
 	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_SHFTCODE
 };
 
+#define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
 
 /*
  * UTF7-IMAP => wchar

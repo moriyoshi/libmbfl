@@ -44,6 +44,8 @@ const mbfl_encoding mbfl_encoding_base64 = {
 	MBFL_ENCTYPE_SBCS
 };
 
+#define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
+
 /*
  * any => BASE64
  */

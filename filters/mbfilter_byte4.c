@@ -53,6 +53,7 @@ const mbfl_encoding mbfl_encoding_byte4le = {
 	MBFL_ENCTYPE_SBCS
 };
 
+#define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
 
 int mbfl_filt_conv_byte4be_wchar(int c, mbfl_convert_filter *filter)
 {

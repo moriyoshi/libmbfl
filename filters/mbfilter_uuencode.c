@@ -43,6 +43,8 @@ const mbfl_encoding mbfl_encoding_uuencode = {
 	MBFL_ENCTYPE_SBCS
 };
 
+#define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
+
 /* uuencode => any */
 #define UUDEC(c)	(char)(((c)-' ')&077)
 static const char * uuenc_begin_text = "begin ";

@@ -44,6 +44,8 @@ const mbfl_encoding mbfl_encoding_byte2be = {
 	MBFL_ENCTYPE_SBCS
 };
 
+#define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
+
 const mbfl_encoding mbfl_encoding_byte2le = {
 	mbfl_no_encoding_byte2le,
 	"byte2le",

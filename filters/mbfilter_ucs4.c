@@ -63,6 +63,7 @@ const mbfl_encoding mbfl_encoding_ucs4le = {
 	MBFL_ENCTYPE_WCS4LE
 };
 
+#define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
 
 /*
  * UCS-4 => wchar
