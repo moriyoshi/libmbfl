@@ -121,7 +121,7 @@ int mbfl_filt_conv_html_enc(int c, mbfl_convert_filter *filter)
 		}
 
 		{
-			int *p = tmp + sizeof(tmp);
+			int *p = tmp + sizeof(tmp) / sizeof(tmp[0]);
 
 			CK((*filter->output_function)('#', filter->data));
 
