@@ -134,7 +134,8 @@ static const mbfl_language * mbfl_get_language_by_name_internal(const char *name
 		*pretval_id = mbfl_language_id_invalid;
 	}
 
-	for (i = 0; i < mbfl_arraylist_get_num_items(&mbfl_language_tbl); i++) {
+	i = mbfl_arraylist_get_num_items(&mbfl_language_tbl);
+	while (--i >= 0) {
 		mbfl_language **tmp;
 		unsigned int sz;
 
