@@ -335,15 +335,7 @@ SOURCE=.\nls\nls_de.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\nls\nls_hy.c
-# End Source File
-# Begin Source File
-
 SOURCE=.\nls\nls_en.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\nls\nls_hy.c
 # End Source File
 # Begin Source File
 
@@ -644,10 +636,6 @@ SOURCE=.\mbfl\mbfl_ident.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\nls\nls_hy.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\mbfl\mbfl_language.h
 # End Source File
 # Begin Source File
@@ -657,10 +645,6 @@ SOURCE=.\mbfl\mbfl_memory_device.h
 # Begin Source File
 
 SOURCE=.\mbfl\mbfl_string.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\nls\nls_hy.h
 # End Source File
 # Begin Source File
 
