@@ -1,6 +1,6 @@
 # Process this file with autoconf to produce a configure script.
 AC_INIT([mbfl/mbfilter.h])
-AM_INIT_AUTOMAKE([libmbfl], [0,0])
+AM_INIT_AUTOMAKE([libmbfl], [1.1.0])
 AC_CONFIG_SRCDIR([mbfl/mbfilter.c])
 AC_CONFIG_HEADER([config.h])
 AM_MAINTAINER_MODE
