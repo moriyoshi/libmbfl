@@ -591,6 +591,21 @@ typedef struct _mbfl_html_entity {
 	int     code;
 } mbfl_html_entity;
 
-extern const mbfl_html_entity mbfl_html_entity_list[];
+/* allocators */
+extern void *(*__mbfl_malloc)(size_t);
+extern void *(*__mbfl_realloc)(void *, size_t);
+extern void *(*__mbfl_calloc)(unsigned int, size_t);
+extern void (*__mbfl_free)(void *);
+extern void *(*__mbfl_pmalloc)(size_t); 
+extern void *(*__mbfl_prealloc)(void *, size_t);
+extern void (*__mbfl_pfree)(void *);
+
+#define mbfl_malloc __mbfl_malloc
+#define mbfl_realloc __mbfl_realloc
+#define mbfl_calloc __mbfl_calloc
+#define mbfl_free __mbfl_free
+#define mbfl_pmalloc __mbfl_pmalloc
+#define mbfl_prealloc __mbfl_prealloc
+#define mbfl_pfree __mbfl_pfree
 
 #endif	/* MBFL_MBFILTER_H */

@@ -85,8 +85,22 @@
 #include "config.h"
 #endif
 
+#include <stddef.h>
+
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
+#endif
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+
+#ifdef HAVE_MEMORY_H
+#include <memory.h>
 #endif
 
 #include "mbfilter.h"
@@ -135,7 +149,7 @@
 #include "filters/mbfilter_byte4.h"
 #include "filters/mbfilter_ucs4.h"
 #include "filters/mbfilter_ucs2.h"
-#include "filters/mbfilter_htmlnumeric.h"
+#include "filters/mbfilter_htmlent.h"
 
 #include "nls/nls_ja.h"
 #include "nls/nls_kr.h"
@@ -145,14 +159,18 @@
 #include "nls/nls_ru.h"
 #include "nls/nls_en.h"
 
-#define	mbfl_malloc		malloc
-#define	mbfl_realloc	realloc
-#define	mbfl_calloc		calloc
-#define	mbfl_free		free
-
-#define	mbfl_pmalloc	malloc
-#define	mbfl_prealloc	realloc
-#define	mbfl_pfree		free
+static void *__mbfl__malloc(size_t);
+static void *__mbfl__realloc(void *, size_t);
+static void *__mbfl__calloc(unsigned int, size_t);
+static void __mbfl__free(void *);
+ 
+void *(*__mbfl_malloc)(size_t) = __mbfl__malloc;
+void *(*__mbfl_realloc)(void *, size_t) = __mbfl__realloc;
+void *(*__mbfl_calloc)(unsigned int, size_t) = __mbfl__calloc;
+void (*__mbfl_free)(void *) = __mbfl__free;
+void *(*__mbfl_pmalloc)(size_t) = __mbfl__malloc;
+void *(*__mbfl_prealloc)(void *, size_t) = __mbfl__realloc;
+void (*__mbfl_pfree)(void *) = __mbfl__free; 
 
 static const mbfl_language *mbfl_language_ptr_table[] = {
 	&mbfl_language_uni,
@@ -4006,52 +4024,6 @@ mbfl_strlen(mbfl_string *string)
 	return len;
 }
 
-#ifdef ZEND_MULTIBYTE
-/*
- *	oddlen
- */
-int
-mbfl_oddlen(mbfl_string *string)
-{
-	int len, n, m, k;
-	unsigned char *p;
-	const unsigned char *mbtab;
-	const mbfl_encoding *encoding;
-
-	encoding = mbfl_no2encoding(string->no_encoding);
-	if (encoding == NULL || string == NULL) {
-		return -1;
-	}
-
-	len = 0;
-	if (encoding->flag & MBFL_ENCTYPE_SBCS) {
-		return 0;
-	} else if (encoding->flag & (MBFL_ENCTYPE_WCS2BE | MBFL_ENCTYPE_WCS2LE)) {
-		return len % 2;
-	} else if (encoding->flag & (MBFL_ENCTYPE_WCS4BE | MBFL_ENCTYPE_WCS4LE)) {
-		return len % 4;
-	} else if (encoding->mblen_table != NULL) {
- 		mbtab = encoding->mblen_table;
- 		n = 0;
-		p = string->val;
-		k = string->len;
-		/* count */
-		if (p != NULL) {
-			while (n < k) {
-				m = mbtab[*p];
-				n += m;
-				p += m;
-			};
-		}
-		return n-k;
-	} else {
-		/* how can i do ? */
-		return 0;
-	}
-	/* NOT REACHED */
-}
-#endif /* ZEND_MULTIBYTE */
- 
  
 /*
  *  strpos
@@ -6011,6 +5983,26 @@ mbfl_html_numeric_entity(
 
 	return result;
 }
+
+static void *__mbfl__malloc(size_t sz)
+{
+	return malloc(sz);
+}
+
+static void *__mbfl__realloc(void *ptr, size_t sz)
+{
+	return realloc(ptr, sz);
+}
+
+static void *__mbfl__calloc(unsigned int nelems, size_t szelem)
+{
+	return calloc(nelems, szelem);
+}
+
+static void __mbfl__free(void *ptr)
+{
+	free(ptr);
+} 
 
 /*
  * Local variables:
