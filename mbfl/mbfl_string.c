@@ -42,8 +42,7 @@
 /*
  * string object
  */
-void
-mbfl_string_init(mbfl_string *string)
+void mbfl_string_init(mbfl_string *string)
 {
 	if (string) {
 		string->no_language = mbfl_language_id_uni;
@@ -53,8 +52,7 @@ mbfl_string_init(mbfl_string *string)
 	}
 }
 
-void
-mbfl_string_init_set(mbfl_string *string, mbfl_language_id no_language, mbfl_encoding_id no_encoding)
+void mbfl_string_init_set(mbfl_string *string, mbfl_language_id no_language, mbfl_encoding_id no_encoding)
 {
 	if (string) {
 		string->no_language = no_language;
@@ -64,8 +62,7 @@ mbfl_string_init_set(mbfl_string *string, mbfl_language_id no_language, mbfl_enc
 	}
 }
 
-void
-mbfl_string_clear(mbfl_string *string)
+void mbfl_string_clear(mbfl_string *string)
 {
 	if (string) {
 		if (string->val != (unsigned char*)NULL) {
