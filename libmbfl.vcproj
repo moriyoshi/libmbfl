@@ -44,7 +44,7 @@
 				OutputFile=".\Debug/mbfl.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				ModuleDefinitionFile="mbfl.def"
+				ModuleDefinitionFile=""
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile=".\Debug/mbfl.pdb"
 				ImportLibrary=".\Debug/mbfl.lib"/>
@@ -103,7 +103,7 @@
 				OutputFile=".\Release/mbfl.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				ModuleDefinitionFile="mbfl.def"
+				ModuleDefinitionFile=""
 				ProgramDatabaseFile=".\Release/mbfl.pdb"
 				ImportLibrary=".\Release/mbfl.lib"/>
 			<Tool
@@ -633,13 +633,6 @@
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe">
 			<File
 				RelativePath=".\mbfl.rc">
-			</File>
-		</Filter>
-		<Filter
-			Name="Miscellaneous Files"
-			Filter="">
-			<File
-				RelativePath="mbfl.def">
 			</File>
 		</Filter>
 	</Files>
