@@ -32,7 +32,7 @@
 
 #include "mbfilter.h"
 
-extern mbfl_html_entity *mbfl_html_entity_list;
+extern mbfl_html_entity mbfl_html_entity_list[];
 
 #endif /* MBFL_HTML_ENTITIES_H */
 

@@ -169,7 +169,7 @@ void mbfl_filt_conv_html_dec_dtor(mbfl_convert_filter *filter)
 int mbfl_filt_conv_html_dec(int c, mbfl_convert_filter *filter)
 {
 	int  pos, ent = 0;
-	const mbfl_html_entity *entity;
+	mbfl_html_entity *entity;
 	char *buffer = (char*)filter->cache;
 
 	if (!filter->status) {
@@ -192,7 +192,7 @@ int mbfl_filt_conv_html_dec(int c, mbfl_convert_filter *filter)
 				/*php_error_docref("ref.mbstring" TSRMLS_CC, E_NOTICE, "mbstring decoded '%s'=%d", buffer, ent);*/
 			} else {
 				/* named entity */
-				entity = mbfl_html_entity_list;
+			        entity = (mbfl_html_entity *)mbfl_html_entity_list;
 				while (entity->name) {
 					if (!strcmp(buffer+1, entity->name))	{
 						ent = entity->code;
