@@ -68,7 +68,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "LIBMBFL_EXPORTS" /YX /FD /GZ /c
-# ADD CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /I "mbfl" /I "." /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "LIBMBFL_EXPORTS" /D "MBFL_DLL_EXPORT" /YX /FD /GZ /c
+# ADD CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /I "mbfl" /I "." /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "LIBMBFL_EXPORTS" /D "MBFL_DLL_EXPORT" /D HAVE_CONFIG_H=1 /YX /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x411 /d "_DEBUG"
@@ -295,18 +295,6 @@ SOURCE=.\mbfl\mbfl_allocators.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\mbfl\mbfl_arraylist.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\mbfl\mbfl_buffer_converter.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\mbfl\mbfl_collection.c
-# End Source File
-# Begin Source File
-
 SOURCE=.\mbfl\mbfl_convert.c
 # End Source File
 # Begin Source File
@@ -323,15 +311,7 @@ SOURCE=.\mbfl\mbfl_ident.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\mbfl\mbfl_iterator.c
-# End Source File
-# Begin Source File
-
 SOURCE=.\mbfl\mbfl_language.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\mbfl\mbfl_list.c
 # End Source File
 # Begin Source File
 
@@ -339,15 +319,7 @@ SOURCE=.\mbfl\mbfl_memory_device.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\mbfl\mbfl_mutex.c
-# End Source File
-# Begin Source File
-
 SOURCE=.\mbfl\mbfl_string.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\mbfl\mbfl_wchar_device.c
 # End Source File
 # Begin Source File
 
@@ -367,6 +339,10 @@ SOURCE=.\nls\nls_kr.c
 # End Source File
 # Begin Source File
 
+SOURCE=.\nls\nls_neutral.c
+# End Source File
+# Begin Source File
+
 SOURCE=.\nls\nls_ru.c
 # End Source File
 # Begin Source File
@@ -381,10 +357,6 @@ SOURCE=.\nls\nls_zh.c
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
-# Begin Source File
-
-SOURCE=".\config-w32.h"
-# End Source File
 # Begin Source File
 
 SOURCE=.\config.h.vc6
@@ -624,27 +596,11 @@ SOURCE=.\mbfl\mbfl_allocators.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\mbfl\mbfl_arraylist.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\mbfl\mbfl_buffer_converter.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\mbfl\mbfl_collection.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\mbfl\mbfl_consts.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\mbfl\mbfl_convert.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\mbfl\mbfl_defs.h
 # End Source File
 # Begin Source File
 
@@ -660,15 +616,7 @@ SOURCE=.\mbfl\mbfl_ident.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\mbfl\mbfl_iterator.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\mbfl\mbfl_language.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\mbfl\mbfl_list.h
 # End Source File
 # Begin Source File
 
@@ -676,15 +624,7 @@ SOURCE=.\mbfl\mbfl_memory_device.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\mbfl\mbfl_mutex.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\mbfl\mbfl_string.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\mbfl\mbfl_wchar_device.h
 # End Source File
 # Begin Source File
 
@@ -704,6 +644,10 @@ SOURCE=.\nls\nls_kr.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\nls\nls_neutral.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\nls\nls_ru.h
 # End Source File
 # Begin Source File
@@ -713,10 +657,6 @@ SOURCE=.\nls\nls_uni.h
 # Begin Source File
 
 SOURCE=.\nls\nls_zh.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\mbfl\private.h
 # End Source File
 # Begin Source File
 
