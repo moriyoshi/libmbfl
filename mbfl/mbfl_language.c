@@ -103,17 +103,22 @@ void mbfl_language_tbl_cleanup(void)
 
 MBFLAPI int mbfl_register_language(const mbfl_language *lang, mbfl_language_id *plangid)
 {
+	int err = 0;
 	int next_id;
 
 	assert(mbfl_language_tbl_initialized);
 
 	next_id = mbfl_arraylist_get_num_items(&mbfl_language_tbl);
 
-	mbfl_arraylist_update_item_at(&mbfl_language_tbl, (void *)&lang, sizeof(lang), NULL, next_id);
+	if ((err = mbfl_arraylist_update_item_at(&mbfl_language_tbl, (void *)&lang, sizeof(lang), NULL, next_id)) != 0) {
+		return err;
+	}
 
 	if (plangid != NULL) {
 		*plangid = next_id;
 	}
+
+	return err;
 }
 
 /* language resolver */
