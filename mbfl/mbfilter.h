@@ -97,6 +97,7 @@
 #include "mbfl_string.h"
 #include "mbfl_convert.h"
 #include "mbfl_ident.h"
+#include "mbfl_buffer_converter.h"
 
 /*
  * convert filter
