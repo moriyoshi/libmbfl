@@ -10,7 +10,7 @@ mbfl.lib: mbfl.dll
 mbfl.dll: compile mbfl.def
 	@if exist linker.rsp del linker.rsp
 	@echo $(LDFLAGS) /embfl.dll /tWD > linker.rsp
-	@for %i in ($(SUBDIRS)) do @for %j in (%i/*.obj) do @echo %i\%j >> linker.rsp
+	@for %i in ($(SUBDIRS)) do @for %j in (%i\*.obj) do @echo %j >> linker.rsp
 	bcc32 @linker.rsp
 	del linker.rsp
   
