@@ -99,6 +99,8 @@
 #include <stddef.h>
 #endif
 
+#include <assert.h>
+
 #include "mbfilter.h"
 #include "mbfl_string.h"
 #include "mbfl_filter_output.h"
@@ -118,17 +120,17 @@ void mbfl_encoding_detector_delete(mbfl_encoding_detector *identd)
 {
 	int i;
 
-	if (identd != NULL) {
-		if (identd->filter_list != NULL) {
-			i = identd->filter_list_size;
-			while (i > 0) {
-				i--;
-				mbfl_identify_filter_delete(identd->filter_list[i]);
-			}
-			mbfl_free((void *)identd->filter_list);
+	assert(identd != NULL);
+
+	if (identd->filter_list != NULL) {
+		i = identd->filter_list_size;
+		while (i > 0) {
+			i--;
+			mbfl_identify_filter_delete(identd->filter_list[i]);
 		}
-		mbfl_free((void *)identd);
+		mbfl_free((void *)identd->filter_list);
 	}
+	mbfl_free((void *)identd);
 }
 
 int mbfl_encoding_detector_feed(mbfl_encoding_detector *identd, mbfl_string *string)
@@ -138,29 +140,31 @@ int mbfl_encoding_detector_feed(mbfl_encoding_detector *identd, mbfl_string *str
 	mbfl_identify_filter *filter;
 
 	res = 0;
-	/* feed data */
-	if (identd != NULL && string != NULL && string->val != NULL) {
-		num = identd->filter_list_size;
-		n = string->len;
-		p = string->val;
-		while (n > 0) {
-			i = 0;
-			bad = 0;
-			while (i < num) {
-				filter = identd->filter_list[i];
-				(*filter->filter_function)(*p, filter);
-				if (filter->flag) {
-					bad++;
-				}
-				i++;
+
+	assert(identd != NULL);
+	assert(string != NULL);
+	assert(string->val != NULL);
+
+	num = identd->filter_list_size;
+	n = string->len;
+	p = string->val;
+	while (n > 0) {
+		i = 0;
+		bad = 0;
+		while (i < num) {
+			filter = identd->filter_list[i];
+			(*filter->filter_function)(*p, filter);
+			if (filter->flag) {
+				bad++;
 			}
-			if ((num - 1) <= bad) {
-				res = 1;
-				break;
-			}
-			p++;
-			n--;
+			i++;
 		}
+		if ((num - 1) <= bad) {
+			res = 1;
+			break;
+		}
+		p++;
+		n--;
 	}
 
 	return res;
@@ -174,6 +178,7 @@ mbfl_encoding_id mbfl_encoding_detector_judge(mbfl_encoding_detector *identd)
 
 	/* judge */
 	encoding = mbfl_encoding_id_invalid;
+
 	if (identd != NULL) {
 		n = identd->filter_list_size - 1;
 		while (n >= 0) {
@@ -202,6 +207,7 @@ mbfl_string * mbfl_convert_encoding(mbfl_string *string, mbfl_string *result, mb
 
 	/* initialize */
 	encoding = mbfl_get_encoding_by_id(toenc);
+
 	if (encoding == NULL || string == NULL || result == NULL) {
 		return NULL;
 	}
