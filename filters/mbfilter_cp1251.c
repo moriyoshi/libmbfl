@@ -18,11 +18,11 @@
  * if not, write to the Free Software Foundation, Inc., 59 Temple Place,
  * Suite 330, Boston, MA  02111-1307  USA
  *
- * The author of this file:
+ * The author of this part: Den V. Tsopa <tdv@edisoft.ru>
  *
  */
 /*
- * The source code included in this files was separated from mbfilter_ja.c
+ * The source code included in this files was separated from mbfilter_ru.c
  * by moriyoshi koizumi <moriyoshi@php.net> on 4 dec 2002.
  * 
  */
@@ -32,6 +32,7 @@
 #endif
 
 #include "mbfilter.h"
+#include "mbfilter_cp1251.h"
 #include "unicode_table_cp1251.h"
 
 static const char *mbfl_encoding_cp1251_aliases[] = {"CP1251", "CP-1251", "WINDOWS-1251", NULL};

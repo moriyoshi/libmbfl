@@ -18,11 +18,11 @@
  * if not, write to the Free Software Foundation, Inc., 59 Temple Place,
  * Suite 330, Boston, MA  02111-1307  USA
  *
- * The author of this file:
+ * The author of this part: Wez Furlong <wez@thebrainroom.com>
  *
  */
 /*
- * the source code included in this files was separated from mbfilter_ja.c
+ * the source code included in this files was separated from mbfilter.c
  * by moriyoshi koizumi <moriyoshi@php.net> on 4 dec 2002.
  *
  */
