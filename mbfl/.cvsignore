@@ -1,5 +1,6 @@
 Makefile
 Makefile.in
+EastAsianWidth.txt
 .deps
 .libs
 *.la
