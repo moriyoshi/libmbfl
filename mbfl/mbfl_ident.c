@@ -50,7 +50,7 @@ static const mbfl_identify_vtbl vtbl_identify_false = {
  * identify filter
  */
 
-void mbfl_identify_filter_set_vtbl(mbfl_identify_filter *filter, const mbfl_identify_vtbl *vtbl)
+MBFLAPI void mbfl_identify_filter_set_vtbl(mbfl_identify_filter *filter, const mbfl_identify_vtbl *vtbl)
 {
 	if (filter && vtbl) {
 		filter->filter_ctor = vtbl->filter_ctor;
@@ -59,7 +59,7 @@ void mbfl_identify_filter_set_vtbl(mbfl_identify_filter *filter, const mbfl_iden
 	}
 }
 
-void mbfl_identify_filter_select_vtbl(mbfl_identify_filter *filter)
+MBFLAPI void mbfl_identify_filter_select_vtbl(mbfl_identify_filter *filter)
 {
 	const mbfl_identify_vtbl *vtbl;
 
@@ -70,7 +70,7 @@ void mbfl_identify_filter_select_vtbl(mbfl_identify_filter *filter)
 	mbfl_identify_filter_set_vtbl(filter, vtbl);
 }
 
-mbfl_identify_filter *mbfl_identify_filter_new(mbfl_encoding *encoding)
+MBFLAPI mbfl_identify_filter *mbfl_identify_filter_new(mbfl_encoding *encoding)
 {
 	mbfl_identify_filter * filter;
 
@@ -99,7 +99,7 @@ mbfl_identify_filter *mbfl_identify_filter_new(mbfl_encoding *encoding)
 	return filter;
 }
 
-void mbfl_identify_filter_delete(mbfl_identify_filter *filter)
+MBFLAPI void mbfl_identify_filter_delete(mbfl_identify_filter *filter)
 {
 	if (filter) {
 		(*filter->filter_dtor)(filter);
@@ -107,30 +107,30 @@ void mbfl_identify_filter_delete(mbfl_identify_filter *filter)
 	}
 }
 
-void mbfl_filt_ident_common_ctor(mbfl_identify_filter *filter)
+MBFLAPI void mbfl_filt_ident_common_ctor(mbfl_identify_filter *filter)
 {
 	filter->status = 0;
 	filter->flag = 0;
 }
 
-void mbfl_filt_ident_common_dtor(mbfl_identify_filter *filter)
+MBFLAPI void mbfl_filt_ident_common_dtor(mbfl_identify_filter *filter)
 {
 	filter->status = 0;
 }
 
-int mbfl_filt_ident_false(int c, mbfl_identify_filter *filter)
+MBFLAPI int mbfl_filt_ident_false(int c, mbfl_identify_filter *filter)
 {
 	filter->flag = 1;	/* bad */
 	return c;
 }
 
-void mbfl_filt_ident_false_ctor(mbfl_identify_filter *filter)
+MBFLAPI void mbfl_filt_ident_false_ctor(mbfl_identify_filter *filter)
 {
 	filter->status = 0;
 	filter->flag = 1;
 }
 
-int mbfl_filt_ident_true(int c, mbfl_identify_filter *filter)
+MBFLAPI int mbfl_filt_ident_true(int c, mbfl_identify_filter *filter)
 {
 	return c;
 }

@@ -44,14 +44,14 @@
 /*
  * string object
  */
-void mbfl_string_ctor(mbfl_string *string)
+MBFLAPI void mbfl_string_ctor(mbfl_string *string)
 {
 	assert(string != NULL);
 
 	mbfl_string_ctor2(string, mbfl_language_id_uni, mbfl_encoding_id_pass);
 }
 
-void mbfl_string_ctor2(mbfl_string *string, mbfl_language_id no_language, mbfl_encoding_id no_encoding)
+MBFLAPI void mbfl_string_ctor2(mbfl_string *string, mbfl_language_id no_language, mbfl_encoding_id no_encoding)
 {
 	assert(string != NULL);
 
@@ -62,7 +62,7 @@ void mbfl_string_ctor2(mbfl_string *string, mbfl_language_id no_language, mbfl_e
 	string->len = 0;
 }
 
-void mbfl_string_dtor(mbfl_string *string)
+MBFLAPI void mbfl_string_dtor(mbfl_string *string)
 {
 	assert(string != NULL);
 
