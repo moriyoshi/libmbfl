@@ -23,7 +23,7 @@
 #error "pthread is not available"
 #endif
 #elif USE_WIN32_NATIVE_THREAD
-#if defined(WIN32) || defined(__WIN32__)
+#if defined(WIN32)
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
 #endif

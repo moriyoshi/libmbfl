@@ -39,7 +39,7 @@
 #endif
 #endif 
 
-#ifdef __WIN32__
+#ifdef WIN32
 #ifdef MBFL_DLL_EXPORT
 #define MBFLAPI __declspec(dllexport)
 #else
