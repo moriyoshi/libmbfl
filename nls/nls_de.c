@@ -20,3 +20,4 @@ const mbfl_language mbfl_language_german = {
 	mbfl_no_encoding_qprint,
 	mbfl_no_encoding_8bit
 };
+

@@ -18,3 +18,4 @@ const mbfl_language mbfl_language_neutral = {
 	mbfl_no_encoding_base64,
 	mbfl_no_encoding_base64
 };
+

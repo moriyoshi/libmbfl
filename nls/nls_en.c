@@ -18,3 +18,4 @@ const mbfl_language mbfl_language_english = {
 	mbfl_no_encoding_qprint,
 	mbfl_no_encoding_8bit
 };
+
