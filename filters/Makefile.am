@@ -39,63 +39,63 @@ mbfilter_iso8859_16.c: unicode_table_iso8859_16.h
 
 unicode_table_iso8859_1.h: mk_sb_tbl.awk
 	$(AWK) -v TABLE_NAME=iso8859_1_ucs_table \
-           -v IFNDEF_NAME=$@ -f mk_sb_tbl.awk 8859-1.TXT > $@
+           -v IFNDEF_NAME=UNICODE_TABLE_ISO8859_1_H -f mk_sb_tbl.awk 8859-1.TXT > $@
 
 unicode_table_iso8859_2.h: mk_sb_tbl.awk
 	$(AWK) -v TABLE_NAME=iso8859_2_ucs_table \
-           -v IFNDEF_NAME=$@ -f mk_sb_tbl.awk 8859-2.TXT > $@
+           -v IFNDEF_NAME=UNICODE_TABLE_ISO8859_2_H -f mk_sb_tbl.awk 8859-2.TXT > $@
 
 unicode_table_iso8859_3.h: mk_sb_tbl.awk
 	$(AWK) -v TABLE_NAME=iso8859_3_ucs_table \
-           -v IFNDEF_NAME=$@ -f mk_sb_tbl.awk 8859-3.TXT > $@
+           -v IFNDEF_NAME=UNICODE_TABLE_ISO8859_3_H -f mk_sb_tbl.awk 8859-3.TXT > $@
 
 unicode_table_iso8859_4.h: mk_sb_tbl.awk 
 	$(AWK) -v TABLE_NAME=iso8859_4_ucs_table \
-           -v IFNDEF_NAME=$@ -f mk_sb_tbl.awk 8859-4.TXT > $@
+           -v IFNDEF_NAME=UNICODE_TABLE_ISO8859_4_H -f mk_sb_tbl.awk 8859-4.TXT > $@
 
 unicode_table_iso8859_5.h: mk_sb_tbl.awk 
 	$(AWK) -v TABLE_NAME=iso8859_5_ucs_table \
-           -v IFNDEF_NAME=$@ -f mk_sb_tbl.awk 8859-5.TXT > $@
+           -v IFNDEF_NAME=UNICODE_TABLE_ISO8859_5_H -f mk_sb_tbl.awk 8859-5.TXT > $@
 
 unicode_table_iso8859_6.h: mk_sb_tbl.awk 
 	$(AWK) -v TABLE_NAME=iso8859_6_ucs_table \
-           -v IFNDEF_NAME=$@ -f mk_sb_tbl.awk 8859-6.TXT > $@
+           -v IFNDEF_NAME=UNICODE_TABLE_ISO8859_6_H -f mk_sb_tbl.awk 8859-6.TXT > $@
 
 unicode_table_iso8859_7.h: mk_sb_tbl.awk 
 	$(AWK) -v TABLE_NAME=iso8859_7_ucs_table \
-           -v IFNDEF_NAME=$@ -f mk_sb_tbl.awk 8859-7.TXT > $@
+           -v IFNDEF_NAME=UNICODE_TABLE_ISO8859_7_H -f mk_sb_tbl.awk 8859-7.TXT > $@
 
 unicode_table_iso8859_8.h: mk_sb_tbl.awk 
 	$(AWK) -v TABLE_NAME=iso8859_8_ucs_table \
-           -v IFNDEF_NAME=$@ -f mk_sb_tbl.awk 8859-8.TXT > $@
+           -v IFNDEF_NAME=UNICODE_TABLE_ISO8859_8_H -f mk_sb_tbl.awk 8859-8.TXT > $@
 
 unicode_table_iso8859_9.h: mk_sb_tbl.awk 
 	$(AWK) -v TABLE_NAME=iso8859_9_ucs_table \
-           -v IFNDEF_NAME=$@ -f mk_sb_tbl.awk 8859-9.TXT > $@
+           -v IFNDEF_NAME=UNICODE_TABLE_ISO8859_9_H -f mk_sb_tbl.awk 8859-9.TXT > $@
 
 unicode_table_iso8859_10.h: mk_sb_tbl.awk 
 	$(AWK) -v TABLE_NAME=iso8859_10_ucs_table \
-           -v IFNDEF_NAME=$@ -f mk_sb_tbl.awk 8859-10.TXT > $@
+           -v IFNDEF_NAME=UNICODE_TABLE_ISO8859_10_H -f mk_sb_tbl.awk 8859-10.TXT > $@
 
 unicode_table_iso8859_11.h: mk_sb_tbl.awk 
 	$(AWK) -v TABLE_NAME=iso8859_11_ucs_table \
-           -v IFNDEF_NAME=$@ -f mk_sb_tbl.awk 8859-11.TXT > $@
+           -v IFNDEF_NAME=UNICODE_TABLE_ISO8859_11_H -f mk_sb_tbl.awk 8859-11.TXT > $@
 
 unicode_table_iso8859_13.h: mk_sb_tbl.awk 
 	$(AWK) -v TABLE_NAME=iso8859_13_ucs_table \
-           -v IFNDEF_NAME=$@ -f mk_sb_tbl.awk 8859-13.TXT > $@
+           -v IFNDEF_NAME=UNICODE_TABLE_ISO8859_13_H -f mk_sb_tbl.awk 8859-13.TXT > $@
 
 unicode_table_iso8859_14.h: mk_sb_tbl.awk 
 	$(AWK) -v TABLE_NAME=iso8859_14_ucs_table \
-           -v IFNDEF_NAME=$@ -f mk_sb_tbl.awk 8859-14.TXT > $@
+           -v IFNDEF_NAME=UNICODE_TABLE_ISO8859_14_H -f mk_sb_tbl.awk 8859-14.TXT > $@
 
 unicode_table_iso8859_15.h: mk_sb_tbl.awk 
 	$(AWK) -v TABLE_NAME=iso8859_15_ucs_table \
-           -v IFNDEF_NAME=$@ -f mk_sb_tbl.awk 8859-15.TXT > $@
+           -v IFNDEF_NAME=UNICODE_TABLE_ISO8859_15_H -f mk_sb_tbl.awk 8859-15.TXT > $@
 
 unicode_table_iso8859_16.h: mk_sb_tbl.awk 
 	$(AWK) -v TABLE_NAME=iso8859_16_ucs_table \
-           -v IFNDEF_NAME=$@ -f mk_sb_tbl.awk 8859-16.TXT > $@
+           -v IFNDEF_NAME=UNICODE_TABLEISO8859_16_H -f mk_sb_tbl.awk 8859-16.TXT > $@
 
 unidata: 8859-1.TXT 8859-2.TXT 8859-3.TXT 8859-4.TXT 8859-5.TXT 8859-6.TXT \
 8859-7.TXT 8859-8.TXT 8859-9.TXT 8859-10.TXT 8859-11.TXT 8859-13.TXT \
