@@ -275,7 +275,8 @@ int mbfl_convert_filter_flush(mbfl_convert_filter *filter)
 	return (filter->flush_function ? (*filter->flush_function)(filter->data) : 0);
 }
 
-void mbfl_convert_filter_reset(mbfl_convert_filter *filter, mbfl_encoding_id from, mbfl_encoding_id to)
+void mbfl_convert_filter_reset(mbfl_convert_filter *filter,
+		mbfl_encoding_id from, mbfl_encoding_id to)
 {
 	/* destruct old filter */
 	(*filter->filter_dtor)(filter);
