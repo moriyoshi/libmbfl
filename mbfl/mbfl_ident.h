@@ -57,9 +57,10 @@ struct mbfl_identify_vtbl {
 };
 
 MBFLAPI extern const struct mbfl_identify_vtbl * mbfl_identify_filter_get_vtbl(enum mbfl_no_encoding encoding);
-MBFLAPI extern void mbfl_identify_filter_select_vtbl(mbfl_identify_filter *filter);
 MBFLAPI extern mbfl_identify_filter * mbfl_identify_filter_new(enum mbfl_no_encoding encoding);
 MBFLAPI extern void mbfl_identify_filter_delete(mbfl_identify_filter *filter);
+MBFLAPI extern mbfl_identify_filter_init(mbfl_identify_filter *filter, enum mbfl_no_encoding encoding);
+MBFLAPI void mbfl_identify_filter_cleanup(mbfl_identify_filter *filter);
 
 MBFLAPI extern void mbfl_filt_ident_common_ctor(mbfl_identify_filter *filter);
 MBFLAPI extern void mbfl_filt_ident_common_dtor(mbfl_identify_filter *filter);
