@@ -13,6 +13,8 @@ libtool
 depcomp
 ltmain.sh
 install-sh
+stamp-h
+stamp-h.in
 stamp-h1
 mkinstalldirs
 missing
