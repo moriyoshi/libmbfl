@@ -98,6 +98,8 @@ enum mbfl_no_encoding {
 	mbfl_no_encoding_charset_max
 };
 
+typedef enum mbfl_no_encoding mbfl_encoding_id;
+
 /*
  * encoding
  */

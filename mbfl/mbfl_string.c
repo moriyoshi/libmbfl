@@ -46,8 +46,8 @@ void
 mbfl_string_init(mbfl_string *string)
 {
 	if (string) {
-		string->no_language = mbfl_language_id_uni;
-		string->no_encoding = mbfl_encoding_id_pass;
+		string->no_language = mbfl_no_language_uni;
+		string->no_encoding = mbfl_no_encoding_pass;
 		string->val = (unsigned char*)NULL;
 		string->len = 0;
 	}

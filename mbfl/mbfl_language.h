@@ -59,6 +59,8 @@ enum mbfl_no_language {
 	mbfl_no_language_max
 };
 
+typedef enum mbfl_no_language mbfl_language_id;
+
 /*
  * language
  */
