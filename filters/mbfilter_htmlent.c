@@ -18,7 +18,7 @@
  * if not, write to the Free Software Foundation, Inc., 59 Temple Place,
  * Suite 330, Boston, MA  02111-1307  USA
  *
- * The author of this file:
+ * The author of this part: Marcus Boerger <marcus.boerger@t-online.de>
  *
  */
 /*
@@ -31,8 +31,17 @@
 #include "config.h"
 #endif
 
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+
 #include "mbfilter.h"
-#include "mbfilter_htmlnumeric.h"
+#include "mbfilter_htmlent.h"
+#include "html_entities.h"
 
 static const unsigned char mblen_table_html[] = { /* 0x00, 0x80 - 0xFF, only valid for numeric entities */
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,

@@ -18,7 +18,7 @@
  * if not, write to the Free Software Foundation, Inc., 59 Temple Place,
  * Suite 330, Boston, MA  02111-1307  USA
  *
- * The author of this file:
+ * The author of this part: Marcus Boerger <marcus.boerger@t-online.de>
  *
  */
 /*
@@ -27,8 +27,8 @@
  * 
  */
 
-#ifndef MBFL_MBFILTER_HTMLNUMERIC_H
-#define MBFL_MBFILTER_HTMLNUMERIC_H
+#ifndef MBFL_MBFILTER_HTMLENT_H
+#define MBFL_MBFILTER_HTMLENT_H
 
 #include "mbfilter.h"
 
@@ -38,5 +38,7 @@ int mbfl_filt_conv_html_enc(int c, mbfl_convert_filter *filter);
 int mbfl_filt_conv_html_enc_flush(mbfl_convert_filter *filter);
 int mbfl_filt_conv_html_dec(int c, mbfl_convert_filter *filter);
 int mbfl_filt_conv_html_dec_flush(mbfl_convert_filter *filter);
+void mbfl_filt_conv_html_dec_ctor(mbfl_convert_filter *filter);
+void mbfl_filt_conv_html_dec_dtor(mbfl_convert_filter *filter);
 
-#endif /* MBFL_MBFILTER_HTMLNUMERIC_H */
+#endif /* MBFL_MBFILTER_HTMLENT_H */
