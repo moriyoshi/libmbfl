@@ -767,7 +767,6 @@ static const struct mbfl_convert_vtbl vtbl_wchar_ascii = {
 	mbfl_filt_conv_wchar_ascii,
 	mbfl_filt_conv_common_flush };
 
-#if defined(HAVE_MBSTR_JA)
 static const struct mbfl_convert_vtbl vtbl_eucjp_wchar = {
 	mbfl_no_encoding_euc_jp,
 	mbfl_no_encoding_wchar,
@@ -863,9 +862,7 @@ static const struct mbfl_convert_vtbl vtbl_wchar_sjiswin = {
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_sjiswin,
 	mbfl_filt_conv_common_flush };
-#endif /* HAVE_MBSTR_JA */
 
-#if defined(HAVE_MBSTR_CN)
 static const struct mbfl_convert_vtbl vtbl_euccn_wchar = {
 	mbfl_no_encoding_euc_cn,
 	mbfl_no_encoding_wchar,
@@ -914,9 +911,6 @@ static const struct mbfl_convert_vtbl vtbl_wchar_hz = {
 	mbfl_filt_conv_wchar_hz,
 	mbfl_filt_conv_any_hz_flush };
 
-#endif /* HAVE_MBSTR_CN */
-
-#if defined(HAVE_MBSTR_TW)
 static const struct mbfl_convert_vtbl vtbl_euctw_wchar = {
 	mbfl_no_encoding_euc_tw,
 	mbfl_no_encoding_wchar,
@@ -948,9 +942,7 @@ static const struct mbfl_convert_vtbl vtbl_wchar_big5 = {
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_big5,
 	mbfl_filt_conv_common_flush };
-#endif /* HAVE_MBSTR_TW */
 
-#if defined(HAVE_MBSTR_KR)
 static const struct mbfl_convert_vtbl vtbl_euckr_wchar = {
 	mbfl_no_encoding_euc_kr,
 	mbfl_no_encoding_wchar,
@@ -998,9 +990,7 @@ static const struct mbfl_convert_vtbl vtbl_2022kr_wchar = {
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_2022kr_wchar,
 	mbfl_filt_conv_common_flush };
-#endif /* HAVE_MBSTR_KR */
 
-#if defined(HAVE_MBSTR_RU)
 static const struct mbfl_convert_vtbl vtbl_wchar_cp1251 = {
 	mbfl_no_encoding_wchar,
 	mbfl_no_encoding_cp1251,
@@ -1048,7 +1038,6 @@ static const struct mbfl_convert_vtbl vtbl_koi8r_wchar = {
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_koi8r_wchar,
 	mbfl_filt_conv_common_flush };
-#endif /* HAVE_MBSTR_RU */
 
 static const struct mbfl_convert_vtbl vtbl_cp1252_wchar = {
 	mbfl_no_encoding_cp1252,
@@ -1279,7 +1268,6 @@ static const struct mbfl_convert_vtbl vtbl_wchar_8859_15 = {
 static const struct mbfl_convert_vtbl *mbfl_convert_filter_list[] = {
 	&vtbl_utf8_wchar,
 	&vtbl_wchar_utf8,
-#if defined(HAVE_MBSTR_JA)
 	&vtbl_eucjp_wchar,
 	&vtbl_wchar_eucjp,
 	&vtbl_sjis_wchar,
@@ -1292,37 +1280,28 @@ static const struct mbfl_convert_vtbl *mbfl_convert_filter_list[] = {
 	&vtbl_wchar_eucjpwin,
 	&vtbl_sjiswin_wchar,
 	&vtbl_wchar_sjiswin,
-#endif
-#if defined(HAVE_MBSTR_CN)
 	&vtbl_euccn_wchar,
 	&vtbl_wchar_euccn,
 	&vtbl_cp936_wchar,
 	&vtbl_wchar_cp936,
 	&vtbl_hz_wchar,
 	&vtbl_wchar_hz,
-#endif
-#if defined(HAVE_MBSTR_TW)
 	&vtbl_euctw_wchar,
 	&vtbl_wchar_euctw,
 	&vtbl_big5_wchar,
 	&vtbl_wchar_big5,
-#endif
-#if defined(HAVE_MBSTR_KR)
 	&vtbl_euckr_wchar,
 	&vtbl_wchar_euckr,
 	&vtbl_uhc_wchar,
 	&vtbl_wchar_uhc,
 	&vtbl_2022kr_wchar,
 	&vtbl_wchar_2022kr,
-#endif
-#if defined(HAVE_MBSTR_RU)
 	&vtbl_cp1251_wchar,
 	&vtbl_wchar_cp1251,
 	&vtbl_cp866_wchar,
 	&vtbl_wchar_cp866,
 	&vtbl_koi8r_wchar,
 	&vtbl_wchar_koi8r,
-#endif
 	&vtbl_cp1252_wchar,
 	&vtbl_wchar_cp1252,
 	&vtbl_ascii_wchar,
@@ -1422,7 +1401,6 @@ static const struct mbfl_identify_vtbl vtbl_identify_utf7 = {
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_utf7 };
 
-#if defined(HAVE_MBSTR_JA)
 static const struct mbfl_identify_vtbl vtbl_identify_eucjp = {
 	mbfl_no_encoding_euc_jp,
 	mbfl_filt_ident_common_ctor,
@@ -1458,9 +1436,7 @@ static const struct mbfl_identify_vtbl vtbl_identify_2022jp = {
 	mbfl_filt_ident_common_ctor,
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_2022jp };
-#endif /* HAVE_MBSTR_JA */
 
-#if defined(HAVE_MBSTR_CN)
 static struct mbfl_identify_vtbl vtbl_identify_euccn = {
 	mbfl_no_encoding_euc_cn,
 	mbfl_filt_ident_common_ctor,
@@ -1479,9 +1455,6 @@ static struct mbfl_identify_vtbl vtbl_identify_hz = {
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_hz };
 
-#endif /* HAVE_MBSTR_CN */
-
-#if defined(HAVE_MBSTR_TW)
 static struct mbfl_identify_vtbl vtbl_identify_euctw = {
 	mbfl_no_encoding_euc_tw,
 	mbfl_filt_ident_common_ctor,
@@ -1493,9 +1466,7 @@ static struct mbfl_identify_vtbl vtbl_identify_big5 = {
 	mbfl_filt_ident_common_ctor,
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_big5 };
-#endif /* HAVE_MBSTR_TW */
 
-#if defined(HAVE_MBSTR_KR)
 static struct mbfl_identify_vtbl vtbl_identify_euckr = {
 	mbfl_no_encoding_euc_kr,
 	mbfl_filt_ident_common_ctor,
@@ -1514,9 +1485,6 @@ static struct mbfl_identify_vtbl vtbl_identify_2022kr = {
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_2022kr };
 
-#endif /* HAVE_MBSTR_KR */
-
-#if defined(HAVE_MBSTR_RU)
 static struct mbfl_identify_vtbl vtbl_identify_cp1251 = {
 	mbfl_no_encoding_cp1251,
 	mbfl_filt_ident_common_ctor,
@@ -1534,7 +1502,6 @@ static struct mbfl_identify_vtbl vtbl_identify_koi8r = {
 	mbfl_filt_ident_common_ctor,
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_koi8r };
-#endif /* HAVE_MBSTR_RU */
 
 static const struct mbfl_identify_vtbl vtbl_identify_cp1252 = {
 	mbfl_no_encoding_cp1252,
@@ -1630,33 +1597,23 @@ static const struct mbfl_identify_vtbl *mbfl_identify_filter_list[] = {
 	&vtbl_identify_utf8,
 	&vtbl_identify_utf7,
 	&vtbl_identify_ascii,
-#if defined(HAVE_MBSTR_JA)
 	&vtbl_identify_eucjp,
 	&vtbl_identify_sjis,
 	&vtbl_identify_eucjpwin,
 	&vtbl_identify_sjiswin,
 	&vtbl_identify_jis,
 	&vtbl_identify_2022jp,
-#endif
-#if defined(HAVE_MBSTR_CN)
 	&vtbl_identify_euccn,
 	&vtbl_identify_cp936,
 	&vtbl_identify_hz,
-#endif
-#if defined(HAVE_MBSTR_TW)
 	&vtbl_identify_euctw,
 	&vtbl_identify_big5,
-#endif
-#if defined(HAVE_MBSTR_KR)
 	&vtbl_identify_euckr,
 	&vtbl_identify_uhc,
 	&vtbl_identify_2022kr,
-#endif
-#if defined(HAVE_MBSTR_RU)
 	&vtbl_identify_cp1251,
 	&vtbl_identify_cp866,
 	&vtbl_identify_koi8r,
-#endif
 	&vtbl_identify_cp1252,
 	&vtbl_identify_8859_1,
 	&vtbl_identify_8859_2,
@@ -2398,7 +2355,6 @@ mbfl_filt_ident_utf7(int c, mbfl_identify_filter *filter)
 	return c;
 }
 
-#if defined(HAVE_MBSTR_JA)
 static int
 mbfl_filt_ident_eucjp(int c, mbfl_identify_filter *filter)
 {
@@ -2592,9 +2548,7 @@ retry:
 
 	return c;
 }
-#endif /* HAVE_MBSTR_JA */
 
-#if defined(HAVE_MBSTR_CN)
 static int
 mbfl_filt_ident_euccn(int c, mbfl_identify_filter *filter)
 {
@@ -2690,9 +2644,6 @@ mbfl_filt_ident_hz(int c, mbfl_identify_filter *filter)
 	return c;
 }
 
-#endif /* HAVE_MBSTR_CN */
-
-#if defined(HAVE_MBSTR_TW)
 static int
 mbfl_filt_ident_euctw(int c, mbfl_identify_filter *filter)
 {
@@ -2765,9 +2716,6 @@ mbfl_filt_ident_big5(int c, mbfl_identify_filter *filter)
 	return c;
 }
 
-#endif /* HAVE_MBSTR_TW */
-
-#if defined(HAVE_MBSTR_KR)
 static int
 mbfl_filt_ident_euckr(int c, mbfl_identify_filter *filter)
 {
@@ -2909,9 +2857,6 @@ retry:
 	return c;
 }
 
-#endif /* HAVE_MBSTR_KR */
-
-
 /* We only distinguish the MS extensions to ISO-8859-1.
  * Actually, this is pretty much a NO-OP, since the identification
  * system doesn't allow us to discriminate between a positive match,
@@ -2928,7 +2873,6 @@ mbfl_filt_ident_cp1252(int c, mbfl_identify_filter *filter)
 	return c;	
 }
 
-#if defined(HAVE_MBSTR_RU)
 /* all of this is so ugly now! */
 static int
 mbfl_filt_ident_cp1251(int c, mbfl_identify_filter *filter)
@@ -2959,7 +2903,6 @@ mbfl_filt_ident_koi8r(int c, mbfl_identify_filter *filter)
 		filter->flag = 1; /* not it */
 	return c;	
 }
-#endif /* HAVE_MBSTR_RU */
 
 static int
 mbfl_filt_ident_2022jp(int c, mbfl_identify_filter *filter)
