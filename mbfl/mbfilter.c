@@ -1108,13 +1108,8 @@ static int collector_strimwidth(int c, void* data)
 		break;
 	default:
 		if (pc->outchar >= pc->from) {
-			if (c >= 0x20) {
-				if (c < 0x2000 || (c > 0xff60 && c < 0xffa0)) {
-					pc->outwidth++;
-				} else {
-					pc->outwidth += 2;
-				}
-			}
+			pc->outwidth += (is_fullwidth(c) ? 2: 1);
+
 			if (pc->outwidth > pc->width) {
 				if (pc->status == 0) {
 					pc->endpos = pc->device.pos;
