@@ -1,5 +1,5 @@
 Microsoft Visual Studio Solution File, Format Version 7.00
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libmbfl", "libmbfl.vcproj", "{D28792AA-3E98-4FCC-9B62-05A3CA774F9D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libmbfl", "libmbfl.vcproj", "{B3636594-A785-4270-A765-8EAE922B5207}"
 EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
@@ -9,10 +9,10 @@ Global
 	GlobalSection(ProjectDependencies) = postSolution
 	EndGlobalSection
 	GlobalSection(ProjectConfiguration) = postSolution
-		{D28792AA-3E98-4FCC-9B62-05A3CA774F9D}.Debug.ActiveCfg = Debug|Win32
-		{D28792AA-3E98-4FCC-9B62-05A3CA774F9D}.Debug.Build.0 = Debug|Win32
-		{D28792AA-3E98-4FCC-9B62-05A3CA774F9D}.Release.ActiveCfg = Release|Win32
-		{D28792AA-3E98-4FCC-9B62-05A3CA774F9D}.Release.Build.0 = Release|Win32
+		{B3636594-A785-4270-A765-8EAE922B5207}.Debug.ActiveCfg = Debug|Win32
+		{B3636594-A785-4270-A765-8EAE922B5207}.Debug.Build.0 = Debug|Win32
+		{B3636594-A785-4270-A765-8EAE922B5207}.Release.ActiveCfg = Release|Win32
+		{B3636594-A785-4270-A765-8EAE922B5207}.Release.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
