@@ -140,11 +140,11 @@ MBFLAPI mbfl_string *mbfl_convert_encoding(mbfl_string *string, mbfl_string *res
 /*
  * identify encoding
  */
-MBFLAPI const mbfl_encoding *mbfl_identify_encoding(mbfl_string *string, mbfl_encoding *elist, int eliztsz);
+MBFLAPI const mbfl_encoding *mbfl_identify_encoding(mbfl_string *string, mbfl_encoding **elist, int eliztsz);
 
-MBFLAPI const char *mbfl_identify_encoding_name(mbfl_string *string, mbfl_encoding *elist, int eliztsz);
+MBFLAPI const char *mbfl_identify_encoding_name(mbfl_string *string, mbfl_encoding **elist, int eliztsz);
 
-MBFLAPI const mbfl_encoding_id mbfl_identify_encoding_no(mbfl_string *string, mbfl_encoding *elist, int eliztsz);
+MBFLAPI const mbfl_encoding_id mbfl_identify_encoding_no(mbfl_string *string, mbfl_encoding **elist, int eliztsz);
 
 /*
  * strlen

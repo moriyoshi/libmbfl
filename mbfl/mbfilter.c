@@ -276,7 +276,7 @@ MBFLAPI mbfl_string * mbfl_convert_encoding(mbfl_string *string, mbfl_string *re
 /*
  * identify encoding
  */
-MBFLAPI const mbfl_encoding * mbfl_identify_encoding(mbfl_string *string, mbfl_encoding *elist, int elistsz)
+MBFLAPI const mbfl_encoding * mbfl_identify_encoding(mbfl_string *string, mbfl_encoding **elist, int elistsz)
 {
 	int i, n, num, bad;
 	unsigned char *p;
@@ -292,7 +292,7 @@ MBFLAPI const mbfl_encoding * mbfl_identify_encoding(mbfl_string *string, mbfl_e
 	num = 0;
 	if (elist != NULL) {
 		for (i = 0; i < elistsz; i++) {
-			if (!mbfl_identify_filter_ctor(&flist[num], &elist[i])) {
+			if (!mbfl_identify_filter_ctor(&flist[num], elist[i])) {
 				num++;
 			}
 		}
@@ -343,7 +343,7 @@ MBFLAPI const mbfl_encoding * mbfl_identify_encoding(mbfl_string *string, mbfl_e
 	return encoding;
 }
 
-MBFLAPI const char* mbfl_identify_encoding_name(mbfl_string *string, mbfl_encoding *elist, int elistsz)
+MBFLAPI const char* mbfl_identify_encoding_name(mbfl_string *string, mbfl_encoding **elist, int elistsz)
 {
 	const mbfl_encoding *encoding;
 
@@ -357,7 +357,7 @@ MBFLAPI const char* mbfl_identify_encoding_name(mbfl_string *string, mbfl_encodi
 	}
 }
 
-MBFLAPI const mbfl_encoding_id mbfl_identify_encoding_no(mbfl_string *string, mbfl_encoding *elist, int elistsz)
+MBFLAPI const mbfl_encoding_id mbfl_identify_encoding_no(mbfl_string *string, mbfl_encoding **elist, int elistsz)
 {
 	const mbfl_encoding *encoding;
 
