@@ -1,11 +1,11 @@
 #!/bin/sh
 function cvsclean_sub() {
-	prev_pwd=`pwd`	
-	cd $1
-	cat .cvsignore | while read fname; do
-		rm -r -f $fname
-	done
-	cd "$prev_pwd"
+  prev_pwd=`pwd`	
+  cd $1
+  cat .cvsignore | while read fname; do
+  rm -r -f $fname
+  done
+  cd "$prev_pwd"
 }
 
 cvsclean_sub .
