@@ -559,7 +559,7 @@ mbfl_identify_encoding(mbfl_string *string, enum mbfl_no_encoding *elist, int el
 				}
 				i++;
 			}
-			if ((num - 1) <= bad) {
+			if ((num - 1) <= bad && strict) {
 				break;
 			}
 			p++;
@@ -570,7 +570,7 @@ mbfl_identify_encoding(mbfl_string *string, enum mbfl_no_encoding *elist, int el
 	/* judge */
 	encoding = NULL;
 
-	for (i = 0; i < num; i++) {
+	i = num; while (--i >= 0) {
 		filter = &flist[i];
 		if (!filter->flag) {
 			encoding = filter->encoding;
