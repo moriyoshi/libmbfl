@@ -45,8 +45,6 @@ const mbfl_encoding mbfl_encoding_pass = {
 	0
 };
 
-
-
 int mbfl_filt_conv_pass(int c, mbfl_convert_filter *filter)
 {
 	return (*filter->output_function)(c, filter->data);

@@ -33,6 +33,8 @@
 #include "mbfilter.h"
 
 extern const mbfl_encoding mbfl_encoding_html_ent;
+extern const struct mbfl_convert_vtbl vtbl_wchar_html; 
+extern const struct mbfl_convert_vtbl vtbl_html_wchar;
 
 void mbfl_filt_conv_html_dec_ctor(mbfl_convert_filter *filter);
 void mbfl_filt_conv_html_dec_dtor(mbfl_convert_filter *filter);

@@ -32,6 +32,8 @@
 
 extern const mbfl_encoding mbfl_encoding_cp866;
 extern const struct mbfl_identify_vtbl vtbl_identify_cp866;
+extern const struct mbfl_convert_vtbl vtbl_wchar_cp866;
+extern const struct mbfl_convert_vtbl vtbl_cp866_wchar;
 
 int mbfl_filt_conv_cp866_wchar(int c, mbfl_convert_filter *filter);
 int mbfl_filt_conv_wchar_cp866(int c, mbfl_convert_filter *filter);

@@ -23,7 +23,7 @@
  */
 /*
  * The source code included in this files was separated from mbfilter.c
- * by moriyoshi koizumi <moriyoshi@php.net> on 4 dec 2002.
+ * by moriyoshi koizumi <moriyoshi@php.net> on 20 dec 2002.
  * 
  */
 
@@ -32,98 +32,97 @@
 #endif
 
 #include "mbfilter.h"
-#include "mbfilter_ucs4.h"
+#include "mbfilter_utf32.h"
 
-static const char *mbfl_encoding_ucs4_aliases[] = {"ISO-10646-UCS-4", "UCS4", NULL};
+static const char *mbfl_encoding_utf32_aliases[] = {"utf32", NULL};
 
-const mbfl_encoding mbfl_encoding_ucs4 = {
-	mbfl_no_encoding_ucs4,
-	"UCS-4",
-	"UCS-4",
-	(const char *(*)[])&mbfl_encoding_ucs4_aliases,
+const mbfl_encoding mbfl_encoding_utf32 = {
+	mbfl_no_encoding_utf32,
+	"UTF-32",
+	"UTF-32",
+	(const char *(*)[])&mbfl_encoding_utf32_aliases,
 	NULL,
 	MBFL_ENCTYPE_WCS4BE
 };
 
-const mbfl_encoding mbfl_encoding_ucs4be = {
-	mbfl_no_encoding_ucs4be,
-	"UCS-4BE",
-	"UCS-4BE",
+const mbfl_encoding mbfl_encoding_utf32be = {
+	mbfl_no_encoding_utf32be,
+	"UTF-32BE",
+	"UTF-32BE",
 	NULL,
 	NULL,
 	MBFL_ENCTYPE_WCS4BE
 };
 
-const mbfl_encoding mbfl_encoding_ucs4le = {
-	mbfl_no_encoding_ucs4le,
-	"UCS-4LE",
-	"UCS-4LE",
+const mbfl_encoding mbfl_encoding_utf32le = {
+	mbfl_no_encoding_utf32le,
+	"UTF-32LE",
+	"UTF-32LE",
 	NULL,
 	NULL,
 	MBFL_ENCTYPE_WCS4LE
 };
 
-const struct mbfl_convert_vtbl vtbl_ucs4_wchar = {
-	mbfl_no_encoding_ucs4,
+const struct mbfl_convert_vtbl vtbl_utf32_wchar = {
+	mbfl_no_encoding_utf32,
 	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
-	mbfl_filt_conv_ucs4_wchar,
+	mbfl_filt_conv_utf32_wchar,
 	mbfl_filt_conv_common_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_wchar_ucs4 = {
+const struct mbfl_convert_vtbl vtbl_wchar_utf32 = {
 	mbfl_no_encoding_wchar,
-	mbfl_no_encoding_ucs4,
+	mbfl_no_encoding_utf32,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
-	mbfl_filt_conv_wchar_ucs4be,
+	mbfl_filt_conv_wchar_utf32be,
 	mbfl_filt_conv_common_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_ucs4be_wchar = {
-	mbfl_no_encoding_ucs4be,
-	mbfl_no_encoding_wchar,
-	mbfl_filt_conv_common_ctor,
-	mbfl_filt_conv_common_dtor,
-	mbfl_filt_conv_ucs4be_wchar,
-	mbfl_filt_conv_common_flush
-};
-
-const struct mbfl_convert_vtbl vtbl_wchar_ucs4be = {
-	mbfl_no_encoding_wchar,
-	mbfl_no_encoding_ucs4be,
-	mbfl_filt_conv_common_ctor,
-	mbfl_filt_conv_common_dtor,
-	mbfl_filt_conv_wchar_ucs4be,
-	mbfl_filt_conv_common_flush
-};
-
-const struct mbfl_convert_vtbl vtbl_ucs4le_wchar = {
-	mbfl_no_encoding_ucs4le,
+const struct mbfl_convert_vtbl vtbl_utf32be_wchar = {
+	mbfl_no_encoding_utf32be,
 	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
-	mbfl_filt_conv_ucs4le_wchar,
+	mbfl_filt_conv_utf32be_wchar,
 	mbfl_filt_conv_common_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_wchar_ucs4le = {
+const struct mbfl_convert_vtbl vtbl_wchar_utf32be = {
 	mbfl_no_encoding_wchar,
-	mbfl_no_encoding_ucs4le,
+	mbfl_no_encoding_utf32be,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
-	mbfl_filt_conv_wchar_ucs4le,
+	mbfl_filt_conv_wchar_utf32be,
 	mbfl_filt_conv_common_flush
 };
 
+const struct mbfl_convert_vtbl vtbl_utf32le_wchar = {
+	mbfl_no_encoding_utf32le,
+	mbfl_no_encoding_wchar,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_utf32le_wchar,
+	mbfl_filt_conv_common_flush
+};
+
+const struct mbfl_convert_vtbl vtbl_wchar_utf32le = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_utf32le,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_wchar_utf32le,
+	mbfl_filt_conv_common_flush
+};
 
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
 
 /*
- * UCS-4 => wchar
+ * UTF-32 => wchar
  */
-int mbfl_filt_conv_ucs4_wchar(int c, mbfl_convert_filter *filter)
+int mbfl_filt_conv_utf32_wchar(int c, mbfl_convert_filter *filter)
 {
 	int n, endian;
 
@@ -181,9 +180,9 @@ int mbfl_filt_conv_ucs4_wchar(int c, mbfl_convert_filter *filter)
 }
 
 /*
- * UCS-4BE => wchar
+ * UTF-32BE => wchar
  */
-int mbfl_filt_conv_ucs4be_wchar(int c, mbfl_convert_filter *filter)
+int mbfl_filt_conv_utf32be_wchar(int c, mbfl_convert_filter *filter)
 {
 	int n;
 
@@ -208,9 +207,9 @@ int mbfl_filt_conv_ucs4be_wchar(int c, mbfl_convert_filter *filter)
 }
 
 /*
- * wchar => UCS-4BE
+ * wchar => UTF-32BE
  */
-int mbfl_filt_conv_wchar_ucs4be(int c, mbfl_convert_filter *filter)
+int mbfl_filt_conv_wchar_utf32be(int c, mbfl_convert_filter *filter)
 {
 	if (c >= 0 && c < MBFL_WCSGROUP_UCS4MAX) {
 		CK((*filter->output_function)((c >> 24) & 0xff, filter->data));
@@ -227,9 +226,9 @@ int mbfl_filt_conv_wchar_ucs4be(int c, mbfl_convert_filter *filter)
 }
 
 /*
- * UCS-4LE => wchar
+ * UTF-32LE => wchar
  */
-int mbfl_filt_conv_ucs4le_wchar(int c, mbfl_convert_filter *filter)
+int mbfl_filt_conv_utf32le_wchar(int c, mbfl_convert_filter *filter)
 {
 	int n;
 
@@ -254,9 +253,9 @@ int mbfl_filt_conv_ucs4le_wchar(int c, mbfl_convert_filter *filter)
 }
 
 /*
- * wchar => UCS-4LE
+ * wchar => UTF-32LE
  */
-int mbfl_filt_conv_wchar_ucs4le(int c, mbfl_convert_filter *filter)
+int mbfl_filt_conv_wchar_utf32le(int c, mbfl_convert_filter *filter)
 {
 	if (c >= 0 && c < MBFL_WCSGROUP_UCS4MAX) {
 		CK((*filter->output_function)(c & 0xff, filter->data));
@@ -271,5 +270,3 @@ int mbfl_filt_conv_wchar_ucs4le(int c, mbfl_convert_filter *filter)
 
 	return c;
 }
-
-

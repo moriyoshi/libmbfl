@@ -35,6 +35,8 @@
 #define MBFL_QPRINT_STS_MIME_HEADER 0x1000000
 
 extern const mbfl_encoding mbfl_encoding_qprint;
+extern const struct mbfl_convert_vtbl vtbl_8bit_qprint;
+extern const struct mbfl_convert_vtbl vtbl_qprint_8bit;
 
 int mbfl_filt_conv_qprintenc(int c, mbfl_convert_filter *filter);
 int mbfl_filt_conv_qprintenc_flush(mbfl_convert_filter *filter);

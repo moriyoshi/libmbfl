@@ -75,6 +75,25 @@ const struct mbfl_identify_vtbl vtbl_identify_cp936 = {
 	mbfl_filt_ident_cp936
 };
 
+const struct mbfl_convert_vtbl vtbl_cp936_wchar = {
+	mbfl_no_encoding_cp936,
+	mbfl_no_encoding_wchar,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_cp936_wchar,
+	mbfl_filt_conv_common_flush
+};
+
+const struct mbfl_convert_vtbl vtbl_wchar_cp936 = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_cp936,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_wchar_cp936,
+	mbfl_filt_conv_common_flush
+};
+
+
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
 
 /*

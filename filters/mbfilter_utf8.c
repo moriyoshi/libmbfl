@@ -73,6 +73,24 @@ const struct mbfl_identify_vtbl vtbl_identify_utf8 = {
 	mbfl_filt_ident_utf8
 };
 
+const struct mbfl_convert_vtbl vtbl_utf8_wchar = {
+	mbfl_no_encoding_utf8,
+	mbfl_no_encoding_wchar,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_utf8_wchar,
+	mbfl_filt_conv_common_flush
+};
+
+const struct mbfl_convert_vtbl vtbl_wchar_utf8 = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_utf8,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_wchar_utf8,
+	mbfl_filt_conv_common_flush
+};
+
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
 
 /*

@@ -34,6 +34,8 @@
 
 extern const mbfl_encoding mbfl_encoding_koi8r;
 extern const struct mbfl_identify_vtbl vtbl_identify_koi8r;
+extern const struct mbfl_convert_vtbl vtbl_wchar_koi8r;
+extern const struct mbfl_convert_vtbl vtbl_koi8r_wchar;
 
 int mbfl_filt_conv_koi8r_wchar(int c, mbfl_convert_filter *filter);
 int mbfl_filt_conv_wchar_koi8r(int c, mbfl_convert_filter *filter);

@@ -46,6 +46,23 @@ const mbfl_encoding mbfl_encoding_qprint = {
 	MBFL_ENCTYPE_SBCS
 };
 
+const struct mbfl_convert_vtbl vtbl_8bit_qprint = {
+	mbfl_no_encoding_8bit,
+	mbfl_no_encoding_qprint,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_qprintenc,
+	mbfl_filt_conv_qprintenc_flush };
+
+const struct mbfl_convert_vtbl vtbl_qprint_8bit = {
+	mbfl_no_encoding_qprint,
+	mbfl_no_encoding_8bit,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_qprintdec,
+	mbfl_filt_conv_qprintdec_flush };
+
+
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
 
 /*

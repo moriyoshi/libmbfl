@@ -32,7 +32,7 @@
 #endif
 
 #include "mbfilter.h"
-#include "mbfilter_euc_kr.h"
+#include "mbfilter_iso2022_kr.h"
 #include "unicode_table_uhc.h"
 
 static int mbfl_filt_ident_2022kr(int c, mbfl_identify_filter *filter);
@@ -51,6 +51,24 @@ const struct mbfl_identify_vtbl vtbl_identify_2022kr = {
 	mbfl_filt_ident_common_ctor,
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_2022kr
+};
+
+const struct mbfl_convert_vtbl vtbl_wchar_2022kr = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_2022kr,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_wchar_2022kr,
+	mbfl_filt_conv_any_2022kr_flush
+};
+
+const struct mbfl_convert_vtbl vtbl_2022kr_wchar = {
+	mbfl_no_encoding_2022kr,
+	mbfl_no_encoding_wchar,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_2022kr_wchar,
+	mbfl_filt_conv_common_flush
 };
 
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)

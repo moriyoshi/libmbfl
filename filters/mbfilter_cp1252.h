@@ -34,6 +34,8 @@
 
 extern const mbfl_encoding mbfl_encoding_cp1252;
 extern const struct mbfl_identify_vtbl vtbl_identify_cp1252;
+extern const struct mbfl_convert_vtbl vtbl_cp1252_wchar;
+extern const struct mbfl_convert_vtbl vtbl_wchar_cp1252;
 
 int mbfl_filt_conv_wchar_cp1252(int c, mbfl_convert_filter *filter);
 int mbfl_filt_conv_cp1252_wchar(int c, mbfl_convert_filter *filter);

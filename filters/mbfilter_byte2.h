@@ -35,6 +35,10 @@
 
 extern const mbfl_encoding mbfl_encoding_byte2be;
 extern const mbfl_encoding mbfl_encoding_byte2le;
+extern const struct mbfl_convert_vtbl vtbl_byte2be_wchar;
+extern const struct mbfl_convert_vtbl vtbl_wchar_byte2be;
+extern const struct mbfl_convert_vtbl vtbl_byte2le_wchar;
+extern const struct mbfl_convert_vtbl vtbl_wchar_byte2le;
 
 int mbfl_filt_conv_wchar_byte2be(int c, mbfl_convert_filter *filter);
 int mbfl_filt_conv_byte2be_wchar(int c, mbfl_convert_filter *filter);

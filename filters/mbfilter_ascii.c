@@ -55,8 +55,34 @@ const struct mbfl_identify_vtbl vtbl_identify_ascii = {
 	mbfl_filt_ident_ascii
 };
 
+const struct mbfl_convert_vtbl vtbl_ascii_wchar = {
+	mbfl_no_encoding_ascii,
+	mbfl_no_encoding_wchar,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_ascii_wchar,
+	mbfl_filt_conv_common_flush
+};
+
+const struct mbfl_convert_vtbl vtbl_wchar_ascii = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_ascii,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_wchar_ascii,
+	mbfl_filt_conv_common_flush
+};
 
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
+
+/*
+ * ASCII => wchar
+ */
+int mbfl_filt_conv_ascii_wchar(int c, mbfl_convert_filter *filter)
+{
+	return (*filter->output_function)(c, filter->data);
+}
+
 
 /*
  * wchar => ASCII

@@ -32,6 +32,8 @@
 
 extern const mbfl_encoding mbfl_encoding_8859_4;
 extern const struct mbfl_identify_vtbl vtbl_identify_8859_4;
+extern const struct mbfl_convert_vtbl vtbl_8859_4_wchar;
+extern const struct mbfl_convert_vtbl vtbl_wchar_8859_4;
 
 int mbfl_filt_conv_8859_4_wchar(int c, mbfl_convert_filter *filter);
 int mbfl_filt_conv_wchar_8859_4(int c, mbfl_convert_filter *filter);

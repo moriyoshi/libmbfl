@@ -63,6 +63,60 @@ const mbfl_encoding mbfl_encoding_ucs2le = {
 	MBFL_ENCTYPE_WCS2LE
 };
 
+const struct mbfl_convert_vtbl vtbl_ucs2_wchar = {
+	mbfl_no_encoding_ucs2,
+	mbfl_no_encoding_wchar,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_ucs2_wchar,
+	mbfl_filt_conv_common_flush
+};
+
+const struct mbfl_convert_vtbl vtbl_wchar_ucs2 = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_ucs2,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_wchar_ucs2be,
+	mbfl_filt_conv_common_flush
+};
+
+const struct mbfl_convert_vtbl vtbl_ucs2be_wchar = {
+	mbfl_no_encoding_ucs2be,
+	mbfl_no_encoding_wchar,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_ucs2be_wchar,
+	mbfl_filt_conv_common_flush
+};
+
+const struct mbfl_convert_vtbl vtbl_wchar_ucs2be = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_ucs2be,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_wchar_ucs2be,
+	mbfl_filt_conv_common_flush
+};
+
+const struct mbfl_convert_vtbl vtbl_ucs2le_wchar = {
+	mbfl_no_encoding_ucs2le,
+	mbfl_no_encoding_wchar,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_ucs2le_wchar,
+	mbfl_filt_conv_common_flush
+};
+
+const struct mbfl_convert_vtbl vtbl_wchar_ucs2le = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_ucs2le,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_wchar_ucs2le,
+	mbfl_filt_conv_common_flush
+};
+
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
 
 /*
@@ -108,6 +162,25 @@ int mbfl_filt_conv_ucs2_wchar(int c, mbfl_convert_filter *filter)
 }
 
 /*
+ * UCS-2BE => wchar
+ */
+int mbfl_filt_conv_ucs2be_wchar(int c, mbfl_convert_filter *filter)
+{
+	int n;
+
+	if (filter->status == 0) {
+		filter->status = 1;
+		n = (c & 0xff) << 8;
+		filter->cache = n;
+	} else {
+		filter->status = 0;
+		n = (c & 0xff) | filter->cache;
+		CK((*filter->output_function)(n, filter->data));
+	}
+	return c;
+}
+
+/*
  * wchar => UCS-2BE
  */
 int mbfl_filt_conv_wchar_ucs2be(int c, mbfl_convert_filter *filter)
@@ -123,6 +196,26 @@ int mbfl_filt_conv_wchar_ucs2be(int c, mbfl_convert_filter *filter)
 
 	return c;
 }
+
+/*
+ * UCS-2LE => wchar
+ */
+int mbfl_filt_conv_ucs2le_wchar(int c, mbfl_convert_filter *filter)
+{
+	int n;
+
+	if (filter->status == 0) {
+		filter->status = 1;
+		n = c & 0xff;
+		filter->cache = n;
+	} else {
+		filter->status = 0;
+		n = ((c & 0xff) << 8) | filter->cache;
+		CK((*filter->output_function)(n, filter->data));
+	}
+	return c;
+}
+
 
 /*
  * wchar => UCS-2LE

@@ -35,7 +35,10 @@
 
 extern const mbfl_encoding mbfl_encoding_ascii;
 extern const struct mbfl_identify_vtbl vtbl_identify_ascii;
+extern const struct mbfl_convert_vtbl vtbl_ascii_wchar;
+extern const struct mbfl_convert_vtbl vtbl_wchar_ascii;
  
+int mbfl_filt_conv_ascii_wchar(int c, mbfl_convert_filter *filter);
 int mbfl_filt_conv_wchar_ascii(int c, mbfl_convert_filter *filter);
 
 #endif /* MBFL_MBFILTER_ASCII_H */

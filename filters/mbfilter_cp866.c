@@ -32,6 +32,7 @@
 #endif
 
 #include "mbfilter.h"
+#include "mbfilter_cp866.h"
 #include "unicode_table_cp866.h"
 
 static int mbfl_filt_ident_cp866(int c, mbfl_identify_filter *filter);
@@ -54,6 +55,23 @@ const struct mbfl_identify_vtbl vtbl_identify_cp866 = {
 	mbfl_filt_ident_cp866
 };
 
+const struct mbfl_convert_vtbl vtbl_wchar_cp866 = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_cp866,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_wchar_cp866,
+	mbfl_filt_conv_common_flush
+};
+
+const struct mbfl_convert_vtbl vtbl_cp866_wchar = {
+	mbfl_no_encoding_cp866,
+	mbfl_no_encoding_wchar,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_cp866_wchar,
+	mbfl_filt_conv_common_flush
+};
 
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
 

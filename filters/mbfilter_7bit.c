@@ -44,7 +44,32 @@ const mbfl_encoding mbfl_encoding_7bit = {
 	MBFL_ENCTYPE_SBCS
 };
 
+const struct mbfl_convert_vtbl vtbl_8bit_7bit = {
+	mbfl_no_encoding_8bit,
+	mbfl_no_encoding_7bit,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_any_7bit,
+	mbfl_filt_conv_common_flush
+};
+
+const struct mbfl_convert_vtbl vtbl_7bit_8bit = {
+	mbfl_no_encoding_7bit,
+	mbfl_no_encoding_8bit,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_7bit_any,
+	mbfl_filt_conv_common_flush
+};
+
+
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
+
+int mbfl_filt_conv_7bit_any(int c, mbfl_convert_filter *filter)
+{
+	return (*filter->output_function)(c, filter->data);
+}
+
 
 int mbfl_filt_conv_any_7bit(int c, mbfl_convert_filter *filter)
 {

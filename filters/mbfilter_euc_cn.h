@@ -32,6 +32,8 @@
 
 extern const mbfl_encoding mbfl_encoding_euc_cn;
 extern const struct mbfl_identify_vtbl vtbl_identify_euccn;
+extern const struct mbfl_convert_vtbl vtbl_euccn_wchar;
+extern const struct mbfl_convert_vtbl vtbl_wchar_euccn;
 
 int mbfl_filt_conv_euccn_wchar(int c, mbfl_convert_filter *filter);
 int mbfl_filt_conv_wchar_euccn(int c, mbfl_convert_filter *filter);

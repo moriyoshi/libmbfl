@@ -54,6 +54,23 @@ const struct mbfl_identify_vtbl vtbl_identify_hz = {
 	mbfl_filt_ident_hz
 };
 
+const struct mbfl_convert_vtbl vtbl_hz_wchar = {
+	mbfl_no_encoding_hz,
+	mbfl_no_encoding_wchar,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_hz_wchar,
+	mbfl_filt_conv_common_flush
+};
+
+const struct mbfl_convert_vtbl vtbl_wchar_hz = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_hz,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_wchar_hz,
+	mbfl_filt_conv_any_hz_flush
+};
 
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
 

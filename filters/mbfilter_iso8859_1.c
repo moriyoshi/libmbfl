@@ -52,7 +52,34 @@ const struct mbfl_identify_vtbl vtbl_identify_8859_1 = {
 	mbfl_filt_ident_true
 };
 
+const struct mbfl_convert_vtbl vtbl_8859_1_wchar = {
+	mbfl_no_encoding_8859_1,
+	mbfl_no_encoding_wchar,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_8859_1_wchar,
+	mbfl_filt_conv_common_flush
+};
+
+const struct mbfl_convert_vtbl vtbl_wchar_8859_1 = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_8859_1,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_wchar_8859_1,
+	mbfl_filt_conv_common_flush
+};
+
+
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
+
+/*
+ * ISO-8859-1 => wchar
+ */
+int mbfl_filt_conv_8859_1_wchar(int c, mbfl_convert_filter *filter)
+{
+	return (*filter->output_function)(c, filter->data);
+}
 
 /*
  * wchar => ISO-8859-1

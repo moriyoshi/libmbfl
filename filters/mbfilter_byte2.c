@@ -44,8 +44,6 @@ const mbfl_encoding mbfl_encoding_byte2be = {
 	MBFL_ENCTYPE_SBCS
 };
 
-#define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
-
 const mbfl_encoding mbfl_encoding_byte2le = {
 	mbfl_no_encoding_byte2le,
 	"byte2le",
@@ -55,7 +53,40 @@ const mbfl_encoding mbfl_encoding_byte2le = {
 	MBFL_ENCTYPE_SBCS
 };
 
-static const char *mbfl_encoding_uhc_aliases[] = {"CP949", NULL};
+const struct mbfl_convert_vtbl vtbl_byte2be_wchar = {
+	mbfl_no_encoding_byte2be,
+	mbfl_no_encoding_wchar,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_byte2be_wchar,
+	mbfl_filt_conv_common_flush
+};
+
+const struct mbfl_convert_vtbl vtbl_wchar_byte2be = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_byte2be,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_wchar_byte2be,
+	mbfl_filt_conv_common_flush };
+
+const struct mbfl_convert_vtbl vtbl_byte2le_wchar = {
+	mbfl_no_encoding_byte2le,
+	mbfl_no_encoding_wchar,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_byte2le_wchar,
+	mbfl_filt_conv_common_flush };
+
+const struct mbfl_convert_vtbl vtbl_wchar_byte2le = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_byte2le,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_wchar_byte2le,
+	mbfl_filt_conv_common_flush };
+
+#define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
 
 int mbfl_filt_conv_byte2be_wchar(int c, mbfl_convert_filter *filter)
 {

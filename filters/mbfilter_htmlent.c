@@ -73,6 +73,24 @@ const mbfl_encoding mbfl_encoding_html_ent = {
 	MBFL_ENCTYPE_HTML_ENT
 };
 
+const struct mbfl_convert_vtbl vtbl_wchar_html = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_html_ent,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_html_enc,
+	mbfl_filt_conv_html_enc_flush
+};
+
+const struct mbfl_convert_vtbl vtbl_html_wchar = {
+	mbfl_no_encoding_html_ent,
+	mbfl_no_encoding_wchar,
+	mbfl_filt_conv_html_dec_ctor,
+	mbfl_filt_conv_html_dec_dtor,
+	mbfl_filt_conv_html_dec,
+	mbfl_filt_conv_html_dec_flush };
+
+
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
 
 /*

@@ -43,6 +43,15 @@ const mbfl_encoding mbfl_encoding_uuencode = {
 	MBFL_ENCTYPE_SBCS
 };
 
+const struct mbfl_convert_vtbl vtbl_uuencode_8bit = {
+	mbfl_no_encoding_uuencode,
+	mbfl_no_encoding_8bit,
+	mbfl_filt_conv_common_ctor,
+	mbfl_filt_conv_common_dtor,
+	mbfl_filt_conv_uudec,
+	mbfl_filt_conv_common_flush
+};
+
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
 
 /* uuencode => any */
