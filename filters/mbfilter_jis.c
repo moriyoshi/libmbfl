@@ -69,7 +69,7 @@ const mbfl_encoding mbfl_encoding_2022jp = {
 	NULL,
 	NULL,
 	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_SHFTCODE,
-	&vtbl_identify_jis
+	&vtbl_identify_2022jp
 };
 
 const mbfl_convert_vtbl vtbl_jis_wchar = {
