@@ -1,6 +1,6 @@
 /*
- *
- *
+ * "streamable kanji code filter and converter"
+ * Copyright (c) 1998-2002 HappySize, Inc. All rights reserved.
  *
  * LICENSE NOTICES
  *
@@ -18,8 +18,8 @@
  * if not, write to the Free Software Foundation, Inc., 59 Temple Place,
  * Suite 330, Boston, MA  02111-1307  USA
  *
- *
- *
+ * The author of this file: Hayk Chamyan <hamshen@gmail.com>
+ *  
  */
 
 /*
