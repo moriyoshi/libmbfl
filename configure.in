@@ -86,8 +86,13 @@ if test "$enable_threads" != "no"; then
       ;;
     "win32native" [)]
       AC_DEFINE([USE_WIN32_NATIVE_THREAD],[1],[Define to 1 if win32 native thread is adopted for threading])
+      ;;
     "gnupth" [)]
       AC_DEFINE([USE_GNUPTH],[1],[Define to 1 if GNUPth is adopted for threading])
+      ;;
+    "benative" [)]
+      AC_DEFINE([USE_BE_NATIVE_THREAD],[1],[Define to 1 if BeOS native thread is adopted for threading])
+      ;;
   esac
 fi
 
