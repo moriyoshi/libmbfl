@@ -280,7 +280,6 @@ MBFLAPI const mbfl_encoding * mbfl_identify_encoding(mbfl_string *string, mbfl_e
 {
 	int i, n, num, bad;
 	unsigned char *p;
-	const mbfl_identify_vtbl *vtbl;
 	mbfl_identify_filter *flist, *filter;
 	const mbfl_encoding *encoding;
 
@@ -303,21 +302,23 @@ MBFLAPI const mbfl_encoding * mbfl_identify_encoding(mbfl_string *string, mbfl_e
 	n = string->len;
 	p = string->val;
 
-	bad = 0;
-	while (n > 0) {
-		for (i = 0; i < num; i++) {
-			filter = &flist[i];
-			(*filter->filter_function)(*p, filter);
-			if (filter->flag) {
-				bad++;
+	if (p != NULL) {
+		bad = 0;
+		while (n > 0) {
+			for (i = 0; i < num; i++) {
+				filter = &flist[i];
+				(*filter->filter_function)(*p, filter);
+				if (filter->flag) {
+					bad++;
+				}
+				i++;
 			}
-			i++;
+			if ((num - 1) <= bad) {
+				break;
+			}
+			p++;
+			n--;
 		}
-		if ((num - 1) <= bad) {
-			break;
-		}
-		p++;
-		n--;
 	}
 
 	/* judge */
