@@ -50,9 +50,9 @@ typedef struct _mbfl_language {
 	mbfl_encoding_id mail_body_encoding;
 } mbfl_language;
 
-MBFLAPI mbfl_language_id mbfl_language_id_uni;
+MBFLAPI extern mbfl_language_id mbfl_language_id_uni;
 
-MBFLAPI int mbfl_register_language(const mbfl_language *lang, mbfl_language_id *plangid);
+MBFLAPI extern int mbfl_register_language(const mbfl_language *lang, mbfl_language_id *plangid);
 
 MBFLAPI extern const mbfl_language * mbfl_get_language_by_name(const char *name);
 MBFLAPI extern const mbfl_language * mbfl_get_language_by_id(mbfl_language_id no_language);
