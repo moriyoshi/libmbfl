@@ -206,8 +206,7 @@ const mbfl_convert_vtbl *mbfl_convert_filter_list[] = {
 	NULL
 };
 
-mbfl_convert_filter *
-mbfl_convert_filter_new(
+mbfl_convert_filter * mbfl_convert_filter_new(
     enum mbfl_no_encoding from,
     enum mbfl_no_encoding to,
     int (*output_function)(int, void* ),
@@ -251,8 +250,7 @@ mbfl_convert_filter_new(
 	return filter;
 }
 
-void
-mbfl_convert_filter_delete(mbfl_convert_filter *filter)
+void mbfl_convert_filter_delete(mbfl_convert_filter *filter)
 {
 	if (filter) {
 		(*filter->filter_dtor)(filter);
@@ -260,24 +258,18 @@ mbfl_convert_filter_delete(mbfl_convert_filter *filter)
 	}
 }
 
-int
-mbfl_convert_filter_feed(int c, mbfl_convert_filter *filter)
+int mbfl_convert_filter_feed(int c, mbfl_convert_filter *filter)
 {
 	return (*filter->filter_function)(c, filter);
 }
 
-int
-mbfl_convert_filter_flush(mbfl_convert_filter *filter)
+int mbfl_convert_filter_flush(mbfl_convert_filter *filter)
 {
 	(*filter->filter_flush)(filter);
 	return (filter->flush_function ? (*filter->flush_function)(filter->data) : 0);
 }
 
-void
-mbfl_convert_filter_reset(
-    mbfl_convert_filter *filter,
-    enum mbfl_no_encoding from,
-    enum mbfl_no_encoding to)
+void mbfl_convert_filter_reset(mbfl_convert_filter *filter, enum mbfl_no_encoding from, enum mbfl_no_encoding to)
 {
 	/* destruct old filter */
 	(*filter->filter_dtor)(filter);
@@ -293,10 +285,7 @@ mbfl_convert_filter_reset(
 	(*filter->filter_ctor)(filter);
 }
 
-void
-mbfl_convert_filter_copy(
-    mbfl_convert_filter *src,
-    mbfl_convert_filter *dist)
+void mbfl_convert_filter_copy(mbfl_convert_filter *src, mbfl_convert_filter *dist)
 {
 	dist->filter_ctor = src->filter_ctor;
 	dist->filter_dtor = src->filter_dtor;
@@ -360,8 +349,7 @@ mbfl_convert_filter_strncat(mbfl_convert_filter *filter, const unsigned char *p,
 #endif
 
 /* illegal character output function for conv-filter */
-int
-mbfl_filt_conv_illegal_output(int c, mbfl_convert_filter *filter)
+int mbfl_filt_conv_illegal_output(int c, mbfl_convert_filter *filter)
 {
 	int mode_backup, ret, n, m, r;
 

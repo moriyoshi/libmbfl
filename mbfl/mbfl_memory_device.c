@@ -41,8 +41,7 @@
 /*
  * memory device output functions
  */
-void
-mbfl_memory_device_init(mbfl_memory_device *device, int initsz, int allocsz)
+void mbfl_memory_device_init(mbfl_memory_device *device, int initsz, int allocsz)
 {
 	if (device) {
 		device->length = 0;
@@ -62,8 +61,7 @@ mbfl_memory_device_init(mbfl_memory_device *device, int initsz, int allocsz)
 	}
 }
 
-void
-mbfl_memory_device_realloc(mbfl_memory_device *device, int initsz, int allocsz)
+void mbfl_memory_device_realloc(mbfl_memory_device *device, int initsz, int allocsz)
 {
 	unsigned char *tmp;
 
@@ -83,8 +81,7 @@ mbfl_memory_device_realloc(mbfl_memory_device *device, int initsz, int allocsz)
 	}
 }
 
-void
-mbfl_memory_device_clear(mbfl_memory_device *device)
+void mbfl_memory_device_clear(mbfl_memory_device *device)
 {
 	if (device) {
 		if (device->buffer) {
@@ -104,16 +101,14 @@ mbfl_memory_device_reset(mbfl_memory_device *device)
 	}
 }
 
-void
-mbfl_memory_device_unput(mbfl_memory_device *device)
+void mbfl_memory_device_unput(mbfl_memory_device *device)
 {
 	if (device->pos > 0) {
 		device->pos--;
 	}
 }
 
-mbfl_string *
-mbfl_memory_device_result(mbfl_memory_device *device, mbfl_string *result)
+mbfl_string *mbfl_memory_device_result(mbfl_memory_device *device, mbfl_string *result)
 {
 	if (device && result) {
 		result->len = device->pos;
@@ -133,8 +128,7 @@ mbfl_memory_device_result(mbfl_memory_device *device, mbfl_string *result)
 	return result;
 }
 
-int
-mbfl_memory_device_output(int c, void *data)
+int mbfl_memory_device_output(int c, void *data)
 {
 	mbfl_memory_device *device = (mbfl_memory_device *)data;
 
@@ -156,8 +150,7 @@ mbfl_memory_device_output(int c, void *data)
 	return c;
 }
 
-int
-mbfl_memory_device_output2(int c, void *data)
+int mbfl_memory_device_output2(int c, void *data)
 {
 	mbfl_memory_device *device = (mbfl_memory_device *)data;
 
@@ -181,8 +174,7 @@ mbfl_memory_device_output2(int c, void *data)
 	return c;
 }
 
-int
-mbfl_memory_device_output4(int c, void* data)
+int mbfl_memory_device_output4(int c, void* data)
 {
 	mbfl_memory_device *device = (mbfl_memory_device *)data;
 
@@ -208,8 +200,7 @@ mbfl_memory_device_output4(int c, void* data)
 	return c;
 }
 
-int
-mbfl_memory_device_strcat(mbfl_memory_device *device, const char *psrc)
+int mbfl_memory_device_strcat(mbfl_memory_device *device, const char *psrc)
 {
 	int len;
 	unsigned char *w;
@@ -244,8 +235,7 @@ mbfl_memory_device_strcat(mbfl_memory_device *device, const char *psrc)
 	return len;
 }
 
-int
-mbfl_memory_device_strncat(mbfl_memory_device *device, const char *psrc, int len)
+int mbfl_memory_device_strncat(mbfl_memory_device *device, const char *psrc, int len)
 {
 	unsigned char *w;
 
@@ -270,8 +260,7 @@ mbfl_memory_device_strncat(mbfl_memory_device *device, const char *psrc, int len
 	return len;
 }
 
-int
-mbfl_memory_device_devcat(mbfl_memory_device *dest, mbfl_memory_device *src)
+int mbfl_memory_device_devcat(mbfl_memory_device *dest, mbfl_memory_device *src)
 {
 	int n;
 	unsigned char *p, *w;
@@ -299,8 +288,7 @@ mbfl_memory_device_devcat(mbfl_memory_device *dest, mbfl_memory_device *src)
 	return n;
 }
 
-void
-mbfl_wchar_device_init(mbfl_wchar_device *device)
+void mbfl_wchar_device_init(mbfl_wchar_device *device)
 {
 	if (device) {
 		device->buffer = (unsigned int *)0;
@@ -323,8 +311,7 @@ mbfl_wchar_device_clear(mbfl_wchar_device *device)
 	}
 }
 
-int
-mbfl_wchar_device_output(int c, void *data)
+int mbfl_wchar_device_output(int c, void *data)
 {
 	mbfl_wchar_device *device = (mbfl_wchar_device *)data;
 
