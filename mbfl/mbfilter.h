@@ -109,8 +109,12 @@
 #define MBFL_OUTPUTFILTER_ILLEGAL_MODE_LONG 2
 
 /*
- * buffering converter
+ * prologue / epilogue functions
  */
+
+MBFLAPI int mbfl_init(void);
+MBFLAPI void mbfl_cleanup(void);
+
 /*
  * encoding detector
  */

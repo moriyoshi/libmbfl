@@ -106,6 +106,7 @@
 #include "mbfl_filter_output.h"
 #include "mbfl_memory_device.h"
 #include "mbfilter_pass.h"
+#include "private.h"
 
 /* hex character table "0123456789ABCDEF" */
 static char mbfl_hexchar_table[] = {
@@ -116,6 +117,23 @@ static char mbfl_hexchar_table[] = {
  * encoding filter
  */
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
+
+MBFLAPI int mbfl_init(void)
+{
+	int err;
+
+	if ((err = mbfl_language_tbl_init()) != 0) {
+		goto out;
+	}
+
+out:
+	return err;
+}
+
+MBFLAPI void mbfl_cleanup(void)
+{
+	mbfl_language_tbl_cleanup();
+}
 
 MBFLAPI void mbfl_encoding_detector_delete(mbfl_encoding_detector *identd)
 {
