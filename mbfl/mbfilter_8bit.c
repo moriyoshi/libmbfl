@@ -38,7 +38,7 @@
 
 #include "mbfilter.h"
 
-static const char *mbfl_encoding_8bit_aliases[] = {"binary"};
+static const char *mbfl_encoding_8bit_aliases[] = {"binary", NULL};
 
 const mbfl_encoding mbfl_encoding_8bit = {
 	mbfl_no_encoding_8bit,
