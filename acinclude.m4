@@ -6,6 +6,32 @@ AC_DEFUN([MBFL_PTHREADS],[
     AC_CHECK_FUNC([pthread_mutex_lock], [], [avail_pthread_funcs=0])
     AC_CHECK_FUNC([pthread_mutex_unlock], [], [vail_pthread_funcs=0])
     if test "$avail_pthread_funcs"; then
+      AC_MSG_CHECKING([if PTHREAD_MUTEX_RECURSIVE is defined])
+      AC_TRY_CPP([
+#include <pthread.h>
+
+#ifndef PTHREAD_MUTEX_RECURSIVE
+#error choke me
+#endif
+      ], [
+        AC_MSG_RESULT([yes])
+        AC_DEFINE([HAVE_PTHREAD_MUTEX_RECURSIVE], [1], [Define to 1 if PTHREAD_MUTEX_RECURSIVE is defined])
+      ], [
+        AC_MSG_RESULT([no])
+        AC_MSG_CHECKING([if PTHREAD_MUTEX_RECURSIVE_NP is defined])
+        AC_TRY_CPP([
+#include <pthread.h>
+
+#ifndef PTHREAD_MUTEX_RECURSIVE_NP
+#error choke me
+#endif
+        ], [
+          AC_MSG_RESULT([yes])
+          AC_DEFINE([HAVE_PTHREAD_MUTEX_RECURSIVE_NP], [1], [Define to 1 if PTHREAD_MUTEX_RECURSIVE_NP is defined])
+        ], [
+          AC_MSG_RESULT([no])
+        ])
+      ])
       AC_DEFINE([HAVE_PTHREAD], [1], [Define to 1 if pthread is available])
       $1
     fi

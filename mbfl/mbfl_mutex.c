@@ -72,7 +72,13 @@ MBFLAPI mbfl_mutex *mbfl_mutex_new(void)
 
 	pthread_mutexattr_init(&mattr);
 	pthread_mutexattr_setpshared(&mattr, PTHREAD_PROCESS_PRIVATE);
+#ifdef HAVE_PTHREAD_MUTEX_RECURSIVE
+	pthread_mutexattr_settype(&mattr, PTHREAD_MUTEX_RECURSIVE);
+#else
+#ifdef HAVE_PTHREAD_MUTEX_RECURSIVE_NP
 	pthread_mutexattr_settype(&mattr, PTHREAD_MUTEX_RECURSIVE_NP);
+#endif
+#endif
 	pthread_mutex_init(mutex, &mattr);
 	pthread_mutexattr_destroy(&mattr);
 #elif defined(USE_WIN32_NATIVE_THREAD)
