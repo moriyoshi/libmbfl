@@ -2,6 +2,8 @@
 #include "config.h"
 #endif
 
+#ifdef ENABLE_THREADS
+
 #ifdef HAVE_STDDEF_H
 #include <stddef.h>
 #endif
@@ -14,13 +16,13 @@
 #include <unistd.h>
 #endif
 
-#if defined(USE_PTHREAD)
+#if USE_PTHREAD
 #if defined(HAVE_PTHREAD)
 #include <pthread.h>
 #else
 #error "pthread is not available"
 #endif
-#elif defined(USE_WIN32_NATIVE_THREAD)
+#elif USE_WIN32_NATIVE_THREAD
 #if defined(__WIN32__)
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
@@ -35,8 +37,6 @@
 
 #include "mbfl_allocators.h"
 #include "mbfl_mutex.h"
-
-#ifdef _REENTRANT
 
 MBFLAPI mbfl_mutex *mbfl_mutex_new(void)
 {
@@ -112,5 +112,4 @@ MBFLAPI void mbfl_mutex_free(mbfl_mutex *mutex)
 	mbfl_free(mutex);
 }
 
-#endif /* _REENTRANT */
-
+#endif /* ENABLE_THREADS */ 

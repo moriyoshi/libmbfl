@@ -26,6 +26,7 @@ MBFLAPI int mbfl_list_ctor(mbfl_list *listd)
 	}
 
 	listd->insert_item_at_op = NULL;
+	listd->update_item_at_op = NULL;
 	listd->get_item_at_op = NULL;
 	listd->index_of_op = NULL;
 	listd->_super.add_item_op = (mbfl_collection_add_item_func)_mbfl_list_add_item;
