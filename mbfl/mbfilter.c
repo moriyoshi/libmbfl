@@ -163,14 +163,18 @@ static void *__mbfl__malloc(size_t);
 static void *__mbfl__realloc(void *, size_t);
 static void *__mbfl__calloc(unsigned int, size_t);
 static void __mbfl__free(void *);
- 
-void *(*__mbfl_malloc)(size_t) = __mbfl__malloc;
-void *(*__mbfl_realloc)(void *, size_t) = __mbfl__realloc;
-void *(*__mbfl_calloc)(unsigned int, size_t) = __mbfl__calloc;
-void (*__mbfl_free)(void *) = __mbfl__free;
-void *(*__mbfl_pmalloc)(size_t) = __mbfl__malloc;
-void *(*__mbfl_prealloc)(void *, size_t) = __mbfl__realloc;
-void (*__mbfl_pfree)(void *) = __mbfl__free; 
+
+static mbfl_allocators default_allocators = {
+	__mbfl__malloc,
+	__mbfl__realloc,
+	__mbfl__calloc,
+	__mbfl__free,
+	__mbfl__malloc,
+	__mbfl__realloc,
+	__mbfl__free
+};
+
+mbfl_allocators *__mbfl_allocators = &default_allocators;
 
 static const mbfl_language *mbfl_language_ptr_table[] = {
 	&mbfl_language_uni,
