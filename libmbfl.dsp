@@ -243,6 +243,18 @@ SOURCE=.\filters\mbfilter_koi8r.c
 # End Source File
 # Begin Source File
 
+SOURCE=.\filters\mbfilter_armscii8.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\filters\mbfilter_armscii8.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\filters\mbfilter_armscii8.c
+# End Source File
+# Begin Source File
+
 SOURCE=.\mbfl\mbfilter_pass.c
 # End Source File
 # Begin Source File
@@ -331,11 +343,23 @@ SOURCE=.\nls\nls_de.c
 # End Source File
 # Begin Source File
 
+SOURCE=.\nls\nls_hy.c
+# End Source File
+# Begin Source File
+
 SOURCE=.\nls\nls_en.c
 # End Source File
 # Begin Source File
 
+SOURCE=.\nls\nls_hy.c
+# End Source File
+# Begin Source File
+
 SOURCE=.\nls\nls_ja.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\nls\nls_hy.c
 # End Source File
 # Begin Source File
 
@@ -532,6 +556,10 @@ SOURCE=.\filters\mbfilter_iso8859_7.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\filters\mbfilter_armscii8.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\filters\mbfilter_iso8859_8.h
 # End Source File
 # Begin Source File
@@ -540,11 +568,19 @@ SOURCE=.\filters\mbfilter_iso8859_9.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\filters\mbfilter_armscii8.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\filters\mbfilter_jis.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\filters\mbfilter_koi8r.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\filters\mbfilter_armscii8.h
 # End Source File
 # Begin Source File
 
@@ -624,6 +660,10 @@ SOURCE=.\mbfl\mbfl_ident.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\nls\nls_hy.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\mbfl\mbfl_language.h
 # End Source File
 # Begin Source File
@@ -636,6 +676,10 @@ SOURCE=.\mbfl\mbfl_string.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\nls\nls_hy.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\nls\nls_de.h
 # End Source File
 # Begin Source File
@@ -645,6 +689,10 @@ SOURCE=.\nls\nls_en.h
 # Begin Source File
 
 SOURCE=.\nls\nls_ja.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\nls\nls_hy.h
 # End Source File
 # Begin Source File
 
@@ -728,6 +776,10 @@ SOURCE=.\filters\unicode_table_iso8859_3.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\filters\unicode_table_armscii8.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\filters\unicode_table_iso8859_4.h
 # End Source File
 # Begin Source File
@@ -744,6 +796,10 @@ SOURCE=.\filters\unicode_table_iso8859_7.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\filters\unicode_table_armscii8.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\filters\unicode_table_iso8859_8.h
 # End Source File
 # Begin Source File
@@ -757,6 +813,10 @@ SOURCE=.\filters\unicode_table_jis.h
 # Begin Source File
 
 SOURCE=.\filters\unicode_table_koi8r.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\filters\unicode_table_armscii8.h
 # End Source File
 # Begin Source File
 
