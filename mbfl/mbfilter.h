@@ -137,7 +137,6 @@ mbfl_string * mbfl_buffer_converter_getbuffer(mbfl_buffer_converter *convd, mbfl
 mbfl_string * mbfl_buffer_converter_result(mbfl_buffer_converter *convd, mbfl_string *result);
 mbfl_string * mbfl_buffer_converter_feed_result(mbfl_buffer_converter *convd, mbfl_string *string, mbfl_string *result);
 
-
 /*
  * encoding detector
  */
@@ -178,14 +177,6 @@ mbfl_identify_encoding_no(mbfl_string *string, enum mbfl_no_encoding *elist, int
  */
 int
 mbfl_strlen(mbfl_string *string);
-
-#ifdef ZEND_MULTIBYTE
-/*
- * oddlen
- */
-int
-mbfl_oddlen(mbfl_string *string);
-#endif /* ZEND_MULTIBYTE */
 
 /*
  * strpos
