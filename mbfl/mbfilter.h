@@ -140,7 +140,7 @@ struct _mbfl_encoding_detector {
 	int filter_list_size;
 };
 
-MBFLAPI extern mbfl_encoding_detector * mbfl_encoding_detector_new(enum mbfl_no_encoding *elist, int eliztsz);
+MBFLAPI extern mbfl_encoding_detector * mbfl_encoding_detector_new(enum mbfl_no_encoding *elist, int elistsz);
 MBFLAPI extern void mbfl_encoding_detector_delete(mbfl_encoding_detector *identd);
 MBFLAPI extern int mbfl_encoding_detector_feed(mbfl_encoding_detector *identd, mbfl_string *string);
 MBFLAPI extern enum mbfl_no_encoding mbfl_encoding_detector_judge(mbfl_encoding_detector *identd);
@@ -157,13 +157,13 @@ mbfl_convert_encoding(mbfl_string *string, mbfl_string *result, enum mbfl_no_enc
  * identify encoding
  */
 MBFLAPI extern const mbfl_encoding *
-mbfl_identify_encoding(mbfl_string *string, enum mbfl_no_encoding *elist, int eliztsz, int strict);
+mbfl_identify_encoding(mbfl_string *string, enum mbfl_no_encoding *elist, int elistsz, int strict);
 
 MBFLAPI extern const char *
-mbfl_identify_encoding_name(mbfl_string *string, enum mbfl_no_encoding *elist, int eliztsz, int strict);
+mbfl_identify_encoding_name(mbfl_string *string, enum mbfl_no_encoding *elist, int elistsz, int strict);
 
 MBFLAPI extern const enum mbfl_no_encoding
-mbfl_identify_encoding_no(mbfl_string *string, enum mbfl_no_encoding *elist, int eliztsz);
+mbfl_identify_encoding_no(mbfl_string *string, enum mbfl_no_encoding *elist, int elistsz);
 
 /*
  * strlen
