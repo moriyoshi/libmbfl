@@ -1,9 +1,5 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
-#else
-#if defined(WIN32) || defined(__WIN32__)
-#include "config-w32.h"
-#endif
 #endif
 
 #ifdef ENABLE_THREADS
