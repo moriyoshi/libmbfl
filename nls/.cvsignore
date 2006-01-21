@@ -6,3 +6,5 @@ Makefile.in
 *.a
 *.o
 *.lo
+*.gcda
+*.gcno
