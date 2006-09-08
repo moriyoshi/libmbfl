@@ -1,3 +1,5 @@
+conv_kana
+conv_encoding
 .libs
 .deps
 Makefile
