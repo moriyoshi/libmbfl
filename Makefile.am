@@ -1,5 +1,5 @@
 AUTOMAKE_OPTIONS=dejagnu
-DEJATOOL=conv_encoding conv_kana
+DEJATOOL=conv_encoding conv_kana strwidth
 RUNTESTDEFAULTFLAGS=--tool $$tool --srcdir "$$srcdir"/tests
 LANG=C
 EXTRA_DIST=AUTHORS DISCLAIMER LICENSE Makefile.bcc32 \

@@ -49,57 +49,57 @@ int main(int argc, char **argv)
 
 		for (p= argv[2] + strlen(argv[2]); p > argv[2]; ) {
 			switch (*(--p)) {
-				case 'A':
-					mode |= 0x1;
-					break;
-				case 'a':
-					mode |= 0x10;
-					break;
-				case 'R':
-					mode |= 0x2;
-					break;
-				case 'r':
-					mode |= 0x20;
-					break;
-				case 'N':
-					mode |= 0x4;
-					break;
-				case 'n':
-					mode |= 0x40;
-					break;
-				case 'S':
-					mode |= 0x8;
-					break;
-				case 's':
-					mode |= 0x80;
-					break;
-				case 'K':
-					mode |= 0x100;
-					break;
-				case 'k':
-					mode |= 0x1000;
-					break;
-				case 'H':
-					mode |= 0x200;
-					break;
-				case 'h':
-					mode |= 0x2000;
-					break;
-				case 'V':
-					mode |= 0x800;
-					break;
-				case 'C':
-					mode |= 0x10000;
-					break;
-				case 'c':
-					mode |= 0x20000;
-					break;
-				case 'M':
-					mode |= 0x100000;
-					break;
-				case 'm':
-					mode |= 0x200000;
-					break;
+			case 'A':
+				mode |= 0x1;
+				break;
+			case 'a':
+				mode |= 0x10;
+				break;
+			case 'R':
+				mode |= 0x2;
+				break;
+			case 'r':
+				mode |= 0x20;
+				break;
+			case 'N':
+				mode |= 0x4;
+				break;
+			case 'n':
+				mode |= 0x40;
+				break;
+			case 'S':
+				mode |= 0x8;
+				break;
+			case 's':
+				mode |= 0x80;
+				break;
+			case 'K':
+				mode |= 0x100;
+				break;
+			case 'k':
+				mode |= 0x1000;
+				break;
+			case 'H':
+				mode |= 0x200;
+				break;
+			case 'h':
+				mode |= 0x2000;
+				break;
+			case 'V':
+				mode |= 0x800;
+				break;
+			case 'C':
+				mode |= 0x10000;
+				break;
+			case 'c':
+				mode |= 0x20000;
+				break;
+			case 'M':
+				mode |= 0x100000;
+				break;
+			case 'm':
+				mode |= 0x200000;
+				break;
 			}
 		}
 	}

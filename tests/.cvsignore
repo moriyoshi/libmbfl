@@ -1,5 +1,6 @@
 conv_kana
 conv_encoding
+strwidth
 .libs
 .deps
 Makefile
