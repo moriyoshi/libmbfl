@@ -59,7 +59,6 @@
 #include "nls/nls_ru.h"
 #include "nls/nls_en.h"
 #include "nls/nls_hy.h"
-#include "nls/nls_tr.h"
 #include "nls/nls_neutral.h"
 
 #ifndef HAVE_STRCASECMP
