@@ -28,7 +28,6 @@ int main(int argc, char **argv)
 	mbfl_buffer_converter *convd = NULL;
 	mbfl_memory_device dev;
 	mbfl_string string, result, *ret;
-	mbfl_language lang;
 	int final = 0;
 	int state = 0;
 

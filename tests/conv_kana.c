@@ -25,10 +25,8 @@ int main(int argc, char **argv)
 {
 	enum mbfl_no_encoding no_enc;
 	const enum mbfl_no_language no_lang = mbfl_no_language_japanese;
-	mbfl_buffer_converter *convd = NULL;
 	mbfl_memory_device dev;
-	mbfl_string string, result, *ret;
-	mbfl_language lang;
+	mbfl_string string, result;
 	int final = 0;
 	int state = 0;
 	int mode = 0;

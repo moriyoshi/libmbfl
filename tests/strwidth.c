@@ -16,7 +16,6 @@ int main(int argc, char **argv)
 	enum mbfl_no_language no_language;
 	mbfl_memory_device dev;
 	mbfl_string string;
-	mbfl_language lang;
 	int final = 0;
 	int state = 0;
 
