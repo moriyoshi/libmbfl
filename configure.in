@@ -34,5 +34,5 @@ if test "$FETCH_VIA_FTP" = "curl"; then
   FETCH_VIA_FTP="curl -O"
 fi
 
-AC_CONFIG_FILES([Makefile mbfl/Makefile filters/Makefile nls/Makefile])
+AC_CONFIG_FILES([Makefile mbfl/Makefile filters/Makefile nls/Makefile tests/Makefile])
 AC_OUTPUT
