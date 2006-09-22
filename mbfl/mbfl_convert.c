@@ -493,6 +493,10 @@ int mbfl_filt_conv_common_flush(mbfl_convert_filter *filter)
 {
 	filter->status = 0;
 	filter->cache = 0;
+
+	if (filter->flush_function != NULL) {
+		(*filter->flush_function)(filter->data);
+	}
 	return 0;
 }
 
