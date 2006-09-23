@@ -1,7 +1,3 @@
-conv_kana
-conv_encoding
-strwidth
-strcut
 .libs
 .deps
 Makefile
