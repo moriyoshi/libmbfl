@@ -42,5 +42,6 @@ AC_CONFIG_FILES([
   tests/Makefile
   tests/conv_encoding.tests/Makefile
   tests/conv_kana.tests/Makefile
-  tests/strwidth.tests/Makefile])
+  tests/strwidth.tests/Makefile
+  tests/strcut.tests/Makefile])
 AC_OUTPUT
