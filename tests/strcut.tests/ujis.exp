@@ -17,13 +17,13 @@ begin_strcut_test -1 2
 set test "asciish characters ($from, $length)"
 send "testtest\r"
 expect {
-    "***ERROR**\r\n" { pass $test }
+    -ex "***ERROR***\r\n" { pass $test }
 }
 
 set test "non-asciish characters ($from, $length)"
 send "テストテスト\r"
 expect {
-    "***ERROR***\r\n" { pass $test }
+    -ex "***ERROR***\r\n" { pass $test }
 }
 
 close
@@ -32,13 +32,13 @@ begin_strcut_test 2 -1
 set test "asciish characters ($from, $length)"
 send "testtest\r"
 expect {
-    "***ERROR**\r\n" { pass $test }
+    -ex "***ERROR***\r\n" { pass $test }
 }
 
 set test "non-asciish characters ($from, $length)"
 send "テストテスト\r"
 expect {
-    "***ERROR***\r\n" { pass $test }
+    -ex "***ERROR***\r\n" { pass $test }
 }
 
 close
@@ -47,13 +47,13 @@ begin_strcut_test 3 2
 set test "asciish characters ($from, $length)"
 send "testtest\r"
 expect {
-    "tt\r\n" { pass $test }
+    -ex "%74%74 (2)\r\n" { pass $test }
 }
 
 set test "non-asciish characters ($from, $length)"
 send "テストテスト\r"
 expect {
-    "ス\r\n" { pass $test }
+    -ex "%a5%b9 (2)\r\n" { pass $test }
 }
 
 close
@@ -62,13 +62,13 @@ begin_strcut_test 5 8
 set test "asciish characters ($from, $length)"
 send "testtest\r"
 expect {
-    "est\r\n" { pass $test }
+    -ex "%65%73%74 (3)\r\n" { pass $test }
 }
 
 set test "non-asciish characters ($from, $length)"
 send "テストテスト\r"
 expect {
-    "トテスト\r\n" { pass $test }
+    -ex "%a5%c8%a5%c6%a5%b9%a5%c8 (8)\r\n" { pass $test }
 }
 
 close
@@ -77,13 +77,13 @@ begin_strcut_test 1 15
 set test "asciish characters ($from, $length)"
 send "testestestestestes\r"
 expect {
-     "estestestestest\r\n" { pass $test }
+     "%65%73%74%65%73%74%65%73%74%65%73%74%65%73%74 (15)\r\n" { pass $test }
 }
 
 set test "non-asciish characters ($from, $length)"
 send "テストテスト\r"
 expect {
-    "テストテスト\r\n" { pass $test }
+    -ex "%a5%c6%a5%b9%a5%c8%a5%c6%a5%b9%a5%c8 (12)\r\n" { pass $test }
 }
 close
 

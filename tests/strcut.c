@@ -11,6 +11,17 @@
 #include <errno.h>
 #include "mbfl/mbfilter.h"
 
+static void hexdump(const mbfl_string *ptr)
+{
+	unsigned int i;
+
+	for (i = 0; i < ptr->len; i++) {
+		printf("%%%02x", ptr->val[i]);
+	}
+
+	printf(" (%u)\n", ptr->len);
+}
+
 int main(int argc, char **argv)
 {
 	enum mbfl_no_encoding no_encoding;
@@ -90,7 +101,7 @@ int main(int argc, char **argv)
 
 		mbfl_memory_device_result(&dev, &string);
 		if (mbfl_strcut(&string, &result, offset, length)) {
-			printf("%s\n", result.val);
+			hexdump(&result);
 			mbfl_string_clear(&result);
 		} else {
 			printf("***ERROR***\n");
