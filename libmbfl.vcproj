@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="7.00"
 	Name="libmbfl"
+	ProjectGUID="{B3636594-A785-4270-A765-8EAE922B5207}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>
@@ -22,7 +23,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="mbfl,."
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;LIBMBFL_EXPORTS;MBFL_DLL_EXPORT;HAVE_CONFIG_H"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;LIBMBFL_EXPORTS;MBFL_DLL_EXPORT;HAVE_CONFIG_H=1"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				UsePrecompiledHeader="2"
@@ -214,6 +215,9 @@
 				RelativePath=".\filters\mbfilter_iso8859_15.c">
 			</File>
 			<File
+				RelativePath=".\filters\mbfilter_iso8859_16.c">
+			</File>
+			<File
 				RelativePath=".\filters\mbfilter_iso8859_2.c">
 			</File>
 			<File
@@ -286,15 +290,6 @@
 				RelativePath=".\mbfl\mbfl_allocators.c">
 			</File>
 			<File
-				RelativePath=".\mbfl\mbfl_arraylist.c">
-			</File>
-			<File
-				RelativePath=".\mbfl\mbfl_buffer_converter.c">
-			</File>
-			<File
-				RelativePath=".\mbfl\mbfl_collection.c">
-			</File>
-			<File
 				RelativePath=".\mbfl\mbfl_convert.c">
 			</File>
 			<File
@@ -307,25 +302,13 @@
 				RelativePath=".\mbfl\mbfl_ident.c">
 			</File>
 			<File
-				RelativePath=".\mbfl\mbfl_iterator.c">
-			</File>
-			<File
 				RelativePath=".\mbfl\mbfl_language.c">
-			</File>
-			<File
-				RelativePath=".\mbfl\mbfl_list.c">
 			</File>
 			<File
 				RelativePath=".\mbfl\mbfl_memory_device.c">
 			</File>
 			<File
-				RelativePath=".\mbfl\mbfl_mutex.c">
-			</File>
-			<File
 				RelativePath=".\mbfl\mbfl_string.c">
-			</File>
-			<File
-				RelativePath=".\mbfl\mbfl_wchar_device.c">
 			</File>
 			<File
 				RelativePath=".\nls\nls_de.c">
@@ -338,6 +321,9 @@
 			</File>
 			<File
 				RelativePath=".\nls\nls_kr.c">
+			</File>
+			<File
+				RelativePath=".\nls\nls_neutral.c">
 			</File>
 			<File
 				RelativePath=".\nls\nls_ru.c">
@@ -456,6 +442,9 @@
 				RelativePath=".\filters\mbfilter_iso8859_15.h">
 			</File>
 			<File
+				RelativePath=".\filters\mbfilter_iso8859_16.h">
+			</File>
+			<File
 				RelativePath=".\filters\mbfilter_iso8859_2.h">
 			</File>
 			<File
@@ -528,22 +517,10 @@
 				RelativePath=".\mbfl\mbfl_allocators.h">
 			</File>
 			<File
-				RelativePath=".\mbfl\mbfl_arraylist.h">
-			</File>
-			<File
-				RelativePath=".\mbfl\mbfl_buffer_converter.h">
-			</File>
-			<File
-				RelativePath=".\mbfl\mbfl_collection.h">
-			</File>
-			<File
 				RelativePath=".\mbfl\mbfl_consts.h">
 			</File>
 			<File
 				RelativePath=".\mbfl\mbfl_convert.h">
-			</File>
-			<File
-				RelativePath=".\mbfl\mbfl_defs.h">
 			</File>
 			<File
 				RelativePath=".\mbfl\mbfl_encoding.h">
@@ -555,25 +532,13 @@
 				RelativePath=".\mbfl\mbfl_ident.h">
 			</File>
 			<File
-				RelativePath=".\mbfl\mbfl_iterator.h">
-			</File>
-			<File
 				RelativePath=".\mbfl\mbfl_language.h">
-			</File>
-			<File
-				RelativePath=".\mbfl\mbfl_list.h">
 			</File>
 			<File
 				RelativePath=".\mbfl\mbfl_memory_device.h">
 			</File>
 			<File
-				RelativePath=".\mbfl\mbfl_mutex.h">
-			</File>
-			<File
 				RelativePath=".\mbfl\mbfl_string.h">
-			</File>
-			<File
-				RelativePath=".\mbfl\mbfl_wchar_device.h">
 			</File>
 			<File
 				RelativePath=".\nls\nls_de.h">
@@ -588,6 +553,9 @@
 				RelativePath=".\nls\nls_kr.h">
 			</File>
 			<File
+				RelativePath=".\nls\nls_neutral.h">
+			</File>
+			<File
 				RelativePath=".\nls\nls_ru.h">
 			</File>
 			<File
@@ -595,9 +563,6 @@
 			</File>
 			<File
 				RelativePath=".\nls\nls_zh.h">
-			</File>
-			<File
-				RelativePath=".\mbfl\private.h">
 			</File>
 			<File
 				RelativePath=".\filters\unicode_prop.h">
@@ -634,6 +599,9 @@
 			</File>
 			<File
 				RelativePath=".\filters\unicode_table_iso8859_15.h">
+			</File>
+			<File
+				RelativePath=".\filters\unicode_table_iso8859_16.h">
 			</File>
 			<File
 				RelativePath=".\filters\unicode_table_iso8859_2.h">

@@ -34,8 +34,8 @@
 #include "mbfilter.h"
 
 extern const mbfl_encoding mbfl_encoding_7bit;
-extern const mbfl_convert_vtbl vtbl_8bit_7bit;
-extern const mbfl_convert_vtbl vtbl_7bit_8bit;
+extern const struct mbfl_convert_vtbl vtbl_8bit_7bit;
+extern const struct mbfl_convert_vtbl vtbl_7bit_8bit;
 
 int mbfl_filt_conv_7bit_any(int c, mbfl_convert_filter *filter);
 int mbfl_filt_conv_any_7bit(int c, mbfl_convert_filter *filter);

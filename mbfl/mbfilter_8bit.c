@@ -41,11 +41,10 @@
 static const char *mbfl_encoding_8bit_aliases[] = {"binary", NULL};
 
 const mbfl_encoding mbfl_encoding_8bit = {
-	mbfl_encoding_id_8bit,
+	mbfl_no_encoding_8bit,
 	"8bit",
 	"8bit",
 	(const char *(*)[])&mbfl_encoding_8bit_aliases,
 	NULL,
-	MBFL_ENCTYPE_SBCS,
-	NULL
+	MBFL_ENCTYPE_SBCS
 };

@@ -35,32 +35,29 @@
 #include "mbfilter_utf7imap.h"
 
 const mbfl_encoding mbfl_encoding_utf7imap = {
-	mbfl_encoding_id_utf7imap,
+	mbfl_no_encoding_utf7imap,
 	"UTF7-IMAP",
 	NULL,
 	NULL,
 	NULL,
-	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_SHFTCODE,
-	NULL
+	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_SHFTCODE
 };
 
-const mbfl_convert_vtbl vtbl_utf7imap_wchar = {
-	mbfl_encoding_id_utf7imap,
-	mbfl_encoding_id_wchar,
+const struct mbfl_convert_vtbl vtbl_utf7imap_wchar = {
+	mbfl_no_encoding_utf7imap,
+	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_utf7imap_wchar,
-	mbfl_filt_conv_common_flush
-};
+	mbfl_filt_conv_common_flush };
 
-const mbfl_convert_vtbl vtbl_wchar_utf7imap = {
-	mbfl_encoding_id_wchar,
-	mbfl_encoding_id_utf7imap,
+const struct mbfl_convert_vtbl vtbl_wchar_utf7imap = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_utf7imap,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_utf7imap,
-	mbfl_filt_conv_wchar_utf7imap_flush
-};
+	mbfl_filt_conv_wchar_utf7imap_flush };
 
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
 

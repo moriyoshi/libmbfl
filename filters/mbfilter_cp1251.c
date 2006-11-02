@@ -39,34 +39,34 @@ static int mbfl_filt_ident_cp1251(int c, mbfl_identify_filter *filter);
 
 static const char *mbfl_encoding_cp1251_aliases[] = {"CP1251", "CP-1251", "WINDOWS-1251", NULL};
 
-static const mbfl_identify_vtbl vtbl_identify_cp1251 = {
+const mbfl_encoding mbfl_encoding_cp1251 = {
+	mbfl_no_encoding_cp1251,
+	"Windows-1251",
+	"Windows-1251",
+	(const char *(*)[])&mbfl_encoding_cp1251_aliases,
+	NULL,
+	MBFL_ENCTYPE_SBCS
+};
+
+const struct mbfl_identify_vtbl vtbl_identify_cp1251 = {
+	mbfl_no_encoding_cp1251,
 	mbfl_filt_ident_common_ctor,
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_cp1251
 };
 
-const mbfl_encoding mbfl_encoding_cp1251 = {
-	mbfl_encoding_id_cp1251,
-	"Windows-1251",
-	"Windows-1251",
-	(const char *(*)[])&mbfl_encoding_cp1251_aliases,
-	NULL,
-	MBFL_ENCTYPE_SBCS,
-	&vtbl_identify_cp1251	
-};
-
-const mbfl_convert_vtbl vtbl_wchar_cp1251 = {
-	mbfl_encoding_id_wchar,
-	mbfl_encoding_id_cp1251,
+const struct mbfl_convert_vtbl vtbl_wchar_cp1251 = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_cp1251,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_cp1251,
 	mbfl_filt_conv_common_flush
 };
 
-const mbfl_convert_vtbl vtbl_cp1251_wchar = {
-	mbfl_encoding_id_cp1251,
-	mbfl_encoding_id_wchar,
+const struct mbfl_convert_vtbl vtbl_cp1251_wchar = {
+	mbfl_no_encoding_cp1251,
+	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_cp1251_wchar,

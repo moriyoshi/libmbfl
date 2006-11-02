@@ -31,7 +31,7 @@
 #define MBFL_MBFILTER_UUENCODE_H
 
 extern const mbfl_encoding mbfl_encoding_uuencode;
-extern const mbfl_convert_vtbl vtbl_uuencode_8bit;
+extern const struct mbfl_convert_vtbl vtbl_uuencode_8bit;
 
 int mbfl_filt_conv_uudec(int c, mbfl_convert_filter *filter);
 

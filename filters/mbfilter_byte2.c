@@ -36,53 +36,51 @@
 #include "mbfilter_byte2.h"
 
 const mbfl_encoding mbfl_encoding_byte2be = {
-	mbfl_encoding_id_byte2be,
+	mbfl_no_encoding_byte2be,
 	"byte2be",
 	NULL,
 	NULL,
 	NULL,
-	MBFL_ENCTYPE_SBCS,
-	NULL
+	MBFL_ENCTYPE_SBCS
 };
 
 const mbfl_encoding mbfl_encoding_byte2le = {
-	mbfl_encoding_id_byte2le,
+	mbfl_no_encoding_byte2le,
 	"byte2le",
 	NULL,
 	NULL,
 	NULL,
-	MBFL_ENCTYPE_SBCS,
-	NULL
+	MBFL_ENCTYPE_SBCS
 };
 
-const mbfl_convert_vtbl vtbl_byte2be_wchar = {
-	mbfl_encoding_id_byte2be,
-	mbfl_encoding_id_wchar,
+const struct mbfl_convert_vtbl vtbl_byte2be_wchar = {
+	mbfl_no_encoding_byte2be,
+	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_byte2be_wchar,
 	mbfl_filt_conv_common_flush
 };
 
-const mbfl_convert_vtbl vtbl_wchar_byte2be = {
-	mbfl_encoding_id_wchar,
-	mbfl_encoding_id_byte2be,
+const struct mbfl_convert_vtbl vtbl_wchar_byte2be = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_byte2be,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_byte2be,
 	mbfl_filt_conv_common_flush };
 
-const mbfl_convert_vtbl vtbl_byte2le_wchar = {
-	mbfl_encoding_id_byte2le,
-	mbfl_encoding_id_wchar,
+const struct mbfl_convert_vtbl vtbl_byte2le_wchar = {
+	mbfl_no_encoding_byte2le,
+	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_byte2le_wchar,
 	mbfl_filt_conv_common_flush };
 
-const mbfl_convert_vtbl vtbl_wchar_byte2le = {
-	mbfl_encoding_id_wchar,
-	mbfl_encoding_id_byte2le,
+const struct mbfl_convert_vtbl vtbl_wchar_byte2le = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_byte2le,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_byte2le,

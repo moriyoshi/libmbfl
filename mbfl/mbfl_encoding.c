@@ -57,6 +57,7 @@
 #include "filters/mbfilter_euc_kr.h"
 #include "filters/mbfilter_iso2022_kr.h"
 #include "filters/mbfilter_sjis.h"
+#include "filters/mbfilter_cp51932.h"
 #include "filters/mbfilter_jis.h"
 #include "filters/mbfilter_euc_jp.h"
 #include "filters/mbfilter_euc_jp_win.h"
@@ -80,6 +81,7 @@
 #include "filters/mbfilter_iso8859_13.h"
 #include "filters/mbfilter_iso8859_14.h"
 #include "filters/mbfilter_iso8859_15.h"
+#include "filters/mbfilter_iso8859_16.h"
 #include "filters/mbfilter_base64.h"
 #include "filters/mbfilter_qprint.h"
 #include "filters/mbfilter_uuencode.h"
@@ -94,6 +96,7 @@
 #include "filters/mbfilter_ucs4.h"
 #include "filters/mbfilter_ucs2.h"
 #include "filters/mbfilter_htmlent.h"
+#include "filters/mbfilter_armscii8.h"
 
 #ifndef HAVE_STRCASECMP
 #ifdef HAVE_STRICMP
@@ -105,7 +108,7 @@
 static const char *mbfl_encoding_auto_aliases[] = {"unknown", NULL};
 
 static const mbfl_encoding mbfl_encoding_auto = {
-	mbfl_encoding_id_auto,
+	mbfl_no_encoding_auto,
 	"auto",
 	NULL,
 	(const char *(*)[])&mbfl_encoding_auto_aliases,
@@ -146,9 +149,11 @@ static const mbfl_encoding *mbfl_encoding_ptr_list[] = {
 	&mbfl_encoding_euc_jp,
 	&mbfl_encoding_sjis,
 	&mbfl_encoding_eucjp_win,
-	&mbfl_encoding_cp932,
+	&mbfl_encoding_sjis_win,
+	&mbfl_encoding_cp51932,
 	&mbfl_encoding_jis,
 	&mbfl_encoding_2022jp,
+	&mbfl_encoding_2022jpms,
 	&mbfl_encoding_cp1252,
 	&mbfl_encoding_8859_1,
 	&mbfl_encoding_8859_2,
@@ -163,6 +168,7 @@ static const mbfl_encoding *mbfl_encoding_ptr_list[] = {
 	&mbfl_encoding_8859_13,
 	&mbfl_encoding_8859_14,
 	&mbfl_encoding_8859_15,
+	&mbfl_encoding_8859_16,
 	&mbfl_encoding_euc_cn,
 	&mbfl_encoding_cp936,
 	&mbfl_encoding_hz,
@@ -174,11 +180,13 @@ static const mbfl_encoding *mbfl_encoding_ptr_list[] = {
 	&mbfl_encoding_cp1251,
 	&mbfl_encoding_cp866,
 	&mbfl_encoding_koi8r,
+	&mbfl_encoding_armscii8,
 	NULL
 };
 
 /* encoding resolver */
-const mbfl_encoding *mbfl_get_encoding_by_name(const char *name)
+const mbfl_encoding *
+mbfl_name2encoding(const char *name)
 {
 	const mbfl_encoding *encoding;
 	int i, j;
@@ -221,7 +229,8 @@ const mbfl_encoding *mbfl_get_encoding_by_name(const char *name)
 	return NULL;
 }
 
-const mbfl_encoding *mbfl_get_encoding_by_id(mbfl_encoding_id no_encoding)
+const mbfl_encoding *
+mbfl_no2encoding(enum mbfl_no_encoding no_encoding)
 {
 	const mbfl_encoding *encoding;
 	int i;
@@ -236,23 +245,25 @@ const mbfl_encoding *mbfl_get_encoding_by_id(mbfl_encoding_id no_encoding)
 	return NULL;
 }
 
-mbfl_encoding_id mbfl_encoding_get_id_by_name(const char *name)
+enum mbfl_no_encoding
+mbfl_name2no_encoding(const char *name)
 {
 	const mbfl_encoding *encoding;
 
-	encoding = mbfl_get_encoding_by_name(name);
+	encoding = mbfl_name2encoding(name);
 	if (encoding == NULL) {
-		return mbfl_encoding_id_invalid;
+		return mbfl_no_encoding_invalid;
 	} else {
 		return encoding->no_encoding;
 	}
 }
 
-const char *mbfl_encoding_get_name_by_id(mbfl_encoding_id no_encoding)
+const char *
+mbfl_no_encoding2name(enum mbfl_no_encoding no_encoding)
 {
 	const mbfl_encoding *encoding;
 
-	encoding = mbfl_get_encoding_by_id(no_encoding);
+	encoding = mbfl_no2encoding(no_encoding);
 	if (encoding == NULL) {
 		return "";
 	} else {
@@ -260,11 +271,18 @@ const char *mbfl_encoding_get_name_by_id(mbfl_encoding_id no_encoding)
 	}
 }
 
-const char * mbfl_encoding_get_mime_preferred_name_by_id(mbfl_encoding_id no_encoding)
+const mbfl_encoding **
+mbfl_get_supported_encodings(void)
+{
+	return mbfl_encoding_ptr_list;
+}
+
+const char *
+mbfl_no2preferred_mime_name(enum mbfl_no_encoding no_encoding)
 {
 	const mbfl_encoding *encoding;
 
-	encoding = mbfl_get_encoding_by_id(no_encoding);
+	encoding = mbfl_no2encoding(no_encoding);
 	if (encoding != NULL && encoding->mime_name != NULL && encoding->mime_name[0] != '\0') {
 		return encoding->mime_name;
 	} else {
@@ -272,18 +290,15 @@ const char * mbfl_encoding_get_mime_preferred_name_by_id(mbfl_encoding_id no_enc
 	}
 }
 
-extern int mbfl_is_supported_encoding(const char *name)
+int
+mbfl_is_support_encoding(const char *name)
 {
 	const mbfl_encoding *encoding;
 
-	encoding = mbfl_get_encoding_by_name(name);
+	encoding = mbfl_name2encoding(name);
 	if (encoding == NULL) {
 		return 0;
 	} else {
 		return 1;
 	}
 }
-
-
-
-

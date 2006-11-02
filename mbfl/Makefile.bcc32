@@ -1,5 +1,5 @@
 !include ..\rules.mak.bcc32
-OBJS=mbfilter.obj mbfl_string.obj mbfl_language.obj mbfl_encoding.obj mbfl_convert.obj mbfl_ident.obj mbfl_memory_device.obj mbfl_allocators.obj mbfl_filter_output.obj mbfilter_pass.obj mbfilter_wchar.obj mbfilter_8bit.obj mbfl_buffer_converter.obj mbfl_wchar_device.obj mbfl_mutex.obj mbfl_collection.obj mbfl_list.obj mbfl_arraylist.obj mbfl_iterator.obj
+OBJS=mbfilter.obj mbfilter_8bit.obj mbfilter_pass.obj mbfilter_wchar.obj mbfl_allocators.obj mbfl_convert.obj mbfl_encoding.obj mbfl_filter_output.obj mbfl_ident.obj mbfl_language.obj mbfl_memory_device.obj mbfl_string.obj
 
 all: $(OBJS)
 

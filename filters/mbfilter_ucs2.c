@@ -37,83 +37,80 @@
 static const char *mbfl_encoding_ucs2_aliases[] = {"ISO-10646-UCS-2", "UCS2" , "UNICODE", NULL};
 
 const mbfl_encoding mbfl_encoding_ucs2 = {
-	mbfl_encoding_id_ucs2,
+	mbfl_no_encoding_ucs2,
 	"UCS-2",
 	"UCS-2",
 	(const char *(*)[])&mbfl_encoding_ucs2_aliases,
 	NULL,
-	MBFL_ENCTYPE_WCS2BE,
-	NULL
+	MBFL_ENCTYPE_WCS2BE
 };
 
 const mbfl_encoding mbfl_encoding_ucs2be = {
-	mbfl_encoding_id_ucs2be,
+	mbfl_no_encoding_ucs2be,
 	"UCS-2BE",
 	"UCS-2BE",
 	NULL,
 	NULL,
-	MBFL_ENCTYPE_WCS2BE,
-	NULL
+	MBFL_ENCTYPE_WCS2BE
 };
 
 const mbfl_encoding mbfl_encoding_ucs2le = {
-	mbfl_encoding_id_ucs2le,
+	mbfl_no_encoding_ucs2le,
 	"UCS-2LE",
 	"UCS-2LE",
 	NULL,
 	NULL,
-	MBFL_ENCTYPE_WCS2LE,
-	NULL
+	MBFL_ENCTYPE_WCS2LE
 };
 
-const mbfl_convert_vtbl vtbl_ucs2_wchar = {
-	mbfl_encoding_id_ucs2,
-	mbfl_encoding_id_wchar,
+const struct mbfl_convert_vtbl vtbl_ucs2_wchar = {
+	mbfl_no_encoding_ucs2,
+	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_ucs2_wchar,
 	mbfl_filt_conv_common_flush
 };
 
-const mbfl_convert_vtbl vtbl_wchar_ucs2 = {
-	mbfl_encoding_id_wchar,
-	mbfl_encoding_id_ucs2,
+const struct mbfl_convert_vtbl vtbl_wchar_ucs2 = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_ucs2,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_ucs2be,
 	mbfl_filt_conv_common_flush
 };
 
-const mbfl_convert_vtbl vtbl_ucs2be_wchar = {
-	mbfl_encoding_id_ucs2be,
-	mbfl_encoding_id_wchar,
+const struct mbfl_convert_vtbl vtbl_ucs2be_wchar = {
+	mbfl_no_encoding_ucs2be,
+	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_ucs2be_wchar,
 	mbfl_filt_conv_common_flush
 };
 
-const mbfl_convert_vtbl vtbl_wchar_ucs2be = {
-	mbfl_encoding_id_wchar,
-	mbfl_encoding_id_ucs2be,
+const struct mbfl_convert_vtbl vtbl_wchar_ucs2be = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_ucs2be,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_ucs2be,
 	mbfl_filt_conv_common_flush
 };
 
-const mbfl_convert_vtbl vtbl_ucs2le_wchar = {
-	mbfl_encoding_id_ucs2le,
-	mbfl_encoding_id_wchar,
+const struct mbfl_convert_vtbl vtbl_ucs2le_wchar = {
+	mbfl_no_encoding_ucs2le,
+	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_ucs2le_wchar,
 	mbfl_filt_conv_common_flush
 };
 
-const mbfl_convert_vtbl vtbl_wchar_ucs2le = {
-	mbfl_encoding_id_wchar,
-	mbfl_encoding_id_ucs2le,
+const struct mbfl_convert_vtbl vtbl_wchar_ucs2le = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_ucs2le,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_ucs2le,

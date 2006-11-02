@@ -39,13 +39,10 @@
 #include "mbfilter.h"
 
 const mbfl_encoding mbfl_encoding_wchar = {
-	mbfl_encoding_id_wchar,
+	mbfl_no_encoding_wchar,
 	"wchar",
 	NULL,
 	NULL,
 	NULL,
-	MBFL_ENCTYPE_WCS4BE,
-	NULL,
+	MBFL_ENCTYPE_WCS4BE
 };
-
-

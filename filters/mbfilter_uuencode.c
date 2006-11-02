@@ -35,18 +35,17 @@
 #include "mbfilter_uuencode.h"
 
 const mbfl_encoding mbfl_encoding_uuencode = {
-	mbfl_encoding_id_uuencode,
+	mbfl_no_encoding_uuencode,
 	"UUENCODE",
 	"x-uuencode",
 	NULL,
 	NULL,
-	MBFL_ENCTYPE_SBCS,
-	NULL
+	MBFL_ENCTYPE_SBCS
 };
 
-const mbfl_convert_vtbl vtbl_uuencode_8bit = {
-	mbfl_encoding_id_uuencode,
-	mbfl_encoding_id_8bit,
+const struct mbfl_convert_vtbl vtbl_uuencode_8bit = {
+	mbfl_no_encoding_uuencode,
+	mbfl_no_encoding_8bit,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_uudec,

@@ -33,8 +33,9 @@
 #include "mbfilter.h"
 
 extern const mbfl_encoding mbfl_encoding_uhc;
-extern const mbfl_convert_vtbl vtbl_uhc_wchar;
-extern const mbfl_convert_vtbl vtbl_wchar_uhc;
+extern const struct mbfl_identify_vtbl vtbl_identify_uhc;
+extern const struct mbfl_convert_vtbl vtbl_uhc_wchar;
+extern const struct mbfl_convert_vtbl vtbl_wchar_uhc;
 
 int mbfl_filt_conv_uhc_wchar(int c, mbfl_convert_filter *filter);
 int mbfl_filt_conv_wchar_uhc(int c, mbfl_convert_filter *filter);

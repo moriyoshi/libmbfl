@@ -48,12 +48,8 @@
 #include <strings.h>
 #endif
 
-#include <assert.h>
-
 #include "mbfl_encoding.h"
 #include "mbfl_language.h"
-#include "mbfl_arraylist.h"
-#include "private.h"
 
 #include "nls/nls_ja.h"
 #include "nls/nls_kr.h"
@@ -62,6 +58,9 @@
 #include "nls/nls_de.h"
 #include "nls/nls_ru.h"
 #include "nls/nls_en.h"
+#include "nls/nls_hy.h"
+#include "nls/nls_tr.h"
+#include "nls/nls_neutral.h"
 
 #ifndef HAVE_STRCASECMP
 #ifdef HAVE_STRICMP
@@ -69,140 +68,98 @@
 #endif
 #endif 
 
-static const mbfl_language * mbfl_get_language_by_name_internal(const char *name, mbfl_language_id *pretval_id);
-
-static int mbfl_language_tbl_initialized = 0;
-static mbfl_arraylist mbfl_language_tbl;
-
-MBFLAPI mbfl_language_id mbfl_language_id_uni;
-
-int mbfl_language_tbl_init(void)
-{
-	int err;
-
-	mbfl_arraylist_ctor(&mbfl_language_tbl);
-	mbfl_language_tbl_initialized = 1;
-
-	(err = mbfl_register_language(&mbfl_language_uni, &mbfl_language_id_uni)) != 0 ||
-	(err = mbfl_register_language(&mbfl_language_japanese, NULL)) != 0||
-	(err = mbfl_register_language(&mbfl_language_korean, NULL)) != 0 ||
-	(err = mbfl_register_language(&mbfl_language_simplified_chinese, NULL))  != 0 ||
-	(err = mbfl_register_language(&mbfl_language_traditional_chinese, NULL)) != 0 ||
-	(err = mbfl_register_language(&mbfl_language_english, NULL)) != 0 ||
-	(err = mbfl_register_language(&mbfl_language_german, NULL)) != 0 ||
-	(err = mbfl_register_language(&mbfl_language_russian, NULL)) != 0 || 1;
-
-	return err;
-}
-
-void mbfl_language_tbl_cleanup(void)
-{
-	assert(mbfl_language_tbl_initialized);
-	mbfl_arraylist_dtor(&mbfl_language_tbl);
-}
-
-MBFLAPI int mbfl_register_language(const mbfl_language *lang, mbfl_language_id *plangid)
-{
-	int err = 0;
-	int next_id;
-
-	assert(mbfl_language_tbl_initialized);
-
-	next_id = mbfl_arraylist_get_num_items(&mbfl_language_tbl);
-
-	if ((err = mbfl_arraylist_update_item_at(&mbfl_language_tbl, (void *)&lang, sizeof(lang), NULL, next_id)) != 0) {
-		return err;
-	}
-
-	if (plangid != NULL) {
-		*plangid = next_id;
-	}
-
-	return err;
-}
+static const mbfl_language *mbfl_language_ptr_table[] = {
+	&mbfl_language_uni,
+	&mbfl_language_japanese,
+	&mbfl_language_korean,
+	&mbfl_language_simplified_chinese,
+	&mbfl_language_traditional_chinese,
+	&mbfl_language_english,
+	&mbfl_language_german,
+	&mbfl_language_russian,
+	&mbfl_language_armenian,
+	&mbfl_language_turkish,
+	&mbfl_language_neutral,
+	NULL
+};
 
 /* language resolver */
-static const mbfl_language * mbfl_get_language_by_name_internal(const char *name, mbfl_language_id *pretval_id)
+const mbfl_language *
+mbfl_name2language(const char *name)
 {
-	const mbfl_language *retval = NULL;
+	const mbfl_language *language;
 	int i, j;
-	unsigned int dummy;
 
-	assert(name != NULL);
-
-	if (pretval_id != NULL) {
-		*pretval_id = mbfl_language_id_invalid;
+	if (name == NULL) {
+		return NULL;
 	}
 
-	i = mbfl_arraylist_get_num_items(&mbfl_language_tbl);
-	while (--i >= 0) {
-		mbfl_language **tmp;
-		unsigned int sz;
-
-		if (mbfl_arraylist_get_item_at(&mbfl_language_tbl, (void **)&tmp, &dummy, i) != 0) {
-			return NULL;
+	i = 0;
+	while ((language = mbfl_language_ptr_table[i++]) != NULL){
+		if (strcasecmp(language->name, name) == 0) {
+			return language;
 		}
-
-		retval = *tmp;
-
-		if (strcasecmp(retval->name, name) == 0) {
-			if (pretval_id != NULL) {
-				*pretval_id = i;
-			}
-			goto out;
-		}
-
-		if (strcasecmp(retval->short_name, name) == 0) {
-			if (pretval_id != NULL) {
-				*pretval_id = i;
-			}
-			goto out;
-		}
-
-		j = 0;
-		while ((*retval->aliases)[j] != NULL) {
-			if (strcasecmp((*retval->aliases)[j], name) == 0) {
-				goto out;
-			}
-			j++;
-		}
-		retval = NULL;
 	}
-out:
-	return retval;
-}
 
-const mbfl_language * mbfl_get_language_by_name(const char *name)
-{
-	return mbfl_get_language_by_name_internal(name, NULL);
-}
+	i = 0;
+	while ((language = mbfl_language_ptr_table[i++]) != NULL){
+		if (strcasecmp(language->short_name, name) == 0) {
+			return language;
+		}
+	}
 
-const mbfl_language * mbfl_get_language_by_id(mbfl_language_id no_language)
-{
-	const mbfl_language **plang;
-	unsigned int sz; 
-
-	if (mbfl_arraylist_get_item_at(&mbfl_language_tbl, (void **)&plang, &sz, no_language) != 0) {
-		return *plang;
+	/* serch aliases */
+	i = 0;
+	while ((language = mbfl_language_ptr_table[i++]) != NULL) {
+		if (language->aliases != NULL) {
+			j = 0;
+			while ((*language->aliases)[j] != NULL) {
+				if (strcasecmp((*language->aliases)[j], name) == 0) {
+					return language;
+				}
+				j++;
+			}
+		}
 	}
 
 	return NULL;
 }
 
-mbfl_language_id mbfl_language_get_id_by_name(const char *name)
+const mbfl_language *
+mbfl_no2language(enum mbfl_no_language no_language)
 {
-	mbfl_language_id retval;
+	const mbfl_language *language;
+	int i;
 
-	mbfl_get_language_by_name_internal(name, &retval);
+	i = 0;
+	while ((language = mbfl_language_ptr_table[i++]) != NULL){
+		if (language->no_language == no_language) {
+			return language;
+		}
+	}
 
-	return retval;
+	return NULL;
 }
 
-const char * mbfl_language_get_name_by_id(mbfl_language_id no_language)
+enum mbfl_no_language
+mbfl_name2no_language(const char *name)
 {
 	const mbfl_language *language;
 
-	language = mbfl_get_language_by_id(no_language);
+	language = mbfl_name2language(name);
+	if (language == NULL) {
+		return mbfl_no_language_invalid;
+	} else {
+		return language->no_language;
+	}
+}
+
+const char *
+mbfl_no_language2name(enum mbfl_no_language no_language)
+{
+	const mbfl_language *language;
+
+	language = mbfl_no2language(no_language);
 	if (language == NULL) {
 		return "";
 	} else {

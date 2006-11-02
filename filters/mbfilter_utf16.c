@@ -37,83 +37,80 @@
 static const char *mbfl_encoding_utf16_aliases[] = {"utf16", NULL};
 
 const mbfl_encoding mbfl_encoding_utf16 = {
-	mbfl_encoding_id_utf16,
+	mbfl_no_encoding_utf16,
 	"UTF-16",
 	"UTF-16",
 	(const char *(*)[])&mbfl_encoding_utf16_aliases,
 	NULL,
-	MBFL_ENCTYPE_MWC2BE,
-	NULL
+	MBFL_ENCTYPE_MWC2BE
 };
 
 const mbfl_encoding mbfl_encoding_utf16be = {
-	mbfl_encoding_id_utf16be,
+	mbfl_no_encoding_utf16be,
 	"UTF-16BE",
 	"UTF-16BE",
 	NULL,
 	NULL,
-	MBFL_ENCTYPE_MWC2BE,
-	NULL
+	MBFL_ENCTYPE_MWC2BE
 };
 
 const mbfl_encoding mbfl_encoding_utf16le = {
-	mbfl_encoding_id_utf16le,
+	mbfl_no_encoding_utf16le,
 	"UTF-16LE",
 	"UTF-16LE",
 	NULL,
 	NULL,
-	MBFL_ENCTYPE_MWC2LE,
-	NULL
+	MBFL_ENCTYPE_MWC2LE
 };
 
-const mbfl_convert_vtbl vtbl_utf16_wchar = {
-	mbfl_encoding_id_utf16,
-	mbfl_encoding_id_wchar,
+const struct mbfl_convert_vtbl vtbl_utf16_wchar = {
+	mbfl_no_encoding_utf16,
+	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_utf16_wchar,
 	mbfl_filt_conv_common_flush
 };
 
-const mbfl_convert_vtbl vtbl_wchar_utf16 = {
-	mbfl_encoding_id_wchar,
-	mbfl_encoding_id_utf16,
+const struct mbfl_convert_vtbl vtbl_wchar_utf16 = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_utf16,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_utf16be,
 	mbfl_filt_conv_common_flush
 };
 
-const mbfl_convert_vtbl vtbl_utf16be_wchar = {
-	mbfl_encoding_id_utf16be,
-	mbfl_encoding_id_wchar,
+const struct mbfl_convert_vtbl vtbl_utf16be_wchar = {
+	mbfl_no_encoding_utf16be,
+	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_utf16be_wchar,
 	mbfl_filt_conv_common_flush
 };
 
-const mbfl_convert_vtbl vtbl_wchar_utf16be = {
-	mbfl_encoding_id_wchar,
-	mbfl_encoding_id_utf16be,
+const struct mbfl_convert_vtbl vtbl_wchar_utf16be = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_utf16be,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_utf16be,
 	mbfl_filt_conv_common_flush
 };
 
-const mbfl_convert_vtbl vtbl_utf16le_wchar = {
-	mbfl_encoding_id_utf16le,
-	mbfl_encoding_id_wchar,
+const struct mbfl_convert_vtbl vtbl_utf16le_wchar = {
+	mbfl_no_encoding_utf16le,
+	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_utf16le_wchar,
 	mbfl_filt_conv_common_flush
 };
 
-const mbfl_convert_vtbl vtbl_wchar_utf16le = {
-	mbfl_encoding_id_wchar,
-	mbfl_encoding_id_utf16le,
+const struct mbfl_convert_vtbl vtbl_wchar_utf16le = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_utf16le,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_utf16le,

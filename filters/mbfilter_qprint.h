@@ -33,8 +33,8 @@
 #include "mbfilter.h"
 
 extern const mbfl_encoding mbfl_encoding_qprint;
-extern const mbfl_convert_vtbl vtbl_8bit_qprint;
-extern const mbfl_convert_vtbl vtbl_qprint_8bit;
+extern const struct mbfl_convert_vtbl vtbl_8bit_qprint;
+extern const struct mbfl_convert_vtbl vtbl_qprint_8bit;
 
 int mbfl_filt_conv_qprintenc(int c, mbfl_convert_filter *filter);
 int mbfl_filt_conv_qprintenc_flush(mbfl_convert_filter *filter);

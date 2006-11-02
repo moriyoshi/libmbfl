@@ -37,83 +37,80 @@
 static const char *mbfl_encoding_ucs4_aliases[] = {"ISO-10646-UCS-4", "UCS4", NULL};
 
 const mbfl_encoding mbfl_encoding_ucs4 = {
-	mbfl_encoding_id_ucs4,
+	mbfl_no_encoding_ucs4,
 	"UCS-4",
 	"UCS-4",
 	(const char *(*)[])&mbfl_encoding_ucs4_aliases,
 	NULL,
-	MBFL_ENCTYPE_WCS4BE,
-	NULL
+	MBFL_ENCTYPE_WCS4BE
 };
 
 const mbfl_encoding mbfl_encoding_ucs4be = {
-	mbfl_encoding_id_ucs4be,
+	mbfl_no_encoding_ucs4be,
 	"UCS-4BE",
 	"UCS-4BE",
 	NULL,
 	NULL,
-	MBFL_ENCTYPE_WCS4BE,
-	NULL
+	MBFL_ENCTYPE_WCS4BE
 };
 
 const mbfl_encoding mbfl_encoding_ucs4le = {
-	mbfl_encoding_id_ucs4le,
+	mbfl_no_encoding_ucs4le,
 	"UCS-4LE",
 	"UCS-4LE",
 	NULL,
 	NULL,
-	MBFL_ENCTYPE_WCS4LE,
-	NULL
+	MBFL_ENCTYPE_WCS4LE
 };
 
-const mbfl_convert_vtbl vtbl_ucs4_wchar = {
-	mbfl_encoding_id_ucs4,
-	mbfl_encoding_id_wchar,
+const struct mbfl_convert_vtbl vtbl_ucs4_wchar = {
+	mbfl_no_encoding_ucs4,
+	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_ucs4_wchar,
 	mbfl_filt_conv_common_flush
 };
 
-const mbfl_convert_vtbl vtbl_wchar_ucs4 = {
-	mbfl_encoding_id_wchar,
-	mbfl_encoding_id_ucs4,
+const struct mbfl_convert_vtbl vtbl_wchar_ucs4 = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_ucs4,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_ucs4be,
 	mbfl_filt_conv_common_flush
 };
 
-const mbfl_convert_vtbl vtbl_ucs4be_wchar = {
-	mbfl_encoding_id_ucs4be,
-	mbfl_encoding_id_wchar,
+const struct mbfl_convert_vtbl vtbl_ucs4be_wchar = {
+	mbfl_no_encoding_ucs4be,
+	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_ucs4be_wchar,
 	mbfl_filt_conv_common_flush
 };
 
-const mbfl_convert_vtbl vtbl_wchar_ucs4be = {
-	mbfl_encoding_id_wchar,
-	mbfl_encoding_id_ucs4be,
+const struct mbfl_convert_vtbl vtbl_wchar_ucs4be = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_ucs4be,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_ucs4be,
 	mbfl_filt_conv_common_flush
 };
 
-const mbfl_convert_vtbl vtbl_ucs4le_wchar = {
-	mbfl_encoding_id_ucs4le,
-	mbfl_encoding_id_wchar,
+const struct mbfl_convert_vtbl vtbl_ucs4le_wchar = {
+	mbfl_no_encoding_ucs4le,
+	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_ucs4le_wchar,
 	mbfl_filt_conv_common_flush
 };
 
-const mbfl_convert_vtbl vtbl_wchar_ucs4le = {
-	mbfl_encoding_id_wchar,
-	mbfl_encoding_id_ucs4le,
+const struct mbfl_convert_vtbl vtbl_wchar_ucs4le = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_ucs4le,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_ucs4le,

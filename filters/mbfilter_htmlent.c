@@ -65,27 +65,26 @@ static const int htmlentitifieds[256] = {
 static const char *mbfl_encoding_html_ent_aliases[] = {"HTML", "html", NULL};
 
 const mbfl_encoding mbfl_encoding_html_ent = {
-	mbfl_encoding_id_html_ent,
+	mbfl_no_encoding_html_ent,
 	"HTML-ENTITIES",
 	"HTML-ENTITIES",
 	(const char *(*)[])&mbfl_encoding_html_ent_aliases,
 	NULL,
-	MBFL_ENCTYPE_HTML_ENT,
-	NULL
+	MBFL_ENCTYPE_HTML_ENT
 };
 
-const mbfl_convert_vtbl vtbl_wchar_html = {
-	mbfl_encoding_id_wchar,
-	mbfl_encoding_id_html_ent,
+const struct mbfl_convert_vtbl vtbl_wchar_html = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_html_ent,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_html_enc,
 	mbfl_filt_conv_html_enc_flush
 };
 
-const mbfl_convert_vtbl vtbl_html_wchar = {
-	mbfl_encoding_id_html_ent,
-	mbfl_encoding_id_wchar,
+const struct mbfl_convert_vtbl vtbl_html_wchar = {
+	mbfl_no_encoding_html_ent,
+	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_html_dec_ctor,
 	mbfl_filt_conv_html_dec_dtor,
 	mbfl_filt_conv_html_dec,
@@ -146,7 +145,7 @@ int mbfl_filt_conv_html_enc(int c, mbfl_convert_filter *filter)
 int mbfl_filt_conv_html_enc_flush(mbfl_convert_filter *filter)
 {
 	filter->status = 0;
-	filter->cache = 0;
+	filter->opaque = NULL;
 	return 0;
 }
 
@@ -159,24 +158,24 @@ static const char html_entity_chars[] = "#0123456789abcdefghijklmnopqrstuvwxyzAB
 void mbfl_filt_conv_html_dec_ctor(mbfl_convert_filter *filter)
 {
 	filter->status = 0;
-	filter->cache = (int)mbfl_malloc(html_enc_buffer_size+1);
+	filter->opaque = mbfl_malloc(html_enc_buffer_size+1);
 }
 	
 void mbfl_filt_conv_html_dec_dtor(mbfl_convert_filter *filter)
 {
 	filter->status = 0;
-	if (filter->cache)
+	if (filter->opaque)
 	{
-		mbfl_free((void*)filter->cache);
+		mbfl_free((void*)filter->opaque);
 	}
-	filter->cache = 0;
+	filter->opaque = NULL;
 }
 
 int mbfl_filt_conv_html_dec(int c, mbfl_convert_filter *filter)
 {
 	int  pos, ent = 0;
-	const mbfl_html_entity_entry *entity;
-	char *buffer = (char*)filter->cache;
+	mbfl_html_entity_entry *entity;
+	char *buffer = (char*)filter->opaque;
 
 	if (!filter->status) {
 		if (c == '&' ) {
@@ -198,7 +197,7 @@ int mbfl_filt_conv_html_dec(int c, mbfl_convert_filter *filter)
 				/*php_error_docref("ref.mbstring" TSRMLS_CC, E_NOTICE, "mbstring decoded '%s'=%d", buffer, ent);*/
 			} else {
 				/* named entity */
-				entity = mbfl_html_entity_list;
+			        entity = (mbfl_html_entity_entry *)mbfl_html_entity_list;
 				while (entity->name) {
 					if (!strcmp(buffer+1, entity->name))	{
 						ent = entity->code;
@@ -247,7 +246,7 @@ int mbfl_filt_conv_html_dec_flush(mbfl_convert_filter *filter)
 	int status, pos = 0;
 	char *buffer;
 
-	buffer = (char*)filter->cache;
+	buffer = (char*)filter->opaque;
 	status = filter->status;
 	/* flush fragments */
 	while (status--) {

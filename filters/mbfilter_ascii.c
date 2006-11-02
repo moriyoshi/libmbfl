@@ -39,34 +39,34 @@ static int mbfl_filt_ident_ascii(int c, mbfl_identify_filter *filter);
 
 static const char *mbfl_encoding_ascii_aliases[] = {"ANSI_X3.4-1968", "iso-ir-6", "ANSI_X3.4-1986", "ISO_646.irv:1991", "US-ASCII", "ISO646-US", "us", "IBM367", "cp367", "csASCII", NULL};
 
-static const mbfl_identify_vtbl vtbl_identify_ascii = {
-	mbfl_filt_ident_common_ctor,
-	mbfl_filt_ident_common_dtor,
-	mbfl_filt_ident_ascii
-};
-
 const mbfl_encoding mbfl_encoding_ascii = {
-	mbfl_encoding_id_ascii,
+	mbfl_no_encoding_ascii,
 	"ASCII",
 	"US-ASCII", /* preferred MIME name */
 	(const char *(*)[])&mbfl_encoding_ascii_aliases,
 	NULL,
-	MBFL_ENCTYPE_SBCS,
-	&vtbl_identify_ascii
+	MBFL_ENCTYPE_SBCS
 };
 
-const mbfl_convert_vtbl vtbl_ascii_wchar = {
-	mbfl_encoding_id_ascii,
-	mbfl_encoding_id_wchar,
+const struct mbfl_identify_vtbl vtbl_identify_ascii = {
+ 	mbfl_no_encoding_ascii,
+ 	mbfl_filt_ident_common_ctor,
+ 	mbfl_filt_ident_common_dtor,
+ 	mbfl_filt_ident_ascii
+};
+
+const struct mbfl_convert_vtbl vtbl_ascii_wchar = {
+ 	mbfl_no_encoding_ascii,
+ 	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_ascii_wchar,
 	mbfl_filt_conv_common_flush
 };
 
-const mbfl_convert_vtbl vtbl_wchar_ascii = {
-	mbfl_encoding_id_wchar,
-	mbfl_encoding_id_ascii,
+const struct mbfl_convert_vtbl vtbl_wchar_ascii = {
+ 	mbfl_no_encoding_wchar,
+ 	mbfl_no_encoding_ascii,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_ascii,

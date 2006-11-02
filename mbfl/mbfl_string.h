@@ -39,19 +39,18 @@
  * string object
  */
 typedef struct _mbfl_string {
-	mbfl_language_id no_language;
-	mbfl_encoding_id no_encoding;
+	enum mbfl_no_language no_language;
+	enum mbfl_no_encoding no_encoding;
 	unsigned char *val;
 	unsigned int len;
-	int val_allocated;
 } mbfl_string;
 
-MBFLAPI void mbfl_string_ctor(mbfl_string *string);
-MBFLAPI void mbfl_string_ctor2(mbfl_string *string, mbfl_language_id no_language, mbfl_encoding_id no_encoding);
-MBFLAPI void mbfl_string_dtor(mbfl_string *string);
+MBFLAPI extern void mbfl_string_init(mbfl_string *string);
+MBFLAPI extern void mbfl_string_init_set(mbfl_string *string, mbfl_language_id no_language, mbfl_encoding_id no_encoding);
+MBFLAPI extern void mbfl_string_clear(mbfl_string *string);
 
-#define mbfl_string_init mbfl_string_ctor
-#define mbfl_string_init_set mbfl_string_ctor2
-#define mbfl_string_clear mbfl_string_dtor
+#ifndef NULL
+#define NULL 0
+#endif
 
 #endif /* MBFL_STRING_H */

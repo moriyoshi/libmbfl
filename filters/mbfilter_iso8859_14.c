@@ -37,34 +37,34 @@
 
 static const char *mbfl_encoding_8859_14_aliases[] = {"ISO_8859-14", "latin8", NULL};
 
-static const mbfl_identify_vtbl vtbl_identify_8859_14 = {
+const mbfl_encoding mbfl_encoding_8859_14 = {
+	mbfl_no_encoding_8859_14,
+	"ISO-8859-14",
+	"ISO-8859-14",
+	(const char *(*)[])&mbfl_encoding_8859_14_aliases,
+	NULL,
+	MBFL_ENCTYPE_SBCS
+};
+
+const struct mbfl_identify_vtbl vtbl_identify_8859_14 = {
+	mbfl_no_encoding_8859_14,
 	mbfl_filt_ident_common_ctor,
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_true
 };
 
-const mbfl_encoding mbfl_encoding_8859_14 = {
-	mbfl_encoding_id_8859_14,
-	"ISO-8859-14",
-	"ISO-8859-14",
-	(const char *(*)[])&mbfl_encoding_8859_14_aliases,
-	NULL,
-	MBFL_ENCTYPE_SBCS,
-	&vtbl_identify_8859_14
-};
-
-const mbfl_convert_vtbl vtbl_8859_14_wchar = {
-	mbfl_encoding_id_8859_14,
-	mbfl_encoding_id_wchar,
+const struct mbfl_convert_vtbl vtbl_8859_14_wchar = {
+	mbfl_no_encoding_8859_14,
+	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_8859_14_wchar,
 	mbfl_filt_conv_common_flush
 };
 
-const mbfl_convert_vtbl vtbl_wchar_8859_14 = {
-	mbfl_encoding_id_wchar,
-	mbfl_encoding_id_8859_14,
+const struct mbfl_convert_vtbl vtbl_wchar_8859_14 = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_8859_14,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_8859_14,

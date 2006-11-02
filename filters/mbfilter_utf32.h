@@ -33,12 +33,12 @@
 extern const mbfl_encoding mbfl_encoding_utf32;
 extern const mbfl_encoding mbfl_encoding_utf32be;
 extern const mbfl_encoding mbfl_encoding_utf32le;
-extern const mbfl_convert_vtbl vtbl_utf32_wchar;
-extern const mbfl_convert_vtbl vtbl_wchar_utf32;
-extern const mbfl_convert_vtbl vtbl_utf32be_wchar;
-extern const mbfl_convert_vtbl vtbl_wchar_utf32be;
-extern const mbfl_convert_vtbl vtbl_utf32le_wchar;
-extern const mbfl_convert_vtbl vtbl_wchar_utf32le;
+extern const struct mbfl_convert_vtbl vtbl_utf32_wchar;
+extern const struct mbfl_convert_vtbl vtbl_wchar_utf32;
+extern const struct mbfl_convert_vtbl vtbl_utf32be_wchar;
+extern const struct mbfl_convert_vtbl vtbl_wchar_utf32be;
+extern const struct mbfl_convert_vtbl vtbl_utf32le_wchar;
+extern const struct mbfl_convert_vtbl vtbl_wchar_utf32le;
 
 int mbfl_filt_conv_utf32_wchar(int c, mbfl_convert_filter *filter);
 int mbfl_filt_conv_utf32be_wchar(int c, mbfl_convert_filter *filter);

@@ -51,34 +51,34 @@ static const unsigned char mbfl_base64_table[] = {
 
 static const char *mbfl_encoding_utf7_aliases[] = {"utf7", NULL};
 
-static const mbfl_identify_vtbl vtbl_identify_utf7 = {
+const mbfl_encoding mbfl_encoding_utf7 = {
+	mbfl_no_encoding_utf7,
+	"UTF-7",
+	"UTF-7",
+	(const char *(*)[])&mbfl_encoding_utf7_aliases,
+	NULL,
+	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_SHFTCODE
+};
+
+const struct mbfl_identify_vtbl vtbl_identify_utf7 = {
+	mbfl_no_encoding_utf7,
 	mbfl_filt_ident_common_ctor,
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_utf7
 };
 
-const mbfl_encoding mbfl_encoding_utf7 = {
-	mbfl_encoding_id_utf7,
-	"UTF-7",
-	"UTF-7",
-	(const char *(*)[])&mbfl_encoding_utf7_aliases,
-	NULL,
-	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_SHFTCODE,
-	&vtbl_identify_utf7
-};
-
-const mbfl_convert_vtbl vtbl_utf7_wchar = {
-	mbfl_encoding_id_utf7,
-	mbfl_encoding_id_wchar,
+const struct mbfl_convert_vtbl vtbl_utf7_wchar = {
+	mbfl_no_encoding_utf7,
+	mbfl_no_encoding_wchar,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_utf7_wchar,
 	mbfl_filt_conv_common_flush
 };
 
-const mbfl_convert_vtbl vtbl_wchar_utf7 = {
-	mbfl_encoding_id_wchar,
-	mbfl_encoding_id_utf7,
+const struct mbfl_convert_vtbl vtbl_wchar_utf7 = {
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_utf7,
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_utf7,

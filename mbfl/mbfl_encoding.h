@@ -33,93 +33,98 @@
 
 #include "mbfl_defs.h"
 
-enum _mbfl_encoding_id {
-	mbfl_encoding_id_invalid = -1,
-	mbfl_encoding_id_pass,
-	mbfl_encoding_id_auto,
-	mbfl_encoding_id_wchar,
-	mbfl_encoding_id_byte2be,
-	mbfl_encoding_id_byte2le,
-	mbfl_encoding_id_byte4be,
-	mbfl_encoding_id_byte4le,
-	mbfl_encoding_id_base64,
-	mbfl_encoding_id_uuencode,
-	mbfl_encoding_id_html_ent,
-	mbfl_encoding_id_qprint,
-	mbfl_encoding_id_7bit,
-	mbfl_encoding_id_8bit,
-	mbfl_encoding_id_charset_min,
-	mbfl_encoding_id_ucs4,
-	mbfl_encoding_id_ucs4be,
-	mbfl_encoding_id_ucs4le,
-	mbfl_encoding_id_ucs2,
-	mbfl_encoding_id_ucs2be,
-	mbfl_encoding_id_ucs2le,
-	mbfl_encoding_id_utf32,
-	mbfl_encoding_id_utf32be,
-	mbfl_encoding_id_utf32le,
-	mbfl_encoding_id_utf16,
-	mbfl_encoding_id_utf16be,
-	mbfl_encoding_id_utf16le,
-	mbfl_encoding_id_utf8,
-	mbfl_encoding_id_utf7,
-	mbfl_encoding_id_utf7imap,
-	mbfl_encoding_id_ascii,
-	mbfl_encoding_id_euc_jp,
-	mbfl_encoding_id_sjis,
-	mbfl_encoding_id_eucjp_win,
-	mbfl_encoding_id_cp932,
-	mbfl_encoding_id_sjis_mac,
-	mbfl_encoding_id_jis,
-	mbfl_encoding_id_2022jp,
-	mbfl_encoding_id_cp1252,
-	mbfl_encoding_id_8859_1,
-	mbfl_encoding_id_8859_2,
-	mbfl_encoding_id_8859_3,
-	mbfl_encoding_id_8859_4,
-	mbfl_encoding_id_8859_5,
-	mbfl_encoding_id_8859_6,
-	mbfl_encoding_id_8859_7,
-	mbfl_encoding_id_8859_8,
-	mbfl_encoding_id_8859_9,
-	mbfl_encoding_id_8859_10,
-	mbfl_encoding_id_8859_13,
-	mbfl_encoding_id_8859_14,
-	mbfl_encoding_id_8859_15,
-	mbfl_encoding_id_euc_cn,
-	mbfl_encoding_id_cp936,
-	mbfl_encoding_id_euc_tw,
-	mbfl_encoding_id_big5,
-	mbfl_encoding_id_euc_kr,
-	mbfl_encoding_id_2022kr,
-	mbfl_encoding_id_uhc,
-	mbfl_encoding_id_hz,
-	mbfl_encoding_id_cp1251,
-	mbfl_encoding_id_cp866,
-	mbfl_encoding_id_koi8r,
-	mbfl_encoding_id_charset_max
+enum mbfl_no_encoding {
+	mbfl_no_encoding_invalid = -1,
+	mbfl_no_encoding_pass,
+	mbfl_no_encoding_auto,
+	mbfl_no_encoding_wchar,
+	mbfl_no_encoding_byte2be,
+	mbfl_no_encoding_byte2le,
+	mbfl_no_encoding_byte4be,
+	mbfl_no_encoding_byte4le,
+	mbfl_no_encoding_base64,
+	mbfl_no_encoding_uuencode,
+	mbfl_no_encoding_html_ent,
+	mbfl_no_encoding_qprint,
+	mbfl_no_encoding_7bit,
+	mbfl_no_encoding_8bit,
+	mbfl_no_encoding_charset_min,
+	mbfl_no_encoding_ucs4,
+	mbfl_no_encoding_ucs4be,
+	mbfl_no_encoding_ucs4le,
+	mbfl_no_encoding_ucs2,
+	mbfl_no_encoding_ucs2be,
+	mbfl_no_encoding_ucs2le,
+	mbfl_no_encoding_utf32,
+	mbfl_no_encoding_utf32be,
+	mbfl_no_encoding_utf32le,
+	mbfl_no_encoding_utf16,
+	mbfl_no_encoding_utf16be,
+	mbfl_no_encoding_utf16le,
+	mbfl_no_encoding_utf8,
+	mbfl_no_encoding_utf7,
+	mbfl_no_encoding_utf7imap,
+	mbfl_no_encoding_ascii,
+	mbfl_no_encoding_euc_jp,
+	mbfl_no_encoding_sjis,
+	mbfl_no_encoding_eucjp_win,
+	mbfl_no_encoding_sjis_win,
+	mbfl_no_encoding_sjis_mac,
+	mbfl_no_encoding_cp51932,
+	mbfl_no_encoding_jis,
+	mbfl_no_encoding_2022jp,
+	mbfl_no_encoding_2022jpms,
+	mbfl_no_encoding_cp1252,
+	mbfl_no_encoding_8859_1,
+	mbfl_no_encoding_8859_2,
+	mbfl_no_encoding_8859_3,
+	mbfl_no_encoding_8859_4,
+	mbfl_no_encoding_8859_5,
+	mbfl_no_encoding_8859_6,
+	mbfl_no_encoding_8859_7,
+	mbfl_no_encoding_8859_8,
+	mbfl_no_encoding_8859_9,
+	mbfl_no_encoding_8859_10,
+	mbfl_no_encoding_8859_13,
+	mbfl_no_encoding_8859_14,
+	mbfl_no_encoding_8859_15,
+	mbfl_no_encoding_euc_cn,
+	mbfl_no_encoding_cp936,
+	mbfl_no_encoding_euc_tw,
+	mbfl_no_encoding_big5,
+	mbfl_no_encoding_euc_kr,
+	mbfl_no_encoding_2022kr,
+	mbfl_no_encoding_uhc,
+	mbfl_no_encoding_hz,
+	mbfl_no_encoding_cp1251,
+	mbfl_no_encoding_cp866,
+	mbfl_no_encoding_koi8r,
+	mbfl_no_encoding_8859_16,
+	mbfl_no_encoding_armscii8,
+	mbfl_no_encoding_charset_max
 };
 
-typedef enum _mbfl_encoding_id mbfl_encoding_id;
+typedef enum mbfl_no_encoding mbfl_encoding_id;
 
 /*
  * encoding
  */
 typedef struct _mbfl_encoding {
-	mbfl_encoding_id no_encoding;
+	enum mbfl_no_encoding no_encoding;
 	const char *name;
 	const char *mime_name;
 	const char *(*aliases)[];
 	const unsigned char *mblen_table;
 	unsigned int flag;
-	const struct _mbfl_identify_vtbl *ident_vtbl;
 } mbfl_encoding;
 
-MBFLAPI extern const mbfl_encoding *mbfl_get_encoding_by_name(const char *name);
-MBFLAPI extern const mbfl_encoding *mbfl_get_encoding_by_id(mbfl_encoding_id no_encoding);
-MBFLAPI extern mbfl_encoding_id mbfl_encoding_get_id_by_name(const char *name);
-MBFLAPI extern const char *mbfl_encoding_get_name_by_id(mbfl_encoding_id no_encoding);
-MBFLAPI extern const char * mbfl_encoding_get_mime_preferred_name_by_id(mbfl_encoding_id no_encoding);
-MBFLAPI extern int mbfl_is_supported_encoding(const char *name);
+MBFLAPI extern const mbfl_encoding * mbfl_name2encoding(const char *name);
+MBFLAPI extern const mbfl_encoding * mbfl_no2encoding(enum mbfl_no_encoding no_encoding);
+MBFLAPI extern enum mbfl_no_encoding mbfl_name2no_encoding(const char *name);
+MBFLAPI extern const mbfl_encoding ** mbfl_get_supported_encodings();
+MBFLAPI extern const char * mbfl_no_encoding2name(enum mbfl_no_encoding no_encoding);
+MBFLAPI extern const char * mbfl_no2preferred_mime_name(enum mbfl_no_encoding no_encoding);
+MBFLAPI extern int mbfl_is_support_encoding(const char *name);
+
 
 #endif /* MBFL_ENCODING_H */

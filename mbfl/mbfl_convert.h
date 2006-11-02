@@ -51,40 +51,40 @@ struct _mbfl_convert_filter {
 	const mbfl_encoding *to;
 	int illegal_mode;
 	int illegal_substchar;
+	int num_illegalchar;
+	void *opaque;
 };
 
-typedef struct _mbfl_convert_vtbl mbfl_convert_vtbl;
-
-struct _mbfl_convert_vtbl {
-	mbfl_encoding_id from;
-	mbfl_encoding_id to;
+struct mbfl_convert_vtbl {
+	enum mbfl_no_encoding from;
+	enum mbfl_no_encoding to;
 	void (*filter_ctor)(mbfl_convert_filter *filter);
 	void (*filter_dtor)(mbfl_convert_filter *filter);
 	int (*filter_function)(int c, mbfl_convert_filter *filter);
 	int (*filter_flush)(mbfl_convert_filter *filter);
 };
 
-extern const mbfl_convert_vtbl *mbfl_convert_filter_list[];
+MBFLAPI extern const struct mbfl_convert_vtbl *mbfl_convert_filter_list[];
 
-MBFLAPI mbfl_convert_filter *mbfl_convert_filter_new(
-    mbfl_encoding_id from,
-    mbfl_encoding_id to,
+MBFLAPI extern mbfl_convert_filter *mbfl_convert_filter_new(
+    enum mbfl_no_encoding from,
+    enum mbfl_no_encoding to,
     int (*output_function)(int, void *),
     int (*flush_function)(void *),
     void *data );
-MBFLAPI void mbfl_convert_filter_delete(mbfl_convert_filter *filter);
-MBFLAPI int mbfl_convert_filter_feed(int c, mbfl_convert_filter *filter);
-MBFLAPI int mbfl_convert_filter_flush(mbfl_convert_filter *filter);
-MBFLAPI void mbfl_convert_filter_reset(mbfl_convert_filter *filter, mbfl_encoding_id from, mbfl_encoding_id to);
-MBFLAPI void mbfl_convert_filter_copy(mbfl_convert_filter *src, mbfl_convert_filter *dist);
-MBFLAPI int mbfl_filt_conv_illegal_output(int c, mbfl_convert_filter *filter);
-MBFLAPI const mbfl_convert_vtbl * mbfl_convert_filter_get_vtbl(mbfl_encoding_id from, mbfl_encoding_id to);
+MBFLAPI extern void mbfl_convert_filter_delete(mbfl_convert_filter *filter);
+MBFLAPI extern int mbfl_convert_filter_feed(int c, mbfl_convert_filter *filter);
+MBFLAPI extern int mbfl_convert_filter_flush(mbfl_convert_filter *filter);
+MBFLAPI extern void mbfl_convert_filter_reset(mbfl_convert_filter *filter, enum mbfl_no_encoding from, enum mbfl_no_encoding to);
+MBFLAPI extern void mbfl_convert_filter_copy(mbfl_convert_filter *src, mbfl_convert_filter *dist);
+MBFLAPI extern int mbfl_filt_conv_illegal_output(int c, mbfl_convert_filter *filter);
+MBFLAPI extern const struct mbfl_convert_vtbl * mbfl_convert_filter_get_vtbl(enum mbfl_no_encoding from, enum mbfl_no_encoding to);
 
-MBFLAPI void mbfl_filt_conv_common_ctor(mbfl_convert_filter *filter);
-MBFLAPI int mbfl_filt_conv_common_flush(mbfl_convert_filter *filter);
-MBFLAPI void mbfl_filt_conv_common_dtor(mbfl_convert_filter *filter);
+MBFLAPI extern void mbfl_filt_conv_common_ctor(mbfl_convert_filter *filter);
+MBFLAPI extern int mbfl_filt_conv_common_flush(mbfl_convert_filter *filter);
+MBFLAPI extern void mbfl_filt_conv_common_dtor(mbfl_convert_filter *filter);
 
-MBFLAPI int mbfl_convert_filter_devcat(mbfl_convert_filter *filter, mbfl_memory_device *src);
-MBFLAPI int mbfl_convert_filter_strcat(mbfl_convert_filter *filter, const unsigned char *p);
+MBFLAPI extern int mbfl_convert_filter_devcat(mbfl_convert_filter *filter, mbfl_memory_device *src);
+MBFLAPI extern int mbfl_convert_filter_strcat(mbfl_convert_filter *filter, const unsigned char *p);
 
 #endif /* MBFL_CONVERT_H */
