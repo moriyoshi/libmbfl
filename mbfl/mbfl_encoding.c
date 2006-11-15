@@ -67,6 +67,7 @@
 #include "filters/mbfilter_cp936.h"
 #include "filters/mbfilter_cp1251.h"
 #include "filters/mbfilter_cp1252.h"
+#include "filters/mbfilter_cp5022x.h"
 #include "filters/mbfilter_iso8859_1.h"
 #include "filters/mbfilter_iso8859_2.h"
 #include "filters/mbfilter_iso8859_3.h"
@@ -178,6 +179,11 @@ static const mbfl_encoding *mbfl_encoding_ptr_list[] = {
 	&mbfl_encoding_cp866,
 	&mbfl_encoding_koi8r,
 	&mbfl_encoding_armscii8,
+	&mbfl_encoding_jis_ms,
+	&mbfl_encoding_cp50220,
+	&mbfl_encoding_cp50220raw,
+	&mbfl_encoding_cp50221,
+	&mbfl_encoding_cp50222,
 	NULL
 };
 
