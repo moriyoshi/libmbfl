@@ -42,6 +42,7 @@ libmbfl_filters_la_SOURCES=mbfilter_cp936.c \
 	mbfilter_utf7imap.c \
 	mbfilter_euc_jp_win.c \
 	mbfilter_cp932.c \
+	mbfilter_cp51932.c \
 	mbfilter_euc_cn.c \
 	mbfilter_euc_kr.c \
 	mbfilter_uhc.c \
@@ -102,6 +103,7 @@ libmbfl_filters_la_SOURCES=mbfilter_cp936.c \
 	mbfilter_utf8.h \
 	mbfilter_uuencode.h \
 	mbfilter_cp5022x.h \
+	mbfilter_cp51932.h \
 	mbfilter_tl_jisx0201_jisx0208.h \
 	unicode_prop.h \
 	unicode_table_big5.h \
