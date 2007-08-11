@@ -22,6 +22,8 @@ prepare: config.h.bcc32
 
 clean:
 	@for %i in ($(SUBDIRS)) do $(COMSPEC) /C mksbcc32.bat $(MAKE) %i clean
+	@if exist linker.rsp del linker.rsp
+	@if exist mbfl.RES del mbfl.RES
 	@if exist mbfl.dll del mbfl.dll
 	@if exist mbfl.lib del mbfl.lib
 	@if exist config.h del config.h

@@ -3,8 +3,9 @@ Makefile.in
 EastAsianWidth.txt
 .deps
 .libs
-*.obj
 *.la
 *.a
 *.o
 *.lo
+*.gcda
+*.gcno
