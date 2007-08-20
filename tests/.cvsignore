@@ -1,0 +1,14 @@
+conv_kana
+conv_encoding
+strwidth
+strcut
+.libs
+.deps
+Makefile
+Makefile.in
+*.o
+*.lo
+*.la
+*.lai
+*.log
+*.sum

@@ -38,3 +38,4 @@ typedef struct _mbfl_html_entity_entry {
 extern const mbfl_html_entity_entry mbfl_html_entity_list[];
 
 #endif /* MBFL_HTML_ENTITIES_H */
+

@@ -2,8 +2,9 @@ Makefile
 Makefile.in
 .deps
 .libs
-*.obj
 *.la
 *.a
 *.o
 *.lo
+*.TXT
+*.txt

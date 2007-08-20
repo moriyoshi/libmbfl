@@ -1,9 +1,8 @@
 # Process this file with autoconf to produce a configure script.
 AC_INIT(mbfl/mbfilter.c)
-AM_INIT_AUTOMAKE(libmbfl, 1.1.0)
+AM_INIT_AUTOMAKE(libmbfl, 1.1.0rc3)
 AC_CONFIG_SRCDIR(mbfl/mbfilter.c)
 AM_CONFIG_HEADER(config.h)
-AM_MAINTAINER_MODE
 
 SHLIB_VERSION="1:1:0"
 AC_SUBST(SHLIB_VERSION)
@@ -20,11 +19,6 @@ AC_PROG_RANLIB
 AC_HEADER_STDC
 AC_CHECK_HEADERS([stdlib.h stddef.h assert.h])
 
-AC_ARG_ENABLE([threads], 	 
-  [  --enable-threads        enable threading support], 	 
-  [enable_threads="$enableval"], 	 
-  [enable_threads="autodetect"])
-
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
 AC_TYPE_SIZE_T
@@ -40,5 +34,14 @@ if test "$FETCH_VIA_FTP" = "curl"; then
   FETCH_VIA_FTP="curl -O"
 fi
 
-AC_CONFIG_FILES([Makefile mbfl/Makefile filters/Makefile nls/Makefile])
+AC_CONFIG_FILES([
+  Makefile
+  mbfl/Makefile
+  filters/Makefile
+  nls/Makefile
+  tests/Makefile
+  tests/conv_encoding.tests/Makefile
+  tests/conv_kana.tests/Makefile
+  tests/strwidth.tests/Makefile
+  tests/strcut.tests/Makefile])
 AC_OUTPUT
