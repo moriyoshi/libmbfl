@@ -7,6 +7,7 @@ OBJS=nls_ja.obj \
 	nls_tr.obj \
 	nls_kr.obj \
 	nls_ru.obj \
+	nls_ua.obj \
 	nls_zh.obj \
 	nls_uni.obj \
 	nls_neutral.obj

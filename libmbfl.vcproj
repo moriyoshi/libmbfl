@@ -248,6 +248,9 @@
 				RelativePath=".\filters\mbfilter_koi8r.c">
 			</File>
 			<File
+				RelativePath=".\filters\mbfilter_koi8u.c">
+			</File>
+			<File
 				RelativePath=".\mbfl\mbfilter_pass.c">
 			</File>
 			<File
@@ -475,6 +478,9 @@
 				RelativePath=".\filters\mbfilter_koi8r.h">
 			</File>
 			<File
+				RelativePath=".\filters\mbfilter_koi8u.h">
+			</File>
+			<File
 				RelativePath=".\mbfl\mbfilter_pass.h">
 			</File>
 			<File
@@ -632,6 +638,9 @@
 			</File>
 			<File
 				RelativePath=".\filters\unicode_table_koi8r.h">
+			</File>
+			<File
+				RelativePath=".\filters\unicode_table_koi8u.h">
 			</File>
 			<File
 				RelativePath=".\filters\unicode_table_uhc.h">

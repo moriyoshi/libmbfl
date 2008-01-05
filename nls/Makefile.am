@@ -9,6 +9,7 @@ libmbfl_nls_la_SOURCES=nls_ja.c \
 	nls_tr.c \
 	nls_kr.c \
 	nls_ru.c \
+	nls_ua.c \
 	nls_zh.c \
 	nls_uni.c \
 	nls_neutral.c \
@@ -19,6 +20,7 @@ libmbfl_nls_la_SOURCES=nls_ja.c \
 	nls_tr.h \
 	nls_kr.h \
 	nls_ru.h \
+	nls_ua.h \
 	nls_zh.h \
 	nls_uni.h \
 	nls_neutral.h

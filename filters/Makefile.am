@@ -49,6 +49,7 @@ libmbfl_filters_la_SOURCES=mbfilter_cp936.c \
 	mbfilter_iso2022_kr.c \
 	mbfilter_cp866.c \
 	mbfilter_koi8r.c \
+	mbfilter_koi8u.c \
 	mbfilter_armscii8.c \
 	mbfilter_cp5022x.c \
 	mbfilter_tl_jisx0201_jisx0208.c \
@@ -90,6 +91,7 @@ libmbfl_filters_la_SOURCES=mbfilter_cp936.c \
 	mbfilter_iso8859_9.h \
 	mbfilter_jis.h \
 	mbfilter_koi8r.h \
+	mbfilter_koi8u.h \
 	mbfilter_armscii8.h \
 	mbfilter_qprint.h \
 	mbfilter_sjis.h \
@@ -128,6 +130,7 @@ libmbfl_filters_la_SOURCES=mbfilter_cp936.c \
 	unicode_table_iso8859_9.h \
 	unicode_table_jis.h \
 	unicode_table_koi8r.h \
+	unicode_table_koi8u.h \
 	unicode_table_armscii8.h \
 	unicode_table_uhc.h \
 	translit_kana_jisx0201_jisx0208.h

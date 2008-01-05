@@ -63,6 +63,7 @@
 #include "filters/mbfilter_euc_jp_win.h"
 #include "filters/mbfilter_ascii.h"
 #include "filters/mbfilter_koi8r.h"
+#include "filters/mbfilter_koi8u.h"
 #include "filters/mbfilter_cp866.h"
 #include "filters/mbfilter_cp932.h"
 #include "filters/mbfilter_cp936.h"
@@ -181,6 +182,7 @@ static const mbfl_encoding *mbfl_encoding_ptr_list[] = {
 	&mbfl_encoding_cp1251,
 	&mbfl_encoding_cp866,
 	&mbfl_encoding_koi8r,
+	&mbfl_encoding_koi8u,
 	&mbfl_encoding_armscii8,
 	&mbfl_encoding_jis_ms,
 	&mbfl_encoding_cp50220,

@@ -57,6 +57,7 @@
 #include "filters/mbfilter_euc_jp_win.h"
 #include "filters/mbfilter_ascii.h"
 #include "filters/mbfilter_koi8r.h"
+#include "filters/mbfilter_koi8u.h"
 #include "filters/mbfilter_cp866.h"
 #include "filters/mbfilter_cp932.h"
 #include "filters/mbfilter_cp936.h"
@@ -140,6 +141,8 @@ const struct mbfl_convert_vtbl *mbfl_convert_filter_list[] = {
 	&vtbl_wchar_cp866,
 	&vtbl_koi8r_wchar,
 	&vtbl_wchar_koi8r,
+	&vtbl_koi8u_wchar,
+	&vtbl_wchar_koi8u,
 	&vtbl_cp1252_wchar,
 	&vtbl_wchar_cp1252,
 	&vtbl_cp50220_wchar,
