@@ -75,6 +75,7 @@ enum mbfl_no_encoding {
 	mbfl_no_encoding_2022jp,
 	mbfl_no_encoding_2022jpms,
 	mbfl_no_encoding_cp1252,
+	mbfl_no_encoding_cp1254,
 	mbfl_no_encoding_8859_1,
 	mbfl_no_encoding_8859_2,
 	mbfl_no_encoding_8859_3,

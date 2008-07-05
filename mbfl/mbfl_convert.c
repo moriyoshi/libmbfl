@@ -63,6 +63,7 @@
 #include "filters/mbfilter_cp936.h"
 #include "filters/mbfilter_cp1251.h"
 #include "filters/mbfilter_cp1252.h"
+#include "filters/mbfilter_cp1254.h"
 #include "filters/mbfilter_cp5022x.h"
 #include "filters/mbfilter_iso8859_1.h"
 #include "filters/mbfilter_iso8859_2.h"
@@ -145,6 +146,8 @@ const struct mbfl_convert_vtbl *mbfl_convert_filter_list[] = {
 	&vtbl_wchar_koi8u,
 	&vtbl_cp1252_wchar,
 	&vtbl_wchar_cp1252,
+	&vtbl_cp1254_wchar,
+	&vtbl_wchar_cp1254,
 	&vtbl_cp50220_wchar,
 	&vtbl_wchar_cp50220,
 	&vtbl_cp50220raw_wchar,

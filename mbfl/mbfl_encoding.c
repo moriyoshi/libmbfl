@@ -69,6 +69,7 @@
 #include "filters/mbfilter_cp936.h"
 #include "filters/mbfilter_cp1251.h"
 #include "filters/mbfilter_cp1252.h"
+#include "filters/mbfilter_cp1254.h"
 #include "filters/mbfilter_cp5022x.h"
 #include "filters/mbfilter_iso8859_1.h"
 #include "filters/mbfilter_iso8859_2.h"
@@ -157,6 +158,7 @@ static const mbfl_encoding *mbfl_encoding_ptr_list[] = {
 	&mbfl_encoding_2022jp,
 	&mbfl_encoding_2022jpms,
 	&mbfl_encoding_cp1252,
+	&mbfl_encoding_cp1254,
 	&mbfl_encoding_8859_1,
 	&mbfl_encoding_8859_2,
 	&mbfl_encoding_8859_3,

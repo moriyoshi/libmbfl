@@ -478,7 +478,7 @@ mbfl_filt_conv_wchar_jis_ms(int c, mbfl_convert_filter *filter)
 
 			for (i = 0;
 					i < cp932ext1_ucs_table_max - cp932ext1_ucs_table_min; i++) {
-				static const int oh = cp932ext1_ucs_table_min / 94;
+				const int oh = cp932ext1_ucs_table_min / 94;
 
 				if (c == cp932ext1_ucs_table[i]) {
 					s = ((i / 94 + oh + 0x21) << 8) + (i % 94 + 0x21);
@@ -487,9 +487,9 @@ mbfl_filt_conv_wchar_jis_ms(int c, mbfl_convert_filter *filter)
 			}
 
 			if (s < 0) {
-				static const int cp932ext3_ucs_table_size =
+				const int cp932ext3_ucs_table_size =
 						cp932ext3_ucs_table_max - cp932ext3_ucs_table_min;
-				static const int limit = cp932ext3_ucs_table_size >
+				const int limit = cp932ext3_ucs_table_size >
 						cp932ext3_eucjp_table_size ?
 							cp932ext3_eucjp_table_size:
 							cp932ext3_ucs_table_size;
@@ -697,7 +697,7 @@ mbfl_filt_conv_wchar_cp50221(int c, mbfl_convert_filter *filter)
 			for (i = 0;
 					i < cp932ext1_ucs_table_max - cp932ext1_ucs_table_min;
 					i++) {
-				static const int oh = cp932ext1_ucs_table_min / 94;
+				const int oh = cp932ext1_ucs_table_min / 94;
 
 				if (c == cp932ext1_ucs_table[i]) {
 					s = ((i / 94 + oh + 0x21) << 8) + (i % 94 + 0x21);
@@ -706,9 +706,9 @@ mbfl_filt_conv_wchar_cp50221(int c, mbfl_convert_filter *filter)
 			}
 
 			if (s <= 0) {
-				static const int cp932ext3_ucs_table_size =
+				const int cp932ext3_ucs_table_size =
 						cp932ext3_ucs_table_max - cp932ext3_ucs_table_min;
-				static const int limit = cp932ext3_ucs_table_size >
+				const int limit = cp932ext3_ucs_table_size >
 						cp932ext3_eucjp_table_size ?
 							cp932ext3_eucjp_table_size:
 							cp932ext3_ucs_table_size;
@@ -831,7 +831,7 @@ mbfl_filt_conv_wchar_cp50222(int c, mbfl_convert_filter *filter)
 
 			for (i = 0;
 					i < cp932ext1_ucs_table_max - cp932ext1_ucs_table_min; i++) {
-				static const int oh = cp932ext1_ucs_table_min / 94;
+				const int oh = cp932ext1_ucs_table_min / 94;
 
 				if (c == cp932ext1_ucs_table[i]) {
 					s = ((i / 94 + oh + 0x21) << 8) + (i % 94 + 0x21);
@@ -840,9 +840,9 @@ mbfl_filt_conv_wchar_cp50222(int c, mbfl_convert_filter *filter)
 			}
 
 			if (s <= 0) {
-				static const int cp932ext3_ucs_table_size =
+				const int cp932ext3_ucs_table_size =
 						cp932ext3_ucs_table_max - cp932ext3_ucs_table_min;
-				static const int limit = cp932ext3_ucs_table_size >
+				const int limit = cp932ext3_ucs_table_size >
 						cp932ext3_eucjp_table_size ?
 							cp932ext3_eucjp_table_size:
 							cp932ext3_ucs_table_size;

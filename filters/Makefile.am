@@ -10,6 +10,7 @@ libmbfl_filters_la_SOURCES=mbfilter_cp936.c \
 	mbfilter_jis.c \
 	mbfilter_iso8859_1.c \
 	mbfilter_iso8859_2.c \
+	mbfilter_cp1254.c \
 	mbfilter_cp1252.c \
 	mbfilter_cp1251.c \
 	mbfilter_ascii.c \
@@ -64,6 +65,7 @@ libmbfl_filters_la_SOURCES=mbfilter_cp936.c \
 	mbfilter_byte4.h \
 	mbfilter_cp1251.h \
 	mbfilter_cp1252.h \
+	mbfilter_cp1254.h \
 	mbfilter_cp866.h \
 	mbfilter_cp932.h \
 	mbfilter_cp936.h \
@@ -112,6 +114,7 @@ libmbfl_filters_la_SOURCES=mbfilter_cp936.c \
 	unicode_table_cns11643.h \
 	unicode_table_cp1251.h \
 	unicode_table_cp1252.h \
+	unicode_table_cp1254.h \
 	unicode_table_cp866.h \
 	unicode_table_cp932_ext.h \
 	unicode_table_cp936.h \

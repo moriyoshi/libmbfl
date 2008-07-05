@@ -1719,6 +1719,7 @@ mbfl_ja_jp_hantozen(
 	mbfl_convert_filter *encoder = NULL;
 	mbfl_convert_filter *tl_filter = NULL;
 	mbfl_convert_filter *next_filter = NULL;
+	mbfl_filt_tl_jisx0201_jisx0208_param *param = NULL;
 
 	/* validate parameters */
 	if (string == NULL || result == NULL) {
@@ -1745,8 +1746,8 @@ mbfl_ja_jp_hantozen(
 	}
 	next_filter = decoder;
 
-	mbfl_filt_tl_jisx0201_jisx0208_param *param =
-		mbfl_malloc(sizeof(mbfl_filt_tl_jisx0201_jisx0208_param));
+	param =
+		(mbfl_filt_tl_jisx0201_jisx0208_param *)mbfl_malloc(sizeof(mbfl_filt_tl_jisx0201_jisx0208_param));
 	if (param == NULL) {
 		goto out;
 	}
