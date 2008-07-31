@@ -461,7 +461,7 @@ mbfl_filt_conv_illegal_output(int c, mbfl_convert_filter *filter)
 			  if (mode_backup == MBFL_OUTPUTFILTER_ILLEGAL_MODE_LONG) {
 			    ret = mbfl_convert_filter_strcat(filter, (const unsigned char *)"U+");
 			  } else { /* entity */
-			    ret = mbfl_convert_filter_strcat(filter, (const unsigned char *)"&#");
+			    ret = mbfl_convert_filter_strcat(filter, (const unsigned char *)"&#x");
 			  }
 			} else {
 				if (c < MBFL_WCSGROUP_WCHARMAX) {
