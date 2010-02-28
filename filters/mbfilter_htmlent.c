@@ -302,8 +302,6 @@ int mbfl_filt_conv_html_dec_flush(mbfl_convert_filter *filter)
 			err = e;
 	}
 
-	filter->status = 0;
-
 	if (filter->flush_function != NULL) {
 		(*filter->flush_function)(filter->data);
 	}
