@@ -103,7 +103,7 @@ enum mbfl_no_encoding {
 	mbfl_no_encoding_koi8u,
 	mbfl_no_encoding_8859_16,
 	mbfl_no_encoding_armscii8,
-    mbfl_no_encoding_cp850,
+	mbfl_no_encoding_cp850,
 	mbfl_no_encoding_jis_ms,
 	mbfl_no_encoding_cp50220,
 	mbfl_no_encoding_cp50220raw,
