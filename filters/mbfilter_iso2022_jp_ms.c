@@ -423,7 +423,13 @@ mbfl_filt_conv_any_2022jpms_flush(mbfl_convert_filter *filter)
 		CK((*filter->output_function)(0x28, filter->data));		/* '(' */
 		CK((*filter->output_function)(0x42, filter->data));		/* 'B' */
 	}
+
 	filter->status &= 0xff;
+
+	if (filter->flush_function != NULL) {
+		return (*filter->flush_function)(filter->data);
+	}
+
 	return 0;
 }
 
