@@ -8,9 +8,9 @@ OBJS=mbfilter_cp936.obj \
 	mbfilter_jis.obj \
 	mbfilter_iso8859_1.obj \
 	mbfilter_iso8859_2.obj \
-	mbfilter_cp1254.obj \
 	mbfilter_cp1252.obj \
 	mbfilter_cp1251.obj \
+	mbfilter_cp1254.obj \
 	mbfilter_ascii.obj \
 	mbfilter_iso8859_3.obj \
 	mbfilter_iso8859_4.obj \
