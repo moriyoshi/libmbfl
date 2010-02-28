@@ -1,9 +1,0 @@
-Makefile
-Makefile.in
-EastAsianWidth.txt
-.deps
-.libs
-*.la
-*.a
-*.o
-*.lo
