@@ -48,18 +48,6 @@ static void mbfl_filt_conv_wchar_cp50220_ctor(mbfl_convert_filter *filt);
 static void mbfl_filt_conv_wchar_cp50220_dtor(mbfl_convert_filter *filt);
 static void mbfl_filt_conv_wchar_cp50220_copy(mbfl_convert_filter *src, mbfl_convert_filter *dest);
 
-static const char *mbfl_encoding_cp50220_aliases[] = {
-	"ISO-2022-JP-win",
-	"ISO-2022-JP-ms",
-	NULL
-};
-
-static const char *mbfl_encoding_cp50220raw_aliases[] = {
-	"ISO-2022-JP-win-raw",
-	"ISO-2022-JP-ms-raw",
-	NULL
-};
-
 const mbfl_encoding mbfl_encoding_jis_ms = {
 	mbfl_no_encoding_jis_ms,
 	"JIS-ms",
@@ -73,7 +61,7 @@ const mbfl_encoding mbfl_encoding_cp50220 = {
 	mbfl_no_encoding_cp50220,
 	"CP50220",
 	"ISO-2022-JP",
-	(const char *(*)[])&mbfl_encoding_cp50220_aliases,
+	(const char *(*)[])NULL,
 	NULL,
 	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_SHFTCODE
 };
@@ -82,7 +70,7 @@ const mbfl_encoding mbfl_encoding_cp50220raw = {
 	mbfl_no_encoding_cp50220raw,
 	"CP50220raw",
 	"ISO-2022-JP",
-	(const char *(*)[])&mbfl_encoding_cp50220raw_aliases,
+	(const char *(*)[])NULL,
 	NULL,
 	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_SHFTCODE
 };
