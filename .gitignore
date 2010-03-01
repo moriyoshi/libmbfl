@@ -33,3 +33,6 @@ tests/conv_encoding
 tests/conv_kana
 tests/strcut
 tests/strwidth
+tests/conv_encoding.tests/CP932.TXT
+tests/conv_encoding.tests/uni_to_cp932.exp
+tests/conv_encoding.tests/gen_exp
