@@ -110,7 +110,6 @@ static const struct mbfl_identify_vtbl *mbfl_identify_filter_list[] = {
 	&vtbl_identify_eucjpwin,
 	&vtbl_identify_sjiswin,
 	&vtbl_identify_jis,
-	&vtbl_identify_jis_ms,
 	&vtbl_identify_2022jp,
 	&vtbl_identify_2022jpms,
 	&vtbl_identify_euccn,
