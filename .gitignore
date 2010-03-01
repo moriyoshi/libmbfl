@@ -10,8 +10,10 @@
 *.tmp
 *.Tpo
 .deps
+.gdb_history
 .libs
 site.exp
+site.bak
 aclocal.m4
 autom4te.cache
 config.guess
