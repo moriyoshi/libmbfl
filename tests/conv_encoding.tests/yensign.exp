@@ -57,7 +57,7 @@ set test "ISO-2022-JP-MS"
 send "\xc2\xa5\r"
 sleep 0.01
 expect {
-    "%5c (1)\r\n" { pass $test }
+    "%1b%24%42%21%6f%1b%28%42 (8)\r\n" { pass $test }
 }
 close
 
