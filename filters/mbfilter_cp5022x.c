@@ -893,6 +893,7 @@ mbfl_filt_conv_wchar_cp50222(int c, mbfl_convert_filter *filter)
 		if (s < 0x80) { /* ASCII */
 			if ((filter->status & 0xff00) == 0x500) {
 				CK((*filter->output_function)(0x0f, filter->data));		/* SO */
+				filter->status = 0;
 			} else if ((filter->status & 0xff00) != 0) {
 				CK((*filter->output_function)(0x1b, filter->data));		/* ESC */
 				CK((*filter->output_function)(0x28, filter->data));		/* '(' */
