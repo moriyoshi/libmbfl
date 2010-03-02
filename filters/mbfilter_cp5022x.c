@@ -462,7 +462,7 @@ mbfl_filt_conv_wchar_jis_ms(int c, mbfl_convert_filter *filter)
 			s = 0x224c;
 		}
 	}
-	if (s <= 0 || s >= 0x8080) {
+	if (s <= 0 || s >= 0x8080 && s < 0x10000) {
 		int i;
 		s = -1;
 
@@ -693,7 +693,7 @@ mbfl_filt_conv_wchar_cp50221(int c, mbfl_convert_filter *filter)
 			s = 0x224c;
 		}
 	}
-	if (s <= 0 || s >= 0x8080) {
+	if (s <= 0 || s >= 0x8080 && s < 0x10000) {
 		int i;
 		s = -1;
 
@@ -768,7 +768,7 @@ mbfl_filt_conv_wchar_cp50221(int c, mbfl_convert_filter *filter)
 			}
 			CK((*filter->output_function)((s >> 8) & 0x7f, filter->data));
 			CK((*filter->output_function)(s & 0x7f, filter->data));
-		} else if (s >= 0x8080) { /* X0212 */
+		} else if (s < 0x10000) { /* X0212 */
 			if (filter->illegal_mode != MBFL_OUTPUTFILTER_ILLEGAL_MODE_NONE) {
 				CK(mbfl_filt_conv_illegal_output(c, filter));
 			}
