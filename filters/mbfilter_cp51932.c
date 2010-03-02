@@ -235,7 +235,7 @@ mbfl_filt_conv_wchar_cp51932(int c, mbfl_convert_filter *filter)
 				s1 = -1;
 			}
 		} else if (c == 0xa5) {		/* YEN SIGN */
-			s1 = 0x216f;			/* FULLWIDTH YEN SIGN */
+			s1 = 0x005c;			/* YEN SIGN */
 		} else if (c == 0x203e) {	/* OVER LINE */
 			s1 = 0x2131;			/* FULLWIDTH MACRON */
 		} else if (c == 0xff3c) {	/* FULLWIDTH REVERSE SOLIDUS */
