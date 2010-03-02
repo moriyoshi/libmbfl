@@ -32,6 +32,7 @@ libmbfl_filters_la_SOURCES=mbfilter_cp936.c \
 	mbfilter_uuencode.c \
 	mbfilter_base64.c \
 	mbfilter_sjis.c \
+	mbfilter_sjis_open.c \
 	mbfilter_7bit.c \
 	mbfilter_qprint.c \
 	mbfilter_ucs4.c \
@@ -100,6 +101,7 @@ libmbfl_filters_la_SOURCES=mbfilter_cp936.c \
 	mbfilter_armscii8.h \
 	mbfilter_qprint.h \
 	mbfilter_sjis.h \
+	mbfilter_sjis_open.h \
 	mbfilter_ucs2.h \
 	mbfilter_ucs4.h \
 	mbfilter_uhc.h \

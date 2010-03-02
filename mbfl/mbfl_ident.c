@@ -50,6 +50,7 @@
 #include "filters/mbfilter_euc_kr.h"
 #include "filters/mbfilter_iso2022_kr.h"
 #include "filters/mbfilter_sjis.h"
+#include "filters/mbfilter_sjis_open.h"
 #include "filters/mbfilter_jis.h"
 #include "filters/mbfilter_iso2022_jp_ms.h"
 #include "filters/mbfilter_euc_jp.h"
@@ -107,8 +108,9 @@ static const struct mbfl_identify_vtbl *mbfl_identify_filter_list[] = {
 	&vtbl_identify_ascii,
 	&vtbl_identify_eucjp,
 	&vtbl_identify_sjis,
+	&vtbl_identify_sjis_open,
 	&vtbl_identify_eucjpwin,
-	&vtbl_identify_sjiswin,
+	&vtbl_identify_cp932,
 	&vtbl_identify_jis,
 	&vtbl_identify_2022jp,
 	&vtbl_identify_2022jpms,

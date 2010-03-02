@@ -27,17 +27,17 @@
  *
  */
 
-#ifndef MBFL_MBFILTER_CP932_H
-#define MBFL_MBFILTER_CP932_H
+#ifndef MBFL_MBFILTER_SJIS_OPEN_H
+#define MBFL_MBFILTER_SJIS_OPEN_H
 
 #include "mbfilter.h"
 
-extern const mbfl_encoding mbfl_encoding_cp932;
-extern const struct mbfl_identify_vtbl vtbl_identify_cp932;
-extern const struct mbfl_convert_vtbl vtbl_cp932_wchar;
-extern const struct mbfl_convert_vtbl vtbl_wchar_cp932;
+extern const mbfl_encoding mbfl_encoding_sjis_open;
+extern const struct mbfl_identify_vtbl vtbl_identify_sjis_open;
+extern const struct mbfl_convert_vtbl vtbl_sjis_open_wchar;
+extern const struct mbfl_convert_vtbl vtbl_wchar_sjis_open;
 
-int mbfl_filt_conv_cp932_wchar(int c, mbfl_convert_filter *filter);
-int mbfl_filt_conv_wchar_cp932(int c, mbfl_convert_filter *filter);
+int mbfl_filt_conv_sjis_open_wchar(int c, mbfl_convert_filter *filter);
+int mbfl_filt_conv_wchar_sjis_open(int c, mbfl_convert_filter *filter);
 
-#endif /* MBFL_MBFILTER_CP932_H */
+#endif /* MBFL_MBFILTER_SJIS_OPEN_H */

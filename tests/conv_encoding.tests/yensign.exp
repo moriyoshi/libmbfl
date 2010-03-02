@@ -13,6 +13,18 @@ expect {
 }
 close
 
+spawn tests/conv_encoding Japanese SJIS-open UTF-8
+expect_after {
+    "\[^\r\n\]*\r\n" { fail $test }
+}
+set test "SJIS-open"
+send "\xc2\xa5\r"
+sleep 0.01
+expect {
+    "%81%8f (2)\r\n" { pass $test }
+}
+close
+
 spawn tests/conv_encoding Japanese eucJP-open UTF-8
 expect_after {
     "\[^\r\n\]*\r\n" { fail $test }
