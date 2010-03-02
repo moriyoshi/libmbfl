@@ -176,6 +176,15 @@ static const char prologue_to_cp50220[] =
 "    \"\\[^\\r\\n\\]*\\r\\n\" { fail $test }\n"
 "}\n";
 
+static const char prologue_to_cp50222[] =
+"#!/usr/bin/expect -f\n"
+"spawn tests/conv_encoding Japanese CP50222 UTF-8\n"
+"set timeout 1\n"
+"\n"
+"expect_after {\n"
+"    \"\\[^\\r\\n\\]*\\r\\n\" { fail $test }\n"
+"}\n";
+
 static void to_cp932_visitor(const struct mappings_entry *entry)
 {
 	char buf_uni[32], buf_cp932[8];
@@ -196,7 +205,7 @@ static void to_cp932_visitor(const struct mappings_entry *entry)
 
 	printf("set test \"U+%06X\"\n"
 	       "send -- \"%s\r\"\n"
-		   "sleep 0.01\n"
+		   "sleep 0.001\n"
 	       "expect {\n", entry->cp_uni, buf_uni);
 
 	for (i = 0; i < entry->n; ++i) {
@@ -235,7 +244,7 @@ static void to_cp50220_visitor(const struct mappings_entry *entry)
 
 	printf("set test \"U+%06X\"\n"
 	       "send -- \"%s\r\"\n"
-		   "sleep 0.01\n"
+		   "sleep 0.001\n"
 	       "expect {\n", entry->cp_uni, buf_uni);
 
 	for (i = 0; i < entry->n; ++i) {
@@ -269,10 +278,54 @@ static void to_cp50220_visitor(const struct mappings_entry *entry)
 	printf("}\n");
 }
 
+static void to_cp50222_visitor(const struct mappings_entry *entry)
+{
+	char buf_uni[32], buf_cp50220[32];
+	int i;
+
+	if (entry->cp_uni < 32 || entry->cp_uni == 127)
+		return;
+
+	i = utf32_utf8(buf_uni, entry->cp_uni);
+	buf_uni[i * 4] = '\0';
+	while (--i >= 0) {
+		unsigned char c = ((unsigned char *)buf_uni)[i];
+		buf_uni[i * 4] = '\\';
+		buf_uni[i * 4 + 1] = 'x';
+		buf_uni[i * 4 + 2] = "0123456789abcdef"[c >> 4];
+		buf_uni[i * 4 + 3] = "0123456789abcdef"[c & 15];
+	}
+
+	printf("set test \"U+%06X\"\n"
+	       "send -- \"%s\r\"\n"
+		   "sleep 0.001\n"
+	       "expect {\n", entry->cp_uni, buf_uni);
+
+	for (i = 0; i < entry->n; ++i) {
+		int len = 0;
+		const int c = entry->cp_932[i];
+		if (c >= 0xa1 && c < 0xe0) {
+			len = 3;
+			sprintf(buf_cp50220, "%%0e%%%02x%%0f", c - 0x80);
+		} else if (c >= 0x100) {
+			const int j = ((((c & 0xff00) - (c >= 0xe000 ? 0xb000: 0x7000)) << 1) | ((c & 0xff) - (c & 0x80 ? 32: 31))) - ((c & 0xff) >= 159 ? 94: 0x100);
+			len = 8;
+			sprintf(buf_cp50220, "%%1b%%24%%42%%%02x%%%02x%%1b%%28%%42", j >> 8, j & 0xff);
+		} else {
+			len = 1;
+			sprintf(buf_cp50220, "%%%02x", c);
+		}
+		printf("    \"%s (%d)\\r\\n\" { pass $test }\n", buf_cp50220, len);
+	}
+
+	printf("}\n");
+}
+
 
 static struct generator_entry entries[] = {
 	{ "to_cp932", prologue_to_cp932, epilogue, to_cp932_visitor },
 	{ "to_cp50220", prologue_to_cp50220, epilogue, to_cp50220_visitor },
+	{ "to_cp50222", prologue_to_cp50222, epilogue, to_cp50222_visitor },
 	{ NULL }
 };
 
