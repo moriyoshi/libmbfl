@@ -38,6 +38,7 @@ tests/strwidth
 tests/conv_encoding.tests/CP932.TXT
 tests/conv_encoding.tests/uni_to_cp932.exp
 tests/conv_encoding.tests/uni_to_cp50220.exp
+tests/conv_encoding.tests/uni_to_cp50222.exp
 tests/conv_encoding.tests/gen_exp
 filters/8859-1.TXT
 filters/8859-2.TXT
