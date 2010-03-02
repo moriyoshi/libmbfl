@@ -167,6 +167,15 @@ static const char prologue_to_cp932[] =
 "    \"\\[^\\r\\n\\]*\\r\\n\" { fail $test }\n"
 "}\n";
 
+static const char prologue_to_cp50220[] =
+"#!/usr/bin/expect -f\n"
+"spawn tests/conv_encoding Japanese CP50220 UTF-8\n"
+"set timeout 1\n"
+"\n"
+"expect_after {\n"
+"    \"\\[^\\r\\n\\]*\\r\\n\" { fail $test }\n"
+"}\n";
+
 static void to_cp932_visitor(const struct mappings_entry *entry)
 {
 	char buf_uni[32], buf_cp932[8];
@@ -187,6 +196,7 @@ static void to_cp932_visitor(const struct mappings_entry *entry)
 
 	printf("set test \"U+%06X\"\n"
 	       "send -- \"%s\r\"\n"
+		   "sleep 0.01\n"
 	       "expect {\n", entry->cp_uni, buf_uni);
 
 	for (i = 0; i < entry->n; ++i) {
@@ -205,8 +215,64 @@ static void to_cp932_visitor(const struct mappings_entry *entry)
 	printf("}\n");
 }
 
+static void to_cp50220_visitor(const struct mappings_entry *entry)
+{
+	char buf_uni[32], buf_cp50220[32];
+	int i;
+
+	if (entry->cp_uni < 32 || entry->cp_uni == 127)
+		return;
+
+	i = utf32_utf8(buf_uni, entry->cp_uni);
+	buf_uni[i * 4] = '\0';
+	while (--i >= 0) {
+		unsigned char c = ((unsigned char *)buf_uni)[i];
+		buf_uni[i * 4] = '\\';
+		buf_uni[i * 4 + 1] = 'x';
+		buf_uni[i * 4 + 2] = "0123456789abcdef"[c >> 4];
+		buf_uni[i * 4 + 3] = "0123456789abcdef"[c & 15];
+	}
+
+	printf("set test \"U+%06X\"\n"
+	       "send -- \"%s\r\"\n"
+		   "sleep 0.01\n"
+	       "expect {\n", entry->cp_uni, buf_uni);
+
+	for (i = 0; i < entry->n; ++i) {
+		int len = 0;
+		const int c = entry->cp_932[i];
+		if (c >= 0xa1 && c < 0xe0) {
+			static const int jisx0208_tl_map[] = {
+				0x0000, 0x2123, 0x2156, 0x2157, 0x2122, 0x2126, 0x2572, 0x2521,
+				0x2523, 0x2525, 0x2527, 0x2529, 0x2563, 0x2565, 0x2567, 0x2543,
+				0x213c, 0x2522, 0x2524, 0x2526, 0x2528, 0x252a, 0x252b, 0x252d,
+				0x252f, 0x2531, 0x2533, 0x2535, 0x2537, 0x2539, 0x253b, 0x253d,
+				0x253f, 0x2541, 0x2544, 0x2546, 0x2548, 0x254a, 0x254b, 0x254c,
+				0x254d, 0x254e, 0x254f, 0x2552, 0x2555, 0x2558, 0x255b, 0x255e,
+				0x255f, 0x2560, 0x2561, 0x2562, 0x2564, 0x2566, 0x2568, 0x2569,
+				0x256a, 0x256b, 0x256c, 0x256d, 0x256f, 0x2573, 0x212b, 0x212c
+			};
+			const int j = jisx0208_tl_map[c - 0xa0];
+			len = 8;
+			sprintf(buf_cp50220, "%%1b%%24%%42%%%02x%%%02x%%1b%%28%%42", j >> 8, j & 0xff);
+		} else if (c >= 0x100) {
+			const int j = ((((c & 0xff00) - (c >= 0xe000 ? 0xb000: 0x7000)) << 1) | ((c & 0xff) - (c & 0x80 ? 32: 31))) - ((c & 0xff) >= 159 ? 94: 0x100);
+			len = 8;
+			sprintf(buf_cp50220, "%%1b%%24%%42%%%02x%%%02x%%1b%%28%%42", j >> 8, j & 0xff);
+		} else {
+			len = 1;
+			sprintf(buf_cp50220, "%%%02x", c);
+		}
+		printf("    \"%s (%d)\\r\\n\" { pass $test }\n", buf_cp50220, len);
+	}
+
+	printf("}\n");
+}
+
+
 static struct generator_entry entries[] = {
 	{ "to_cp932", prologue_to_cp932, epilogue, to_cp932_visitor },
+	{ "to_cp50220", prologue_to_cp50220, epilogue, to_cp50220_visitor },
 	{ NULL }
 };
 

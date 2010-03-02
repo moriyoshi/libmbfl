@@ -9,6 +9,9 @@ CP932.TXT:
 uni_to_cp932.exp: gen_exp CP932.TXT
 	./gen_exp to_cp932 > "$@"
 
-check: uni_to_cp932.exp
+uni_to_cp50220.exp: gen_exp CP932.TXT
+	./gen_exp to_cp50220 > "$@"
+
+check-local: uni_to_cp932.exp uni_to_cp50220.exp
 
 .PHONY: check-local
