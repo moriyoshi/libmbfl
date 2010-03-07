@@ -185,6 +185,15 @@ static const char prologue_to_cp50222[] =
 "    \"\\[^\\r\\n\\]*\\r\\n\" { fail $test }\n"
 "}\n";
 
+static const char prologue_from_cp932[] =
+"#!/usr/bin/expect -f\n"
+"spawn tests/conv_encoding Japanese UTF-8 CP932\n"
+"set timeout 1\n"
+"\n"
+"expect_after {\n"
+"    \"\\[^\\r\\n\\]*\\r\\n\" { fail $test }\n"
+"}\n";
+
 static void to_cp932_visitor(const struct mappings_entry *entry)
 {
 	char buf_uni[32], buf_cp932[8];
@@ -222,6 +231,40 @@ static void to_cp932_visitor(const struct mappings_entry *entry)
 	}
 
 	printf("}\n");
+}
+
+static void from_cp932_visitor(const struct mappings_entry *entry)
+{
+	char buf_uni[32], buf_cp932[8];
+	int i, len;
+
+	if (entry->cp_uni < 32 || entry->cp_uni == 127)
+		return;
+
+	len = utf32_utf8(buf_uni, entry->cp_uni);
+	buf_uni[len * 3] = '\0';
+	i = len;
+	while (--i >= 0) {
+		unsigned char c = ((unsigned char *)buf_uni)[i];
+		buf_uni[i * 3] = '%';
+		buf_uni[i * 3 + 1] = "0123456789abcdef"[c >> 4];
+		buf_uni[i * 3 + 2] = "0123456789abcdef"[c & 15];
+	}
+
+	for (i = 0; i < entry->n; ++i) {
+		const int c = entry->cp_932[i];
+		if (c >= 0x100)
+			sprintf(buf_cp932, "\\x%02x\\x%02x", (c >> 8) & 0xff, c & 0xff);
+		else
+			sprintf(buf_cp932, "\\x%02x", c);
+		printf("set test \"U+%06X\"\n"
+			   "send -- \"%s\r\"\n"
+			   "sleep 0.001\n"
+			   "expect {\n"
+		       "    \"%s (%d)\\r\\n\" { pass $test }\n"
+		       "}\n",
+			   entry->cp_uni, buf_cp932, buf_uni, len);
+	}
 }
 
 static void to_cp50220_visitor(const struct mappings_entry *entry)
@@ -326,6 +369,7 @@ static struct generator_entry entries[] = {
 	{ "to_cp932", prologue_to_cp932, epilogue, to_cp932_visitor },
 	{ "to_cp50220", prologue_to_cp50220, epilogue, to_cp50220_visitor },
 	{ "to_cp50222", prologue_to_cp50222, epilogue, to_cp50222_visitor },
+	{ "from_cp932", prologue_from_cp932, epilogue, from_cp932_visitor },
 	{ NULL }
 };
 
