@@ -4,3 +4,4 @@ RUNTESTDEFAULTFLAGS=--tool $$tool --srcdir "$$srcdir"/tests
 LANG=C
 EXTRA_DIST=AUTHORS DISCLAIMER LICENSE buildconf
 SUBDIRS = nls filters mbfl tests
+CLEANFILES=*.log *.sum
