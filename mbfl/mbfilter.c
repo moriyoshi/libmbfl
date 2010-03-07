@@ -2,6 +2,7 @@
  * charset=UTF-8
  * vim600: encoding=utf-8
  */
+
 /*
  * "streamable kanji code filter and converter"
  *
@@ -83,6 +84,8 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
+
+#include <stddef.h>
 
 #ifdef HAVE_STRING_H
 #include <string.h>
