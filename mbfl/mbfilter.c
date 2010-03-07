@@ -335,7 +335,7 @@ mbfl_buffer_converter_feed_result(mbfl_buffer_converter *convd, mbfl_string *str
 	result->no_encoding = convd->to->no_encoding;
 	return mbfl_memory_device_result(&convd->device, result);
 }
- 
+
 int mbfl_buffer_illegalchars(mbfl_buffer_converter *convd)
 {
 	int num_illegalchars = 0;
@@ -394,9 +394,9 @@ mbfl_encoding_detector_new(enum mbfl_no_encoding *elist, int elistsz, int strict
 	}
 	identd->filter_list_size = num;
 
- 	/* set strict flag */
- 	identd->strict = strict;
- 
+	/* set strict flag */
+	identd->strict = strict;
+
 	return identd;
 }
 
@@ -467,24 +467,24 @@ enum mbfl_no_encoding mbfl_encoding_detector_judge(mbfl_encoding_detector *ident
 		while (n >= 0) {
 			filter = identd->filter_list[n];
 			if (!filter->flag) {
- 				if (!identd->strict || !filter->status) {
+				if (!identd->strict || !filter->status) {
 					encoding = filter->encoding->no_encoding;
- 				}
+				}
 			}
 			n--;
 		}
  
- 		/* fallback judge */
- 		if (encoding ==	mbfl_no_encoding_invalid) {
- 			n = identd->filter_list_size - 1;
- 			while (n >= 0) {
- 				filter = identd->filter_list[n];
- 				if (!filter->flag) {
- 					encoding = filter->encoding->no_encoding;
- 				}
- 				n--;
+		/* fallback judge */
+		if (encoding ==	mbfl_no_encoding_invalid) {
+			n = identd->filter_list_size - 1;
+			while (n >= 0) {
+				filter = identd->filter_list[n];
+				if (!filter->flag) {
+					encoding = filter->encoding->no_encoding;
+				}
+				n--;
  			}
- 		}
+		}
 	}
 
 	return encoding;
@@ -616,7 +616,7 @@ mbfl_identify_encoding(mbfl_string *string, enum mbfl_no_encoding *elist, int el
 	for (i = 0; i < num; i++) {
 		filter = &flist[i];
 		if (!filter->flag) {
- 			if (strict && filter->status) {
+			if (strict && filter->status) {
  				continue;
  			}
 			encoding = filter->encoding;
@@ -624,16 +624,16 @@ mbfl_identify_encoding(mbfl_string *string, enum mbfl_no_encoding *elist, int el
 		}
 	}
 
- 	/* fall-back judge */
- 	if (!encoding) {
- 		for (i = 0; i < num; i++) {
- 			filter = &flist[i];
- 			if (!filter->flag && (!strict || !filter->status)) {
- 				encoding = filter->encoding;
- 				break;
- 			}
- 		}
- 	}
+	/* fall-back judge */
+	if (!encoding) {
+		for (i = 0; i < num; i++) {
+			filter = &flist[i];
+			if (!filter->flag && (!strict || !filter->status)) {
+				encoding = filter->encoding;
+				break;
+			}
+		}
+	}
  
 	/* cleanup */
 	/* dtors should be called in reverse order */
