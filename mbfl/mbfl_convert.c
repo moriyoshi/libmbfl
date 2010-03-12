@@ -271,6 +271,7 @@ mbfl_convert_filter_common_init(
 	filter->data = data;
 	filter->illegal_mode = MBFL_OUTPUTFILTER_ILLEGAL_MODE_CHAR;
 	filter->illegal_substchar = 0x3f;		/* '?' */
+	filter->num_illegalchar = 0;
 	filter->filter_ctor = vtbl->filter_ctor;
 	filter->filter_dtor = vtbl->filter_dtor;
 	filter->filter_function = vtbl->filter_function;
@@ -324,21 +325,15 @@ mbfl_convert_filter_new2(
 {
 	mbfl_convert_filter * filter;
 
+	if (vtbl == NULL) {
+		vtbl = &vtbl_pass;
+	}
+
 	/* allocate */
 	filter = (mbfl_convert_filter *)mbfl_malloc(sizeof(mbfl_convert_filter));
 	if (filter == NULL) {
 		return NULL;
 	}
-
-	if (vtbl == NULL) {
-		vtbl = &vtbl_pass;
-	}
-
-	filter->flush_function = flush_function;
-	filter->data = data;
-	filter->illegal_mode = MBFL_OUTPUTFILTER_ILLEGAL_MODE_CHAR;
-	filter->illegal_substchar = 0x3f;		/* '?' */
-	filter->num_illegalchar = 0;
 
 	if (mbfl_convert_filter_common_init(filter, vtbl->from, vtbl->to, vtbl,
 			output_function, flush_function, data)) {
