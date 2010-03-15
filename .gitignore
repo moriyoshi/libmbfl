@@ -9,6 +9,8 @@
 *.sum
 *.tmp
 *.Tpo
+*.tar.gz
+*.tar.bz2
 .deps
 .gdb_history
 .libs
