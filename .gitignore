@@ -58,3 +58,8 @@ filters/8859-13.TXT
 filters/8859-14.TXT
 filters/8859-15.TXT
 filters/8859-16.TXT
+
+#CMake stuff
+/CMakeCache.txt
+cmake_install.cmake
+CMakeFiles
