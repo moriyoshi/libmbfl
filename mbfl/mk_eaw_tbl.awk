@@ -5,6 +5,22 @@
 # Description: a script to generate east asian width table.
 #
 
+function hexstrtonum(str) {
+    str = toupper(str)
+    l = length(str)
+    retval = 0
+    for (i = 1; i <= l; i++) {
+        v = index("0123456789ABCDEF", substr(str, i, 1)) - 1
+        if (v < 0) {
+            return -1
+        } else {
+            retval *= 16
+            retval += v
+        }
+    }
+    return retval
+}
+
 BEGIN {
 	prev = -1
 	comma = 0
@@ -18,7 +34,7 @@ BEGIN {
 
 /^[0-9a-fA-F]+;/ {
 	if ($2 == "W" || $2 == "F") {
-		v = ( "0x" $1 ) + 0
+		v = hexstrtonum($1)
 		if (prev < 0) {
 			first = v
 		} else if (v - prev > 1) {
@@ -44,8 +60,8 @@ BEGIN {
 
 /^[0-9a-fA-F]+\.\./ {
 	if ($4 == "W" || $4 == "F") {
-		vs = ( "0x" $1 ) + 0
-		ve = ( "0x" $3 ) + 0
+		vs = hexstrtonum($1)
+		ve = hexstrtonum($3)
 		if (prev < 0) {
 			first = vs
 		} else if (vs - prev > 1) {
