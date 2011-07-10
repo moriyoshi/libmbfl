@@ -75,13 +75,16 @@ int main(int argc, char **argv)
 	mbfl_string_init_set(&result, no_language, to_encoding);
 	ret = mbfl_buffer_converter_feed_result(convd, &string, &result);
 
-	if (result.val[0] >= 0xD8 && result.val[0] < 0xE0) { // Surrogate pair
-	  int h = (result.val[0] & 0x07)<<8 | result.val[1];
-	  int l = (result.val[2] & 0x03)<<8 | result.val[3];
-	  int c = (h<<(2+8)) | l;
-	  printf("U+%x\n",c+0x10000);
-	} else {
-	  printf("U+%x\n",(result.val[0] << 8) | result.val[1]);
+	for (i = 0; i < result.len; i+= 2) {
+		if (result.val[i] >= 0xD8 && result.val[i] < 0xE0) { // Surrogate pair
+			int h = (result.val[i] & 0x07)<<8 | result.val[i+1];
+			int l = (result.val[i+2] & 0x03)<<8 | result.val[i+3];
+			int c = (h<<(2+8)) | l;
+			printf("U+%x\n",c+0x10000);
+			i+=2;
+		} else {
+			printf("U+%x\n",(result.val[i] << 8) | result.val[i+1]);
+		}
 	}
 
 

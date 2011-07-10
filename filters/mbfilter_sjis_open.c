@@ -331,30 +331,54 @@ mbfiler_sjis_emoji_sb2unicode(int s, int *snd)
 }
 
 int
-mbfiler_unicode2sjis_emoji_docomo(int c, int *s1, int *s2, int *c1, int *c2)
+mbfiler_unicode2sjis_emoji_docomo(int c, int *s1, int *s2, int *c1, int *c2, mbfl_convert_filter *filter)
 {
 	int i, match = 0;
 	
-	if (c >= mb_tbl_uni_docomo2code_min2 &&
-		c <= mb_tbl_uni_docomo2code_max2) {
-		for (i=0; mb_tbl_uni_docomo2code_key2[i] >0; i++) {
-			if (c >0 && mb_tbl_uni_docomo2code_key2[i] == c) {
-				*s1 = mb_tbl_uni_docomo2code_val2[i];
+	if (filter->status == 1) {
+		filter->status = 0;
+		*s1 = 0x0;
+		if (c == 0x20E3) {
+			if (filter->cache == 0x0023) {
+				*s1 = 0x2964;
 				match = 1;
-				break;
+			} else if (filter->cache == 0x0030) { 
+				*s1 = 0x296f;
+				match = 1;
+			} else if (filter->cache >= 0x0031 && 
+					   filter->cache >= 0x0039) {
+				*s1 = 0x2966 + (filter->cache - 0x0031);
+				match = 1;
 			}
 		}
-	} else if (c >= mb_tbl_uni_docomo2code_min3 &&
-			   c <= mb_tbl_uni_docomo2code_max3) {
-		for (i=0; mb_tbl_uni_docomo2code_key3[i] >0; i++) {
-			if (c >0 && mb_tbl_uni_docomo2code_key3[i] == c) {
-				*s1 = mb_tbl_uni_docomo2code_val3[i];
-				match = 1;
-				break;
+	} else {
+		if (c == 0x0023 || (c >= 0x0030 && c<=0x0039)) {
+			filter->status = 1;
+			filter->cache = c;
+			return 0;
+		}		
+
+		if (c >= mb_tbl_uni_docomo2code_min2 &&
+			c <= mb_tbl_uni_docomo2code_max2) {
+			for (i=0; mb_tbl_uni_docomo2code_key2[i] >0; i++) {
+				if (c >0 && mb_tbl_uni_docomo2code_key2[i] == c) {
+					*s1 = mb_tbl_uni_docomo2code_val2[i];
+					match = 1;
+					break;
+				}
+			}
+		} else if (c >= mb_tbl_uni_docomo2code_min3 &&
+				   c <= mb_tbl_uni_docomo2code_max3) {
+			for (i=0; mb_tbl_uni_docomo2code_key3[i] >0; i++) {
+				if (c >0 && mb_tbl_uni_docomo2code_key3[i] == c) {
+					*s1 = mb_tbl_uni_docomo2code_val3[i];
+					match = 1;
+					break;
+				}
 			}
 		}
 	}
-	
+
 	if (match && *s1 >0) {
 		*s1 += 0x21;
 		*c1 = *s1/94;
@@ -363,29 +387,78 @@ mbfiler_unicode2sjis_emoji_docomo(int c, int *s1, int *s2, int *c1, int *c2)
 		*s1 = (*c1 << 8) | *c2;
 		*s2 = 1;
 	}
+
+	return 1;
 }
 
 int
-mbfiler_unicode2sjis_emoji_kddi(int c, int *s1, int *s2, int *c1, int *c2)
+mbfiler_unicode2sjis_emoji_kddi(int c, int *s1, int *s2, int *c1, int *c2, mbfl_convert_filter *filter)
 {
 	int i, match = 0;
 	
-	if (c >= mb_tbl_uni_kddi2code_min2 &&
-		c <= mb_tbl_uni_kddi2code_max2) {
-		for (i=0; mb_tbl_uni_kddi2code_key2[i] >0; i++) {
-			if (c >0 && mb_tbl_uni_kddi2code_key2[i] == c) {
-				*s1 = mb_tbl_uni_kddi2code_val2[i];
+	if (filter->status == 1) {
+		filter->status = 0;
+		*s1 = 0x0;
+		if (c == 0x20E3) {
+			if (filter->cache == 0x0023) {
+				*s1 = 0x25bc;
 				match = 1;
-				break;
+			} else if (filter->cache == 0x0030) { 
+				*s1 = 0x2830;
+				match = 1;
+			} else if (filter->cache >= 0x0031 && 
+					   filter->cache >= 0x0039) {
+				*s1 = 0x27a6 + (filter->cache - 0x0031);
+				match = 1;
 			}
+		} else if (c == 0x1F1F3 && filter->cache == 0x1F1E8) {
+			*s1 = 0x2549; match = 1;
+		} else if (c == 0x1F1EA && filter->cache == 0x1F1E9) {
+			*s1 = 0x2546; match = 1;
+		} else if (c == 0x1F1F8 && filter->cache == 0x1F1EA) {
+			*s1 = 0x24c0; match = 1;			
+		} else if (c == 0x1F1F7 && filter->cache == 0x1F1EB) {
+			*s1 = 0x2545; match = 1;			
+		} else if (c == 0x1F1E7 && filter->cache == 0x1F1EC) {
+			*s1 = 0x2548; match = 1;			
+		} else if (c == 0x1F1F9 && filter->cache == 0x1F1EE) {
+			*s1 = 0x2547; match = 1;			
+		} else if (c == 0x1F1F5 && filter->cache == 0x1F1EF) {
+			*s1 = 0x2750; match = 1;			
+		} else if (c == 0x1F1F7 && filter->cache == 0x1F1F0) {
+			*s1 = 0x254a; match = 1;			
+		} else if (c == 0x1F1FA && filter->cache == 0x1F1F7) {
+			*s1 = 0x24c1; match = 1;			
+		} else if (c == 0x1F1F8 && filter->cache == 0x1F1FA) {
+			*s1 = 0x27f7; match = 1;			
 		}
-	} else if (c >= mb_tbl_uni_kddi2code_min3 &&
-			   c <= mb_tbl_uni_kddi2code_max3) {
-		for (i=0; mb_tbl_uni_kddi2code_key3[i] >0; i++) {
-			if (c >0 && mb_tbl_uni_kddi2code_key3[i] == c) {
-				*s1 = mb_tbl_uni_kddi2code_val3[i];
-				match = 1;
-				break;
+	} else {
+		if (c == 0x0023 || ( c >= 0x0030 && c<=0x0039) ||
+			(c >= 0x1F1E8 && c<= 0x1F1EC) || 
+			(c >= 0x1F1EE && c<= 0x1F1F0) || 
+			c == 0x1F1F7 || c == 0x1F1FA) {
+			filter->status = 1;
+			filter->cache = c;
+			return 0;
+		}		
+
+		if (c >= mb_tbl_uni_kddi2code_min2 &&
+			c <= mb_tbl_uni_kddi2code_max2) {
+			for (i=0; mb_tbl_uni_kddi2code_key2[i] >0; i++) {
+				if (c >0 && mb_tbl_uni_kddi2code_key2[i] == c) {
+					*s1 = mb_tbl_uni_kddi2code_val2[i];
+					match = 1;
+					break;
+				}
+			}
+		} else if (c >= mb_tbl_uni_kddi2code_min3 &&
+				   c <= mb_tbl_uni_kddi2code_max3) {
+			for (i=0; mb_tbl_uni_kddi2code_key3[i] >0; i++) {
+				if (c >0 && mb_tbl_uni_kddi2code_key3[i] == c) {
+					*s1 = mb_tbl_uni_kddi2code_val3[i];
+					match = 1;
+					break;
+				}
 			}
 		}
 	}
@@ -398,29 +471,78 @@ mbfiler_unicode2sjis_emoji_kddi(int c, int *s1, int *s2, int *c1, int *c2)
 		*s1 = (*c1 << 8) | *c2;
 		*s2 = 1;
 	}
+	
+	return 1;
 }
 
 int
-mbfiler_unicode2sjis_emoji_sb(int c, int *s1, int *s2, int *c1, int *c2)
+mbfiler_unicode2sjis_emoji_sb(int c, int *s1, int *s2, int *c1, int *c2, mbfl_convert_filter *filter)
 {
 	int i, match = 0;
 	
-	if (c >= mb_tbl_uni_sb2code_min2 &&
-		c <= mb_tbl_uni_sb2code_max2) {
-		for (i=0; mb_tbl_uni_sb2code_key2[i] >0; i++) {
-			if (c >0 && mb_tbl_uni_sb2code_key2[i] == c) {
-				*s1 = mb_tbl_uni_sb2code_val2[i];
+	if (filter->status == 1) {
+		filter->status = 0;
+		*s1 = 0x0;
+		if (c == 0x20E3) {
+			if (filter->cache == 0x0023) {
+				*s1 = 0x2817;
 				match = 1;
-				break;
+			} else if (filter->cache == 0x0030) { 
+				*s1 = 0x282c;
+				match = 1;
+			} else if (filter->cache >= 0x0031 && 
+					   filter->cache >= 0x0039) {
+				*s1 = 0x2823 + (filter->cache - 0x0031);
+				match = 1;
 			}
+		} else if (c == 0x1F1F3 && filter->cache == 0x1F1E8) {
+			*s1 = 0x2b0a; match = 1;
+		} else if (c == 0x1F1EA && filter->cache == 0x1F1E9) {
+			*s1 = 0x2b05; match = 1;
+		} else if (c == 0x1F1F8 && filter->cache == 0x1F1EA) {
+			*s1 = 0x2b08; match = 1;			
+		} else if (c == 0x1F1F7 && filter->cache == 0x1F1EB) {
+			*s1 = 0x2b04; match = 1;			
+		} else if (c == 0x1F1E7 && filter->cache == 0x1F1EC) {
+			*s1 = 0x2b07; match = 1;			
+		} else if (c == 0x1F1F9 && filter->cache == 0x1F1EE) {
+			*s1 = 0x2b06; match = 1;			
+		} else if (c == 0x1F1F5 && filter->cache == 0x1F1EF) {
+			*s1 = 0x2b02; match = 1;			
+		} else if (c == 0x1F1F7 && filter->cache == 0x1F1F0) {
+			*s1 = 0x2b0b; match = 1;			
+		} else if (c == 0x1F1FA && filter->cache == 0x1F1F7) {
+			*s1 = 0x2b09; match = 1;			
+		} else if (c == 0x1F1F8 && filter->cache == 0x1F1FA) {
+			*s1 = 0x2b03; match = 1;			
 		}
-	} else if (c >= mb_tbl_uni_sb2code_min3 &&
-			   c <= mb_tbl_uni_sb2code_max3) {
-		for (i=0; mb_tbl_uni_sb2code_key3[i] >0; i++) {
-			if (c >0 && mb_tbl_uni_sb2code_key3[i] == c) {
-				*s1 = mb_tbl_uni_sb2code_val3[i];
-				match = 1;
-				break;
+	} else {
+		if (c == 0x0023 || ( c >= 0x0030 && c<=0x0039) ||
+			(c >= 0x1F1E8 && c<= 0x1F1EC) || 
+			(c >= 0x1F1EE && c<= 0x1F1F0) || 
+			c == 0x1F1F7 || c == 0x1F1FA) {
+			filter->status = 1;
+			filter->cache = c;
+			return 0;
+		}		
+
+		if (c >= mb_tbl_uni_sb2code_min2 &&
+			c <= mb_tbl_uni_sb2code_max2) {
+			for (i=0; mb_tbl_uni_sb2code_key2[i] >0; i++) {
+				if (c >0 && mb_tbl_uni_sb2code_key2[i] == c) {
+					*s1 = mb_tbl_uni_sb2code_val2[i];
+					match = 1;
+					break;
+				}
+			}
+		} else if (c >= mb_tbl_uni_sb2code_min3 &&
+				   c <= mb_tbl_uni_sb2code_max3) {
+			for (i=0; mb_tbl_uni_sb2code_key3[i] >0; i++) {
+				if (c >0 && mb_tbl_uni_sb2code_key3[i] == c) {
+					*s1 = mb_tbl_uni_sb2code_val3[i];
+					match = 1;
+					break;
+				}
 			}
 		}
 	}
@@ -433,6 +555,8 @@ mbfiler_unicode2sjis_emoji_sb(int c, int *s1, int *s2, int *c1, int *c2)
 		*s1 = (*c1 << 8) | *c2;
 		*s2 = 1;
 	}
+
+	return 1;
 }
 
 /*
@@ -593,14 +717,6 @@ mbfl_filt_conv_wchar_sjis_open(int c, mbfl_convert_filter *filter)
 
 	}
 
-	if (filter->to->no_encoding == mbfl_no_encoding_sjis_docomo_uni) {
-		mbfiler_unicode2sjis_emoji_docomo(c, &s1, &s2, &c1, &c2);
-	} else if (filter->to->no_encoding == mbfl_no_encoding_sjis_kddi_uni) {
-		mbfiler_unicode2sjis_emoji_kddi(c, &s1, &s2, &c1, &c2);
-	} else if (filter->to->no_encoding == mbfl_no_encoding_sjis_sb_uni) {
-		mbfiler_unicode2sjis_emoji_sb(c, &s1, &s2, &c1, &c2);
-	}
-	
 	if ((s1 <= 0) || (s1 >= 0x8080 && s2 == 0)) {	/* not found or X 0212 */
 		s1 = -1;
 		c1 = 0;
@@ -629,6 +745,15 @@ mbfl_filt_conv_wchar_sjis_open(int c, mbfl_convert_filter *filter)
 			s1 = -1;
 		}
 	}
+
+	if (filter->to->no_encoding == mbfl_no_encoding_sjis_docomo_uni) {
+		mbfiler_unicode2sjis_emoji_docomo(c, &s1, &s2, &c1, &c2, filter);
+	} else if (filter->to->no_encoding == mbfl_no_encoding_sjis_kddi_uni) {
+		mbfiler_unicode2sjis_emoji_kddi(c, &s1, &s2, &c1, &c2, filter);
+	} else if (filter->to->no_encoding == mbfl_no_encoding_sjis_sb_uni) {
+		mbfiler_unicode2sjis_emoji_sb(c, &s1, &s2, &c1, &c2, filter);
+	}
+	
 	if (s1 >= 0) {
 		if (s1 < 0x100) { /* latin or kana */
 			CK((*filter->output_function)(s1, filter->data));
@@ -640,7 +765,8 @@ mbfl_filt_conv_wchar_sjis_open(int c, mbfl_convert_filter *filter)
 			CK((*filter->output_function)(s2, filter->data));
 		}
 	} else {
-		if (filter->illegal_mode != MBFL_OUTPUTFILTER_ILLEGAL_MODE_NONE) {
+		if (filter->status == 0 && 
+			filter->illegal_mode != MBFL_OUTPUTFILTER_ILLEGAL_MODE_NONE) {
 			CK(mbfl_filt_conv_illegal_output(c, filter));
 		}
 	}
