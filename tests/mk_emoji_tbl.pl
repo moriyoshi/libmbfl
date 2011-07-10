@@ -307,12 +307,12 @@ if (1) {
     print "SoftBank\n";
     
     foreach $key (sort {hex($a) <=> hex($b)} keys(%softbank)) {
-	#$s = $key;
-	#$pos = $s % 94;
-	#$ku = ($s - $pos)/94;
-	#$v = $key - $sb_min1;
-	#$h = sprintf("%x",$key);
-	#print "$ku:$pos :: $v ($h) => $sb{$key}\n";
+	$s = $key;
+	$pos = $s % 94;
+	$ku = ($s - $pos)/94;
+	$v = $key - $sb_min1;
+	$h = sprintf("%x",$key);
+	print "$ku:$pos :: $v ($h) => $softbank{$key}\n";
 	if ($key <= $sb_max1) {
 	    $sb_v1[$key-$sb_min1] = $softbank{$key};
 	} elsif ($key <= $sb_max2) {
@@ -344,7 +344,7 @@ foreach $key (sort {hex($a) <=> hex($b)} keys(%to_sb)) {
     $ku = ($s - $pos)/94;
     $v = $to_sb{$key} - $to_sb_min;
     $h = sprintf("%x",$s);
-    print "$ku:$pos = $h ($v) <= $key\n";
+    #print "$ku:$pos = $h ($v) <= $key\n";
     if (hex($key) <= $to_sb_max1) {
 	push(@r_sb1_key, $key);
 	push(@r_sb1_val, $h);
