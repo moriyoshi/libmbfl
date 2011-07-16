@@ -66,6 +66,11 @@ while(<>) {
 	    $code = &sjis2code($v[3]);
 	    $softbank{$code} = $v[0];
 	    $to_sb{$v[0]} = $code;
+	    if ($v[3] =~ /F7EE/)  {
+		$s = sprintf("%x",$code);
+		print "DD 0x$s $v[0] $v[3]\n";
+		die;
+	    }
 	}
     }
 }
@@ -326,12 +331,11 @@ if (1) {
 
 $to_sb_min = 10263;
 $to_sb_min1 = 0x0023;
-$to_sb_max1 = 0x00A9;
+$to_sb_max1 = 0x00AE;
 $to_sb_min2 = 0x2122;
 $to_sb_max2 = 0x3299;
 $to_sb_min3 = 0x1F004;
 $to_sb_max3 = 0x1F6C0;
-#$to_sb = array();
 
 @r_sb1_key = (); @r_sb1_val = ();
 @r_sb2_key = (); @r_sb2_val = ();
@@ -344,11 +348,11 @@ foreach $key (sort {hex($a) <=> hex($b)} keys(%to_sb)) {
     $ku = ($s - $pos)/94;
     $v = $to_sb{$key} - $to_sb_min;
     $h = sprintf("%x",$s);
-    #print "$ku:$pos = $h ($v) <= $key\n";
+    print "$ku:$pos = $h ($v) <= $key\n";
     if (hex($key) <= $to_sb_max1) {
 	push(@r_sb1_key, $key);
 	push(@r_sb1_val, $h);
-    } elsif (hex($key) <= $to_sb_max2) {
+    } elsif (hex($key) >= $to_sb_min2 && hex($key) <= $to_sb_max2) {
 	push(@r_sb2_key, $key);
 	push(@r_sb2_val, $h);
     } else {

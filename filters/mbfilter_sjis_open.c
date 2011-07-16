@@ -353,10 +353,15 @@ mbfiler_unicode2sjis_emoji_docomo(int c, int *s1, int *s2, int *c1, int *c2, mbf
 		if (c == 0x0023 || (c >= 0x0030 && c<=0x0039)) {
 			filter->status = 1;
 			filter->cache = c;
+			*s1 = -1;
 			return 0;
 		}		
 
-		if (c >= mb_tbl_uni_docomo2code_min2 &&
+		if (c == 0x00A9) {
+			*s1 = 0x29b5; match = 1;
+		} else if (c == 0x00AE) {
+			*s1 = 0x29ba; match = 1;
+		} else if (c >= mb_tbl_uni_docomo2code_min2 &&
 			c <= mb_tbl_uni_docomo2code_max2) {
 			for (i=0; mb_tbl_uni_docomo2code_key2[i] >0; i++) {
 				if (c >0 && mb_tbl_uni_docomo2code_key2[i] == c) {
@@ -378,10 +383,8 @@ mbfiler_unicode2sjis_emoji_docomo(int c, int *s1, int *s2, int *c1, int *c2, mbf
 	}
 
 	if (match && *s1 >0) {
-		*s1 += 0x21;
-		*c1 = *s1/94;
-		*c2 = *s1- *c1*94;
-		*c1 += 0x21;
+		*c1 = *s1/94+0x21;
+		*c2 = *s1-94*(*c1-0x21)+0x21;
 		*s1 = (*c1 << 8) | *c2;
 		*s2 = 1;
 	}
@@ -429,10 +432,15 @@ mbfiler_unicode2sjis_emoji_kddi(int c, int *s1, int *s2, int *c1, int *c2, mbfl_
 			(c >= 0x1F1A5 + 0x41 && c<= 0x1F1A5 + 0x5A)) {
 			filter->status = 1;
 			filter->cache = c;
+			*s1 = -1;
 			return 0;
 		}		
 
-		if (c >= mb_tbl_uni_kddi2code_min2 &&
+		if (c == 0x00A9) {
+			*s1 = 0x27dc; match = 1;
+		} else if (c == 0x00AE) {
+			*s1 = 0x27dd; match = 1;
+		} else if (c >= mb_tbl_uni_kddi2code_min2 &&
 			c <= mb_tbl_uni_kddi2code_max2) {
 			for (i=0; mb_tbl_uni_kddi2code_key2[i] >0; i++) {
 				if (c >0 && mb_tbl_uni_kddi2code_key2[i] == c) {
@@ -454,10 +462,8 @@ mbfiler_unicode2sjis_emoji_kddi(int c, int *s1, int *s2, int *c1, int *c2, mbfl_
 	}
 	
 	if (match && *s1 >0) {
-		*s1 += 0x21;
-		*c1 = *s1/94;
-		*c2 = *s1- *c1*94;
-		*c1 += 0x21;
+		*c1 = *s1/94+0x21;
+		*c2 = *s1-94*(*c1-0x21)+0x21;
 		*s1 = (*c1 << 8) | *c2;
 		*s2 = 1;
 	}
@@ -501,10 +507,15 @@ mbfiler_unicode2sjis_emoji_sb(int c, int *s1, int *s2, int *c1, int *c2, mbfl_co
 			(c >= 0x1F1A5 + 0x41 && c<= 0x1F1A5 + 0x5A)) {
 			filter->status = 1;
 			filter->cache = c;
+			*s1 = -1;
 			return 0;
 		}		
 
-		if (c >= mb_tbl_uni_sb2code_min2 &&
+		if (c == 0x00A9) {
+			*s1 = 0x2855; match = 1;
+		} else if (c == 0x00AE) {
+			*s1 = 0x2856; match = 1;
+		} else if (c >= mb_tbl_uni_sb2code_min2 &&
 			c <= mb_tbl_uni_sb2code_max2) {
 			for (i=0; mb_tbl_uni_sb2code_key2[i] >0; i++) {
 				if (c >0 && mb_tbl_uni_sb2code_key2[i] == c) {
@@ -526,10 +537,8 @@ mbfiler_unicode2sjis_emoji_sb(int c, int *s1, int *s2, int *c1, int *c2, mbfl_co
 	}
 	
 	if (match && *s1 >0) {
-		*s1 += 0x21;
-		*c1 = *s1/94;
-		*c2 = *s1- *c1*94;
-		*c1 += 0x21;
+		*c1 = *s1/94+0x21;
+		*c2 = *s1-94*(*c1-0x21)+0x21;
 		*s1 = (*c1 << 8) | *c2;
 		*s2 = 1;
 	}
