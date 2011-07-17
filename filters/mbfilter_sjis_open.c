@@ -60,12 +60,7 @@ static const unsigned char mblen_table_sjis[] = { /* 0x80-0x9f,0xE0-0xFF */
   2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
 };
 
-static const char *mbfl_encoding_sjis_open_aliases[] = {"SJIS-open", "SJIS-ms", 
-							NULL};
-
-static const char *mbfl_encoding_sjis_docomo_aliases[] = {NULL};
-static const char *mbfl_encoding_sjis_kddi_aliases[] = {NULL};
-static const char *mbfl_encoding_sjis_sb_aliases[] = {NULL};
+static const char *mbfl_encoding_sjis_open_aliases[] = {"SJIS-open", "SJIS-ms", NULL};
 
 const mbfl_encoding mbfl_encoding_sjis_open = {
 	mbfl_no_encoding_sjis_open,
@@ -73,34 +68,34 @@ const mbfl_encoding mbfl_encoding_sjis_open = {
 	"Shift_JIS",
 	(const char *(*)[])&mbfl_encoding_sjis_open_aliases,
 	mblen_table_sjis,
-	MBFL_ENCTYPE_MBCS
+	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_GL_UNSAFE
 };
 
-const mbfl_encoding mbfl_encoding_sjis_docomo_uni = {
-	mbfl_no_encoding_sjis_docomo_uni,
-	"SJIS-win#DOCOMO",
-	"Shift_JIS",
-	(const char *(*)[])&mbfl_encoding_sjis_docomo_aliases,
-	mblen_table_sjis,
-	MBFL_ENCTYPE_MBCS
+const mbfl_encoding mbfl_encoding_sjis_docomo = {
+ 	mbfl_no_encoding_sjis_docomo,
+ 	"SJIS-win#DOCOMO",
+ 	"Shift_JIS",
+ 	NULL,
+ 	mblen_table_sjis,
+ 	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_GL_UNSAFE
 };
 
-const mbfl_encoding mbfl_encoding_sjis_kddi_uni = {
-	mbfl_no_encoding_sjis_kddi_uni,
-	"SJIS-win#KDDI",
-	"Shift_JIS",
-	(const char *(*)[])&mbfl_encoding_sjis_kddi_aliases,
-	mblen_table_sjis,
-	MBFL_ENCTYPE_MBCS
+const mbfl_encoding mbfl_encoding_sjis_kddi = {
+ 	mbfl_no_encoding_sjis_kddi,
+ 	"SJIS-win#KDDI",
+ 	"Shift_JIS",
+ 	NULL,
+ 	mblen_table_sjis,
+ 	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_GL_UNSAFE
 };
 
-const mbfl_encoding mbfl_encoding_sjis_sb_uni = {
-	mbfl_no_encoding_sjis_sb_uni,
-	"SJIS-win#SOFTBANK",
-	"Shift_JIS",
-	(const char *(*)[])&mbfl_encoding_sjis_sb_aliases,
-	mblen_table_sjis,
-	MBFL_ENCTYPE_MBCS
+const mbfl_encoding mbfl_encoding_sjis_sb = {
+ 	mbfl_no_encoding_sjis_sb,
+ 	"SJIS-win#SOFTBANK",
+ 	"Shift_JIS",
+ 	NULL,
+ 	mblen_table_sjis,
+ 	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_GL_UNSAFE
 };
 
 const struct mbfl_identify_vtbl vtbl_identify_sjis_open = {
@@ -129,57 +124,57 @@ const struct mbfl_convert_vtbl vtbl_wchar_sjis_open = {
 };
 
 const struct mbfl_convert_vtbl vtbl_sjis_docomo_wchar = {
-	mbfl_no_encoding_sjis_docomo_uni,
-	mbfl_no_encoding_wchar,
-	mbfl_filt_conv_common_ctor,
-	mbfl_filt_conv_common_dtor,
-	mbfl_filt_conv_sjis_open_wchar,
-	mbfl_filt_conv_common_flush
+ 	mbfl_no_encoding_sjis_docomo,
+ 	mbfl_no_encoding_wchar,
+ 	mbfl_filt_conv_common_ctor,
+ 	mbfl_filt_conv_common_dtor,
+ 	mbfl_filt_conv_sjis_open_wchar,
+ 	mbfl_filt_conv_common_flush
 };
 
 const struct mbfl_convert_vtbl vtbl_wchar_sjis_docomo = {
-	mbfl_no_encoding_wchar,
-	mbfl_no_encoding_sjis_docomo_uni,
-	mbfl_filt_conv_common_ctor,
-	mbfl_filt_conv_common_dtor,
-	mbfl_filt_conv_wchar_sjis_open,
-	mbfl_filt_conv_common_flush
+ 	mbfl_no_encoding_wchar,
+ 	mbfl_no_encoding_sjis_docomo,
+ 	mbfl_filt_conv_common_ctor,
+ 	mbfl_filt_conv_common_dtor,
+ 	mbfl_filt_conv_wchar_sjis_open,
+ 	mbfl_filt_conv_common_flush
 };
 
 const struct mbfl_convert_vtbl vtbl_sjis_kddi_wchar = {
-	mbfl_no_encoding_sjis_kddi_uni,
-	mbfl_no_encoding_wchar,
-	mbfl_filt_conv_common_ctor,
-	mbfl_filt_conv_common_dtor,
-	mbfl_filt_conv_sjis_open_wchar,
-	mbfl_filt_conv_common_flush
+ 	mbfl_no_encoding_sjis_kddi,
+ 	mbfl_no_encoding_wchar,
+ 	mbfl_filt_conv_common_ctor,
+ 	mbfl_filt_conv_common_dtor,
+ 	mbfl_filt_conv_sjis_open_wchar,
+ 	mbfl_filt_conv_common_flush
 };
 
 const struct mbfl_convert_vtbl vtbl_wchar_sjis_kddi = {
-	mbfl_no_encoding_wchar,
-	mbfl_no_encoding_sjis_kddi_uni,
-	mbfl_filt_conv_common_ctor,
-	mbfl_filt_conv_common_dtor,
-	mbfl_filt_conv_wchar_sjis_open,
-	mbfl_filt_conv_common_flush
+ 	mbfl_no_encoding_wchar,
+ 	mbfl_no_encoding_sjis_kddi,
+ 	mbfl_filt_conv_common_ctor,
+ 	mbfl_filt_conv_common_dtor,
+ 	mbfl_filt_conv_wchar_sjis_open,
+ 	mbfl_filt_conv_common_flush
 };
 
 const struct mbfl_convert_vtbl vtbl_sjis_sb_wchar = {
-	mbfl_no_encoding_sjis_sb_uni,
-	mbfl_no_encoding_wchar,
-	mbfl_filt_conv_common_ctor,
-	mbfl_filt_conv_common_dtor,
-	mbfl_filt_conv_sjis_open_wchar,
-	mbfl_filt_conv_common_flush
+ 	mbfl_no_encoding_sjis_sb,
+ 	mbfl_no_encoding_wchar,
+ 	mbfl_filt_conv_common_ctor,
+ 	mbfl_filt_conv_common_dtor,
+ 	mbfl_filt_conv_sjis_open_wchar,
+ 	mbfl_filt_conv_common_flush
 };
 
 const struct mbfl_convert_vtbl vtbl_wchar_sjis_sb = {
-	mbfl_no_encoding_wchar,
-	mbfl_no_encoding_sjis_sb_uni,
-	mbfl_filt_conv_common_ctor,
-	mbfl_filt_conv_common_dtor,
-	mbfl_filt_conv_wchar_sjis_open,
-	mbfl_filt_conv_common_flush
+ 	mbfl_no_encoding_wchar,
+ 	mbfl_no_encoding_sjis_sb,
+ 	mbfl_filt_conv_common_ctor,
+ 	mbfl_filt_conv_common_dtor,
+ 	mbfl_filt_conv_wchar_sjis_open,
+ 	mbfl_filt_conv_common_flush
 };
 
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
@@ -226,7 +221,6 @@ const struct mbfl_convert_vtbl vtbl_wchar_sjis_sb = {
 				s2 -= 0x7e;			\
 			}						\
 		} while (0)
-
 
 int
 mbfiler_sjis_emoji_docomo2unicode(int s, int *snd)
@@ -604,24 +598,23 @@ mbfl_filt_conv_sjis_open_wchar(int c, mbfl_convert_filter *filter)
 				} else if (s >= cp932ext3_ucs_table_min && s < cp932ext3_ucs_table_max) {		/* vendor ext3 (115ku - 119ku) */
 					w = cp932ext3_ucs_table[s - cp932ext3_ucs_table_min];
 				} else if (s >= (94*94) && s < (114*94)) {		/* user (95ku - 114ku) */
-				  w = s - (94*94) + 0xe000;
-
+					w = s - (94*94) + 0xe000;
 				}
-
-				if (s >= (94*94) && s < 119*94) {
-				  int snd = 0;
-				  
-				  if (filter->from->no_encoding == mbfl_no_encoding_sjis_docomo_uni) {
-					  w = mbfiler_sjis_emoji_docomo2unicode(s, &snd);
-				  } else if (filter->from->no_encoding == mbfl_no_encoding_sjis_kddi_uni) {
-					  w = mbfiler_sjis_emoji_kddi2unicode(s, &snd);
-				  } else if (filter->from->no_encoding == mbfl_no_encoding_sjis_sb_uni) {
-					  w = mbfiler_sjis_emoji_sb2unicode(s, &snd);
-				  }
-				  if (w > 0  && snd > 0) {
-					  CK((*filter->output_function)(snd, filter->data));
-				  }				  
-				}
+				
+ 				if (s >= (94*94) && s < 119*94) {
+					int snd = 0;
+					
+					if (filter->from->no_encoding == mbfl_no_encoding_sjis_docomo) {
+						w = mbfiler_sjis_emoji_docomo2unicode(s, &snd);
+					} else if (filter->from->no_encoding == mbfl_no_encoding_sjis_kddi) {
+						w = mbfiler_sjis_emoji_kddi2unicode(s, &snd);
+					} else if (filter->from->no_encoding == mbfl_no_encoding_sjis_sb) {
+						w = mbfiler_sjis_emoji_sb2unicode(s, &snd);
+					}
+					if (w > 0  && snd > 0) {
+						CK((*filter->output_function)(snd, filter->data));
+					}
+				}		
 			}
 			if (w <= 0) {
 				w = (s1 << 8) | s2;
@@ -701,9 +694,7 @@ mbfl_filt_conv_wchar_sjis_open(int c, mbfl_convert_filter *filter)
 		} else if (c == 0xffe2) {	/* FULLWIDTH NOT SIGN */
 			s1 = 0x224c;
 		}
-
 	}
-
 	if ((s1 <= 0) || (s1 >= 0x8080 && s2 == 0)) {	/* not found or X 0212 */
 		s1 = -1;
 		c1 = 0;
@@ -733,14 +724,14 @@ mbfl_filt_conv_wchar_sjis_open(int c, mbfl_convert_filter *filter)
 		}
 	}
 
-	if (filter->to->no_encoding == mbfl_no_encoding_sjis_docomo_uni) {
-		mbfiler_unicode2sjis_emoji_docomo(c, &s1, &s2, &c1, &c2, filter);
-	} else if (filter->to->no_encoding == mbfl_no_encoding_sjis_kddi_uni) {
-		mbfiler_unicode2sjis_emoji_kddi(c, &s1, &s2, &c1, &c2, filter);
-	} else if (filter->to->no_encoding == mbfl_no_encoding_sjis_sb_uni) {
-		mbfiler_unicode2sjis_emoji_sb(c, &s1, &s2, &c1, &c2, filter);
-	}
-	
+ 	if (filter->to->no_encoding == mbfl_no_encoding_sjis_docomo) {
+ 		mbfiler_unicode2sjis_emoji_docomo(c, &s1, &s2, &c1, &c2, filter);
+ 	} else if (filter->to->no_encoding == mbfl_no_encoding_sjis_kddi) {
+ 		mbfiler_unicode2sjis_emoji_kddi(c, &s1, &s2, &c1, &c2, filter);
+ 	} else if (filter->to->no_encoding == mbfl_no_encoding_sjis_sb) {
+ 		mbfiler_unicode2sjis_emoji_sb(c, &s1, &s2, &c1, &c2, filter);
+ 	}
+
 	if (s1 >= 0) {
 		if (s1 < 0x100) { /* latin or kana */
 			CK((*filter->output_function)(s1, filter->data));

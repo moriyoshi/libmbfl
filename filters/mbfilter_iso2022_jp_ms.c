@@ -48,7 +48,7 @@ const mbfl_encoding mbfl_encoding_2022jpms = {
 	"ISO-2022-JP",
 	(const char *(*)[])&mbfl_encoding_2022jpms_aliases,
 	NULL,
-	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_SHFTCODE
+	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_SHFTCODE | MBFL_ENCTYPE_GL_UNSAFE
 };
 
 const struct mbfl_identify_vtbl vtbl_identify_2022jpms = {
@@ -321,7 +321,7 @@ mbfl_filt_conv_wchar_2022jpms(int c, mbfl_convert_filter *filter)
 			s1 = c & MBFL_WCSPLANE_MASK;
 			s1 |= 0x8080;
 		} else if (c == 0xa5) {		/* YEN SIGN */
-			s1 = 0x216f;	            /* FULLWIDTH YEN SIGN */
+			s1 = 0x216f;	/* FULLWIDTH YEN SIGN */
 		} else if (c == 0x203e) {	/* OVER LINE */
 			s1 = 0x2131;	/* FULLWIDTH MACRON */
 		} else if (c == 0xff3c) {	/* FULLWIDTH REVERSE SOLIDUS */

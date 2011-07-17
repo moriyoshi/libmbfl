@@ -33,9 +33,9 @@
 #include "mbfilter.h"
 
 extern const mbfl_encoding mbfl_encoding_sjis_open;
-extern const mbfl_encoding mbfl_encoding_sjis_docomo_uni;
-extern const mbfl_encoding mbfl_encoding_sjis_kddi_uni;
-extern const mbfl_encoding mbfl_encoding_sjis_sb_uni;
+extern const mbfl_encoding mbfl_encoding_sjis_docomo;
+extern const mbfl_encoding mbfl_encoding_sjis_kddi;
+extern const mbfl_encoding mbfl_encoding_sjis_sb;
 
 extern const struct mbfl_identify_vtbl vtbl_identify_sjis_open;
 extern const struct mbfl_convert_vtbl vtbl_sjis_open_wchar;

@@ -128,6 +128,18 @@ mbfl_buffer_converter_new(
     enum mbfl_no_encoding to,
     int buf_initsz)
 {
+	const mbfl_encoding *_from = mbfl_no2encoding(from);
+	const mbfl_encoding *_to = mbfl_no2encoding(to);
+
+	return mbfl_buffer_converter_new2(_from ? _from: &mbfl_encoding_pass, _to ? _to: &mbfl_encoding_pass, buf_initsz);
+}
+
+mbfl_buffer_converter *
+mbfl_buffer_converter_new2(
+	const mbfl_encoding *from,
+	const mbfl_encoding *to, 
+    int buf_initsz)
+{
 	mbfl_buffer_converter *convd;
 
 	/* allocate */
@@ -137,14 +149,8 @@ mbfl_buffer_converter_new(
 	}
 
 	/* initialize */
-	convd->from = mbfl_no2encoding(from);
-	convd->to = mbfl_no2encoding(to);
-	if (convd->from == NULL) {
-		convd->from = &mbfl_encoding_pass;
-	}
-	if (convd->to == NULL) {
-		convd->to = &mbfl_encoding_pass;
-	}
+	convd->from = from;
+	convd->to = to;
 
 	/* create convert filter */
 	convd->filter1 = NULL;
@@ -172,6 +178,7 @@ mbfl_buffer_converter_new(
 
 	return convd;
 }
+
 
 void
 mbfl_buffer_converter_delete(mbfl_buffer_converter *convd)
@@ -251,6 +258,12 @@ mbfl_buffer_converter_strncat(mbfl_buffer_converter *convd, const unsigned char 
 int
 mbfl_buffer_converter_feed(mbfl_buffer_converter *convd, mbfl_string *string)
 {
+	return mbfl_buffer_converter_feed2(convd, string, NULL);
+}
+
+int
+mbfl_buffer_converter_feed2(mbfl_buffer_converter *convd, mbfl_string *string, int *loc)
+{
 	int n;
 	unsigned char *p;
 	mbfl_convert_filter *filter;
@@ -263,19 +276,26 @@ mbfl_buffer_converter_feed(mbfl_buffer_converter *convd, mbfl_string *string)
 	/* feed data */
 	n = string->len;
 	p = string->val;
+
 	filter = convd->filter1;
 	if (filter != NULL) {
 		filter_function = filter->filter_function;
 		while (n > 0) {
 			if ((*filter_function)(*p++, filter) < 0) {
+				if (loc) {
+					*loc = p - string->val;
+				}
 				return -1;
 			}
 			n--;
 		}
 	}
-
+	if (loc) {
+		*loc = p - string->val;
+	}
 	return 0;
 }
+
 
 int
 mbfl_buffer_converter_flush(mbfl_buffer_converter *convd)
@@ -335,7 +355,7 @@ mbfl_buffer_converter_feed_result(mbfl_buffer_converter *convd, mbfl_string *str
 	result->no_encoding = convd->to->no_encoding;
 	return mbfl_memory_device_result(&convd->device, result);
 }
-
+ 
 int mbfl_buffer_illegalchars(mbfl_buffer_converter *convd)
 {
 	int num_illegalchars = 0;
@@ -394,11 +414,54 @@ mbfl_encoding_detector_new(enum mbfl_no_encoding *elist, int elistsz, int strict
 	}
 	identd->filter_list_size = num;
 
+ 	/* set strict flag */
+ 	identd->strict = strict;
+ 
+	return identd;
+}
+
+mbfl_encoding_detector *
+mbfl_encoding_detector_new2(const mbfl_encoding **elist, int elistsz, int strict)
+{
+	mbfl_encoding_detector *identd;
+
+	int i, num;
+	mbfl_identify_filter *filter;
+
+	if (elist == NULL || elistsz <= 0) {
+		return NULL;
+	}
+
+	/* allocate */
+	identd = (mbfl_encoding_detector*)mbfl_malloc(sizeof(mbfl_encoding_detector));
+	if (identd == NULL) {
+		return NULL;
+	}
+	identd->filter_list = (mbfl_identify_filter **)mbfl_calloc(elistsz, sizeof(mbfl_identify_filter *));
+	if (identd->filter_list == NULL) {
+		mbfl_free(identd);
+		return NULL;
+	}
+
+	/* create filters */
+	i = 0;
+	num = 0;
+	while (i < elistsz) {
+		filter = mbfl_identify_filter_new2(elist[i]);
+		if (filter != NULL) {
+			identd->filter_list[num] = filter;
+			num++;
+		}
+		i++;
+	}
+	identd->filter_list_size = num;
+
 	/* set strict flag */
 	identd->strict = strict;
 
 	return identd;
 }
+
 
 void
 mbfl_encoding_detector_delete(mbfl_encoding_detector *identd)
@@ -454,40 +517,45 @@ mbfl_encoding_detector_feed(mbfl_encoding_detector *identd, mbfl_string *string)
 	return res;
 }
 
-enum mbfl_no_encoding mbfl_encoding_detector_judge(mbfl_encoding_detector *identd)
+const mbfl_encoding *mbfl_encoding_detector_judge2(mbfl_encoding_detector *identd)
 {
 	mbfl_identify_filter *filter;
-	enum mbfl_no_encoding encoding;
+	const mbfl_encoding *encoding = NULL;
 	int n;
 
 	/* judge */
-	encoding = mbfl_no_encoding_invalid;
 	if (identd != NULL) {
 		n = identd->filter_list_size - 1;
 		while (n >= 0) {
 			filter = identd->filter_list[n];
 			if (!filter->flag) {
 				if (!identd->strict || !filter->status) {
-					encoding = filter->encoding->no_encoding;
-				}
+					encoding = filter->encoding;
+ 				}
 			}
 			n--;
 		}
  
-		/* fallback judge */
-		if (encoding ==	mbfl_no_encoding_invalid) {
-			n = identd->filter_list_size - 1;
-			while (n >= 0) {
-				filter = identd->filter_list[n];
-				if (!filter->flag) {
-					encoding = filter->encoding->no_encoding;
-				}
-				n--;
+ 		/* fallback judge */
+		if (!encoding) {
+ 			n = identd->filter_list_size - 1;
+ 			while (n >= 0) {
+ 				filter = identd->filter_list[n];
+ 				if (!filter->flag) {
+					encoding = filter->encoding;
+ 				}
+ 				n--;
  			}
-		}
+ 		}
 	}
 
 	return encoding;
+}
+
+enum mbfl_no_encoding mbfl_encoding_detector_judge(mbfl_encoding_detector *identd)
+{
+	const mbfl_encoding *encoding = mbfl_encoding_detector_judge2(identd);
+	return !encoding ? mbfl_no_encoding_invalid: encoding->no_encoding;
 }
 
 
@@ -616,6 +684,89 @@ mbfl_identify_encoding(mbfl_string *string, enum mbfl_no_encoding *elist, int el
 	for (i = 0; i < num; i++) {
 		filter = &flist[i];
 		if (!filter->flag) {
+ 			if (strict && filter->status) {
+ 				continue;
+ 			}
+			encoding = filter->encoding;
+			break;
+		}
+	}
+
+ 	/* fall-back judge */
+ 	if (!encoding) {
+ 		for (i = 0; i < num; i++) {
+ 			filter = &flist[i];
+			if (!filter->flag && (!strict || !filter->status)) {
+ 				encoding = filter->encoding;
+ 				break;
+ 			}
+ 		}
+ 	}
+ 
+	/* cleanup */
+	/* dtors should be called in reverse order */
+	i = num; while (--i >= 0) {
+		mbfl_identify_filter_cleanup(&flist[i]);
+	}
+
+	mbfl_free((void *)flist);
+
+	return encoding;
+}
+
+const mbfl_encoding *
+mbfl_identify_encoding2(mbfl_string *string, const mbfl_encoding **elist, int elistsz, int strict)
+{
+	int i, n, num, bad;
+	unsigned char *p;
+	mbfl_identify_filter *flist, *filter;
+	const mbfl_encoding *encoding;
+
+	/* flist is an array of mbfl_identify_filter instances */
+	flist = (mbfl_identify_filter *)mbfl_calloc(elistsz, sizeof(mbfl_identify_filter));
+	if (flist == NULL) {
+		return NULL;
+	}
+
+	num = 0;
+	if (elist != NULL) {
+		for (i = 0; i < elistsz; i++) {
+			if (!mbfl_identify_filter_init2(&flist[num], elist[i])) {
+				num++;
+			}
+		}
+	}
+
+	/* feed data */
+	n = string->len;
+	p = string->val;
+
+	if (p != NULL) {
+		bad = 0;
+		while (n > 0) {
+			for (i = 0; i < num; i++) {
+				filter = &flist[i];
+				if (!filter->flag) {
+					(*filter->filter_function)(*p, filter);
+					if (filter->flag) {
+						bad++;
+					}
+				}
+			}
+			if ((num - 1) <= bad && !strict) {
+				break;
+			}
+			p++;
+			n--;
+		}
+	}
+
+	/* judge */
+	encoding = NULL;
+
+	for (i = 0; i < num; i++) {
+		filter = &flist[i];
+		if (!filter->flag) {
 			if (strict && filter->status) {
  				continue;
  			}
@@ -645,37 +796,6 @@ mbfl_identify_encoding(mbfl_string *string, enum mbfl_no_encoding *elist, int el
 
 	return encoding;
 }
-
-const char*
-mbfl_identify_encoding_name(mbfl_string *string, enum mbfl_no_encoding *elist, int elistsz, int strict)
-{
-	const mbfl_encoding *encoding;
-
-	encoding = mbfl_identify_encoding(string, elist, elistsz, strict);
-	if (encoding != NULL &&
-	    encoding->no_encoding > mbfl_no_encoding_charset_min &&
-	    encoding->no_encoding < mbfl_no_encoding_charset_max) {
-		return encoding->name;
-	} else {
-		return NULL;
-	}
-}
-
-enum mbfl_no_encoding
-mbfl_identify_encoding_no(mbfl_string *string, enum mbfl_no_encoding *elist, int elistsz, int strict)
-{
-	const mbfl_encoding *encoding;
-
-	encoding = mbfl_identify_encoding(string, elist, elistsz, strict);
-	if (encoding != NULL &&
-	    encoding->no_encoding > mbfl_no_encoding_charset_min &&
-	    encoding->no_encoding < mbfl_no_encoding_charset_max) {
-		return encoding->no_encoding;
-	} else {
-		return mbfl_no_encoding_invalid;
-	}
-}
-
 
 /*
  *  strlen
@@ -877,9 +997,9 @@ mbfl_strpos(
 		u8_enc = mbfl_no2encoding(mbfl_no_encoding_utf8);
 		if (u8_enc == NULL || u8_enc->mblen_table == NULL) {
 			return -8;
-		}
-		u8_tbl = u8_enc->mblen_table;
 	}
+		u8_tbl = u8_enc->mblen_table;
+			}
 
 	if (haystack->no_encoding != mbfl_no_encoding_utf8) {
 		mbfl_string_init(&_haystack_u8);
@@ -898,7 +1018,7 @@ mbfl_strpos(
 		if (needle_u8 == NULL) {
 			result = -4;
 			goto out;
-		}
+	}
 	} else {
 		needle_u8 = needle;
 	}
@@ -956,8 +1076,8 @@ mbfl_strpos(
 					goto out;
 				}
 				if (*--q != *--p) {
-					break;
-				}
+				break;
+			}
 			}
 			p += jtbl[*p];
 			if (p <= pv) {
@@ -1043,10 +1163,10 @@ mbfl_strpos(
 					goto out;
 				}
 				if (*q != *p) {
-					break;
-				}
-				++p, ++q;
+				break;
 			}
+				++p, ++q;
+		}
 			p -= jtbl[*p];
 			if (p >= pv) {
 				p = pv - 1;
@@ -1202,10 +1322,10 @@ mbfl_substr(
 		len = string->len;
 		start = from;
 		end = from + length;
-		if (encoding->flag & (MBFL_ENCTYPE_WCS2BE | MBFL_ENCTYPE_MWC2LE)) {
+		if (encoding->flag & (MBFL_ENCTYPE_WCS2BE | MBFL_ENCTYPE_WCS2LE)) {
 			start *= 2;
 			end = start + length*2;
-		} else if (encoding->flag & (MBFL_ENCTYPE_WCS4BE | MBFL_ENCTYPE_MWC4LE)) {
+		} else if (encoding->flag & (MBFL_ENCTYPE_WCS4BE | MBFL_ENCTYPE_WCS4LE)) {
 			start *= 4;
 			end = start + length*4;
 		} else if (encoding->mblen_table != NULL) {

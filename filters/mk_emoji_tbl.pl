@@ -66,11 +66,6 @@ while(<>) {
 	    $code = &sjis2code($v[3]);
 	    $softbank{$code} = $v[0];
 	    $to_sb{$v[0]} = $code;
-	    if ($v[3] =~ /F7EE/)  {
-		$s = sprintf("%x",$code);
-		print "DD 0x$s $v[0] $v[3]\n";
-		die;
-	    }
 	}
     }
 }
@@ -150,7 +145,7 @@ print OUT "int mb_tbl_uni_docomo2code_max2 = $to_docomo_max2;\n";
 print OUT "int mb_tbl_uni_docomo2code_min3 = $to_docomo_min3;\n"; 
 print OUT "int mb_tbl_uni_docomo2code_max3 = $to_docomo_max3;\n\n"; 
 
-print "DOCOMO reverse 1\n";
+#print "DOCOMO reverse 1\n";
 
 print OUT "int mb_tbl_uni_docomo2code_key1[] = {\n";
 print OUT &show_code(@r_docomo1_key),"\n";
@@ -159,7 +154,7 @@ print OUT "int mb_tbl_uni_docomo2code_val1[] = {\n";
 print OUT &show_code(@r_docomo1_val),"\n";
 print OUT "};\n\n";
 
-print "DOCOMO reverse 2\n";
+#print "DOCOMO reverse 2\n";
 
 print OUT "int mb_tbl_uni_docomo2code_key2[] = {\n";
 print OUT &show_code(@r_docomo2_key),"\n";
@@ -177,9 +172,7 @@ print OUT "int mb_tbl_uni_docomo2code_val3[] = {\n";
 print OUT &show_code(@r_docomo3_val),"\n";
 print OUT "};\n\n";
 
-print "DOCOMO reverse end \n";
-
-
+#print "DOCOMO reverse end \n";
 
 $kddi_min1 = 9400;
 $kddi_max1 = 9400+264;
@@ -189,7 +182,7 @@ $kddi_max2 = 9400+939;
 @kddi_v1 = ();
 @kddi_v2 = ();
 
-print "KDDI\n";
+#print "KDDI\n";
 
 foreach $key (sort {hex($a) <=> hex($b)} keys(%kddi)) {
     $s = $key;
@@ -250,13 +243,13 @@ print OUT "int mb_tbl_code2uni_kddi1_max = $kddi_max1;\n";
 print OUT "int mb_tbl_code2uni_kddi2_min = $kddi_min2;\n"; 
 print OUT "int mb_tbl_code2uni_kddi2_max = $kddi_max2;\n\n"; 
 
-print "KDDI 1\n";
+#print "KDDI 1\n";
 
 print OUT "int mb_tbl_code2uni_kddi1[] = {\n";
 print OUT &show_code(@kddi_v1);
 print OUT "};\n\n";
 
-print "KDDI 2\n";
+#print "KDDI 2\n";
 
 print OUT "int mb_tbl_code2uni_kddi2[] = {\n";
 print OUT &show_code(@kddi_v2);
@@ -269,7 +262,7 @@ print OUT "int mb_tbl_uni_kddi2code_max2 = $to_kddi_max2;\n";
 print OUT "int mb_tbl_uni_kddi2code_min3 = $to_kddi_min3;\n"; 
 print OUT "int mb_tbl_uni_kddi2code_max3 = $to_kddi_max3;\n\n"; 
 
-print "KDDI reverse 1\n";
+#print "KDDI reverse 1\n";
 
 print OUT "int mb_tbl_uni_kddi2code_key1[] = {\n";
 print OUT &show_code(@r_kddi1_key),"\n";
@@ -278,7 +271,7 @@ print OUT "int mb_tbl_uni_kddi2code_val1[] = {\n";
 print OUT &show_code(@r_kddi1_val),"\n";
 print OUT "};\n\n";
 
-print "KDDI reverse 1\n";
+#print "KDDI reverse 1\n";
 
 print OUT "int mb_tbl_uni_kddi2code_key2[] = {\n";
 print OUT &show_code(@r_kddi2_key),"\n";
@@ -287,7 +280,7 @@ print OUT "int mb_tbl_uni_kddi2code_val2[] = {\n";
 print OUT &show_code(@r_kddi2_val),"\n";
 print OUT "};\n\n";
 
-print "KDDI reverse 3\n";
+#print "KDDI reverse 3\n";
 
 print OUT "int mb_tbl_uni_kddi2code_key3[] = {\n";
 print OUT &show_code(@r_kddi3_key),"\n";
@@ -317,7 +310,7 @@ if (1) {
 	$ku = ($s - $pos)/94;
 	$v = $key - $sb_min1;
 	$h = sprintf("%x",$key);
-	print "$ku:$pos :: $v ($h) => $softbank{$key}\n";
+	#print "$ku:$pos :: $v ($h) => $softbank{$key}\n";
 	if ($key <= $sb_max1) {
 	    $sb_v1[$key-$sb_min1] = $softbank{$key};
 	} elsif ($key <= $sb_max2) {
@@ -348,7 +341,7 @@ foreach $key (sort {hex($a) <=> hex($b)} keys(%to_sb)) {
     $ku = ($s - $pos)/94;
     $v = $to_sb{$key} - $to_sb_min;
     $h = sprintf("%x",$s);
-    print "$ku:$pos = $h ($v) <= $key\n";
+    #print "$ku:$pos = $h ($v) <= $key\n";
     if (hex($key) <= $to_sb_max1) {
 	push(@r_sb1_key, $key);
 	push(@r_sb1_val, $h);
@@ -376,19 +369,19 @@ print OUT "int mb_tbl_code2uni_sb2_max = $sb_max2;\n";
 print OUT "int mb_tbl_code2uni_sb3_min = $sb_min3;\n"; 
 print OUT "int mb_tbl_code2uni_sb3_max = $sb_max3;\n\n"; 
 
-print "SoftBank 1\n";
+#print "SoftBank 1\n";
 
 print OUT "int mb_tbl_code2uni_sb1[] = {\n";
 print OUT &show_code(@sb_v1);
 print OUT "};\n\n";
 
-print "SoftBank 2\n";
+#print "SoftBank 2\n";
 
 print OUT "int mb_tbl_code2uni_sb2[] = {\n";
 print OUT &show_code(@sb_v2);
 print OUT "};\n\n";
 
-print "SoftBank 3\n";
+#print "SoftBank 3\n";
 
 print OUT "int mb_tbl_code2uni_sb3[] = {\n";
 print OUT &show_code(@sb_v3);
@@ -401,7 +394,7 @@ print OUT "int mb_tbl_uni_sb2code_max2 = $to_sb_max2;\n";
 print OUT "int mb_tbl_uni_sb2code_min3 = $to_sb_min3;\n"; 
 print OUT "int mb_tbl_uni_sb2code_max3 = $to_sb_max3;\n\n"; 
 
-print "SB reverse 1\n";
+#print "SB reverse 1\n";
 
 print OUT "int mb_tbl_uni_sb2code_key1[] = {\n";
 print OUT &show_code(@r_sb1_key),"\n";
@@ -410,7 +403,7 @@ print OUT "int mb_tbl_uni_sb2code_val1[] = {\n";
 print OUT &show_code(@r_sb1_val),"\n";
 print OUT "};\n\n";
 
-print "SB reverse 1\n";
+#print "SB reverse 2\n";
 
 print OUT "int mb_tbl_uni_sb2code_key2[] = {\n";
 print OUT &show_code(@r_sb2_key),"\n";
@@ -419,7 +412,7 @@ print OUT "int mb_tbl_uni_sb2code_val2[] = {\n";
 print OUT &show_code(@r_sb2_val),"\n";
 print OUT "};\n\n";
 
-print "SB reverse 3\n";
+#print "SB reverse 3\n";
 
 print OUT "int mb_tbl_uni_sb2code_key3[] = {\n";
 print OUT &show_code(@r_sb3_key),"\n";

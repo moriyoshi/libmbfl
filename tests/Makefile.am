@@ -1,5 +1,5 @@
 SUBDIRS=conv_encoding.tests conv_kana.tests strwidth.tests strcut.tests
-noinst_PROGRAMS=conv_encoding conv_kana strwidth strcut emoji
+noinst_PROGRAMS=conv_encoding conv_kana strwidth strcut
 conv_encoding_SOURCES=conv_encoding.c
 conv_encoding_LDADD=../mbfl/libmbfl.la
 conv_kana_SOURCES=conv_kana.c
@@ -8,5 +8,3 @@ strwidth_SOURCES=strwidth.c
 strwidth_LDADD=../mbfl/libmbfl.la
 strcut_SOURCES=strcut.c
 strcut_LDADD=../mbfl/libmbfl.la
-emoji_SOURCES=emoji.c
-emoji_LDADD=../mbfl/libmbfl.la
