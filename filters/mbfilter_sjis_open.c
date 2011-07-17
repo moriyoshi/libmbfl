@@ -37,6 +37,8 @@
 #include "unicode_table_cp932_ext.h"
 #include "unicode_table_jis.h"
 
+#include "emoji2uni.h"
+
 static int mbfl_filt_ident_sjis_open(int c, mbfl_identify_filter *filter);
 
 static const unsigned char mblen_table_sjis[] = { /* 0x80-0x9f,0xE0-0xFF */
@@ -66,7 +68,34 @@ const mbfl_encoding mbfl_encoding_sjis_open = {
 	"Shift_JIS",
 	(const char *(*)[])&mbfl_encoding_sjis_open_aliases,
 	mblen_table_sjis,
-	MBFL_ENCTYPE_MBCS
+	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_GL_UNSAFE
+};
+
+const mbfl_encoding mbfl_encoding_sjis_docomo = {
+ 	mbfl_no_encoding_sjis_docomo,
+ 	"SJIS-win#DOCOMO",
+ 	"Shift_JIS",
+ 	NULL,
+ 	mblen_table_sjis,
+ 	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_GL_UNSAFE
+};
+
+const mbfl_encoding mbfl_encoding_sjis_kddi = {
+ 	mbfl_no_encoding_sjis_kddi,
+ 	"SJIS-win#KDDI",
+ 	"Shift_JIS",
+ 	NULL,
+ 	mblen_table_sjis,
+ 	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_GL_UNSAFE
+};
+
+const mbfl_encoding mbfl_encoding_sjis_sb = {
+ 	mbfl_no_encoding_sjis_sb,
+ 	"SJIS-win#SOFTBANK",
+ 	"Shift_JIS",
+ 	NULL,
+ 	mblen_table_sjis,
+ 	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_GL_UNSAFE
 };
 
 const struct mbfl_identify_vtbl vtbl_identify_sjis_open = {
@@ -92,6 +121,60 @@ const struct mbfl_convert_vtbl vtbl_wchar_sjis_open = {
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_wchar_sjis_open,
 	mbfl_filt_conv_common_flush
+};
+
+const struct mbfl_convert_vtbl vtbl_sjis_docomo_wchar = {
+ 	mbfl_no_encoding_sjis_docomo,
+ 	mbfl_no_encoding_wchar,
+ 	mbfl_filt_conv_common_ctor,
+ 	mbfl_filt_conv_common_dtor,
+ 	mbfl_filt_conv_sjis_open_wchar,
+ 	mbfl_filt_conv_common_flush
+};
+
+const struct mbfl_convert_vtbl vtbl_wchar_sjis_docomo = {
+ 	mbfl_no_encoding_wchar,
+ 	mbfl_no_encoding_sjis_docomo,
+ 	mbfl_filt_conv_common_ctor,
+ 	mbfl_filt_conv_common_dtor,
+ 	mbfl_filt_conv_wchar_sjis_open,
+ 	mbfl_filt_conv_common_flush
+};
+
+const struct mbfl_convert_vtbl vtbl_sjis_kddi_wchar = {
+ 	mbfl_no_encoding_sjis_kddi,
+ 	mbfl_no_encoding_wchar,
+ 	mbfl_filt_conv_common_ctor,
+ 	mbfl_filt_conv_common_dtor,
+ 	mbfl_filt_conv_sjis_open_wchar,
+ 	mbfl_filt_conv_common_flush
+};
+
+const struct mbfl_convert_vtbl vtbl_wchar_sjis_kddi = {
+ 	mbfl_no_encoding_wchar,
+ 	mbfl_no_encoding_sjis_kddi,
+ 	mbfl_filt_conv_common_ctor,
+ 	mbfl_filt_conv_common_dtor,
+ 	mbfl_filt_conv_wchar_sjis_open,
+ 	mbfl_filt_conv_common_flush
+};
+
+const struct mbfl_convert_vtbl vtbl_sjis_sb_wchar = {
+ 	mbfl_no_encoding_sjis_sb,
+ 	mbfl_no_encoding_wchar,
+ 	mbfl_filt_conv_common_ctor,
+ 	mbfl_filt_conv_common_dtor,
+ 	mbfl_filt_conv_sjis_open_wchar,
+ 	mbfl_filt_conv_common_flush
+};
+
+const struct mbfl_convert_vtbl vtbl_wchar_sjis_sb = {
+ 	mbfl_no_encoding_wchar,
+ 	mbfl_no_encoding_sjis_sb,
+ 	mbfl_filt_conv_common_ctor,
+ 	mbfl_filt_conv_common_dtor,
+ 	mbfl_filt_conv_wchar_sjis_open,
+ 	mbfl_filt_conv_common_flush
 };
 
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
@@ -139,6 +222,323 @@ const struct mbfl_convert_vtbl vtbl_wchar_sjis_open = {
 			}						\
 		} while (0)
 
+int
+mbfiler_sjis_emoji_docomo2unicode(int s, int *snd)
+{
+	int w = s;
+	if (s >= mb_tbl_code2uni_docomo_min && s <= mb_tbl_code2uni_docomo_max) {
+		if (s >= mb_tbl_code2uni_docomo_min + 162 &&
+			s <= mb_tbl_code2uni_docomo_min + 173 &&
+			s != mb_tbl_code2uni_docomo_min + 163) {
+			w =  0x20E3; 	
+			if (s == mb_tbl_code2uni_docomo_min + 162) {
+				*snd = 0x0023; 
+			} else {
+				*snd = s - (mb_tbl_code2uni_docomo_min + 164) + 0x0031;
+			}
+		} else {
+			w = mb_tbl_code2uni_docomo[s - mb_tbl_code2uni_docomo_min];
+			*snd = 0;
+			if (!w) {
+				w = s;
+			}
+		}
+	}
+	return w;
+}
+
+int
+mbfiler_sjis_emoji_kddi2unicode(int s, int *snd)
+{
+	int w = s, si;
+	const char flags[][2] = {"FR","DE","IT","GB","CN","KR","ES","RU","JP","US"};
+	
+	*snd = 0;
+	if (s >= mb_tbl_code2uni_kddi1_min &&
+		s <= mb_tbl_code2uni_kddi1_max) {
+		si = s - mb_tbl_code2uni_kddi1_min;
+		if (si == 8) {
+			*snd = 0x1F1A5 + flags[6][0]; w = 0x1F1A5 + flags[6][1];
+		} else if (si == 9) {
+			*snd = 0x1F1A5 + flags[7][0]; w = 0x1F1A5 + flags[7][1];
+		} else if (si >= 141 && si <= 146) {
+			*snd = 0x1F1A5 + flags[si - 141][0];
+			w = 0x1F1A5 + flags[si - 141][1];
+		} else if (si == 260) {
+			*snd = 0x0023; w = 0x20E3;
+		} else {
+			w = mb_tbl_code2uni_kddi1[si];
+		}
+	} else if (s >= mb_tbl_code2uni_kddi2_min &&
+			   s <= mb_tbl_code2uni_kddi2_max) {
+		si = s - mb_tbl_code2uni_kddi2_min;
+		if (si == 100) {
+			*snd = 0x1F1A5 + flags[8][0]; w = 0x1F1A5 + flags[8][1];
+		} else if (si >= 186 && si <= 194) {
+			*snd = si-186+0x0031; w = 0x20E3;
+		} else if (si == 267) {
+			*snd = 0x1F1A5 + flags[9][0]; w = 0x1F1A5 + flags[9][1];
+		} else if (si == 324) {
+			*snd = 0x0030; w = 0x20E3;
+		} else {
+			w = mb_tbl_code2uni_kddi2[si];
+		}
+	}
+	return w;
+}
+
+int
+mbfiler_sjis_emoji_sb2unicode(int s, int *snd)
+{
+	int w = s, si;
+	const char flags[][2] = {"JP","US","FR","DE","IT","GB","ES","RU","CN","KR"};
+	
+	*snd = 0;
+	if (s >= mb_tbl_code2uni_sb1_min &&
+		s <= mb_tbl_code2uni_sb1_max) {
+		si = s - mb_tbl_code2uni_sb1_min;
+		if (si == 110) {
+			*snd = 0x0023; w = 0x20E3;
+		} else if (si >= 122 && si <= 131) {
+			*snd = si - 122 + 0x0031; 
+			w = 0x20E3;
+		} else {
+			w = mb_tbl_code2uni_sb1[si];    
+		}
+	} else if (s >= mb_tbl_code2uni_sb2_min &&
+			   s <= mb_tbl_code2uni_sb2_max) {
+		si = s - mb_tbl_code2uni_sb2_min;
+		w = mb_tbl_code2uni_sb2[si];
+	} else if (s >= mb_tbl_code2uni_sb3_min &&
+			   s <= mb_tbl_code2uni_sb3_max) {
+		si = s - mb_tbl_code2uni_sb3_min;
+		if (si >= 105 && si <= 114) {
+			*snd = 0x1F1A5 + flags[si - 105][0];
+			w = 0x1F1A5 + flags[si - 105][1];
+		} else {
+			w = mb_tbl_code2uni_sb3[si];
+		}
+	}
+	return w;
+}
+
+int
+mbfiler_unicode2sjis_emoji_docomo(int c, int *s1, int *s2, int *c1, int *c2, mbfl_convert_filter *filter)
+{
+	int i, match = 0;
+	
+	if (filter->status == 1) {
+		filter->status = 0;
+		*s1 = 0x0;
+		if (c == 0x20E3) {
+			if (filter->cache == 0x0023) {
+				*s1 = 0x2964;
+				match = 1;
+			} else if (filter->cache == 0x0030) { 
+				*s1 = 0x296f;
+				match = 1;
+			} else if (filter->cache >= 0x0031 && 
+					   filter->cache >= 0x0039) {
+				*s1 = 0x2966 + (filter->cache - 0x0031);
+				match = 1;
+			}
+		}
+	} else {
+		if (c == 0x0023 || (c >= 0x0030 && c<=0x0039)) {
+			filter->status = 1;
+			filter->cache = c;
+			*s1 = -1;
+			return 0;
+		}		
+
+		if (c == 0x00A9) {
+			*s1 = 0x29b5; match = 1;
+		} else if (c == 0x00AE) {
+			*s1 = 0x29ba; match = 1;
+		} else if (c >= mb_tbl_uni_docomo2code_min2 &&
+			c <= mb_tbl_uni_docomo2code_max2) {
+			for (i=0; mb_tbl_uni_docomo2code_key2[i] >0; i++) {
+				if (c >0 && mb_tbl_uni_docomo2code_key2[i] == c) {
+					*s1 = mb_tbl_uni_docomo2code_val2[i];
+					match = 1;
+					break;
+				}
+			}
+		} else if (c >= mb_tbl_uni_docomo2code_min3 &&
+				   c <= mb_tbl_uni_docomo2code_max3) {
+			for (i=0; mb_tbl_uni_docomo2code_key3[i] >0; i++) {
+				if (c >0 && mb_tbl_uni_docomo2code_key3[i] == c) {
+					*s1 = mb_tbl_uni_docomo2code_val3[i];
+					match = 1;
+					break;
+				}
+			}
+		}
+	}
+
+	if (match && *s1 >0) {
+		*c1 = *s1/94+0x21;
+		*c2 = *s1-94*(*c1-0x21)+0x21;
+		*s1 = (*c1 << 8) | *c2;
+		*s2 = 1;
+	}
+
+	return 1;
+}
+
+const char nflags_s[][2] = {"CN","DE","ES","FR","GB","IT","JP","KR","RU","US"};
+const int nflags_code_kddi[] = {0x2549, 0x2546, 0x24c0, 0x2545, 0x2548, 0x2547, 0x2750, 0x254a, 0x24c1, 0x27f7};
+const int nflags_code_sb[] = {0x2b0a, 0x2b05, 0x2b08, 0x2b04, 0x2b07, 0x2b06, 0x2b02, 0x2b0b, 0x2b09, 0x2b03};
+
+int
+mbfiler_unicode2sjis_emoji_kddi(int c, int *s1, int *s2, int *c1, int *c2, mbfl_convert_filter *filter)
+{
+	int i, match = 0;
+	
+	if (filter->status == 1) {
+		filter->status = 0;
+		*s1 = 0x0;
+		if (c == 0x20E3) {
+			if (filter->cache == 0x0023) {
+				*s1 = 0x25bc;
+				match = 1;
+			} else if (filter->cache == 0x0030) { 
+				*s1 = 0x2830;
+				match = 1;
+			} else if (filter->cache >= 0x0031 && 
+					   filter->cache >= 0x0039) {
+				*s1 = 0x27a6 + (filter->cache - 0x0031);
+				match = 1;
+			}
+		} else if ((c >= 0x1F1A5 + 0x41 && c <= 0x1F1A5 + 0x5A) &&
+				   (filter->cache >= 0x1F1A5 + 0x41 && filter->cache <= 0x1F1A5 + 0x5A)) {
+			for (i=0;i<10;i++) {
+				if (filter->cache == 0x1F1A5 + nflags_s[i][0] &&
+					c == 0x1F1A5 + nflags_s[i][1]) {
+					*s1 = nflags_code_kddi[i]; 
+					match = 1;
+					break;
+				}
+			}
+		}
+	} else {
+		if (c == 0x0023 || ( c >= 0x0030 && c<=0x0039) ||
+			(c >= 0x1F1A5 + 0x41 && c<= 0x1F1A5 + 0x5A)) {
+			filter->status = 1;
+			filter->cache = c;
+			*s1 = -1;
+			return 0;
+		}		
+
+		if (c == 0x00A9) {
+			*s1 = 0x27dc; match = 1;
+		} else if (c == 0x00AE) {
+			*s1 = 0x27dd; match = 1;
+		} else if (c >= mb_tbl_uni_kddi2code_min2 &&
+			c <= mb_tbl_uni_kddi2code_max2) {
+			for (i=0; mb_tbl_uni_kddi2code_key2[i] >0; i++) {
+				if (c >0 && mb_tbl_uni_kddi2code_key2[i] == c) {
+					*s1 = mb_tbl_uni_kddi2code_val2[i];
+					match = 1;
+					break;
+				}
+			}
+		} else if (c >= mb_tbl_uni_kddi2code_min3 &&
+				   c <= mb_tbl_uni_kddi2code_max3) {
+			for (i=0; mb_tbl_uni_kddi2code_key3[i] >0; i++) {
+				if (c >0 && mb_tbl_uni_kddi2code_key3[i] == c) {
+					*s1 = mb_tbl_uni_kddi2code_val3[i];
+					match = 1;
+					break;
+				}
+			}
+		}
+	}
+	
+	if (match && *s1 >0) {
+		*c1 = *s1/94+0x21;
+		*c2 = *s1-94*(*c1-0x21)+0x21;
+		*s1 = (*c1 << 8) | *c2;
+		*s2 = 1;
+	}
+	
+	return 1;
+}
+
+int
+mbfiler_unicode2sjis_emoji_sb(int c, int *s1, int *s2, int *c1, int *c2, mbfl_convert_filter *filter)
+{
+	int i, match = 0;
+	
+	if (filter->status == 1) {
+		filter->status = 0;
+		*s1 = 0x0;
+		if (c == 0x20E3) {
+			if (filter->cache == 0x0023) {
+				*s1 = 0x2817;
+				match = 1;
+			} else if (filter->cache == 0x0030) { 
+				*s1 = 0x282c;
+				match = 1;
+			} else if (filter->cache >= 0x0031 && 
+					   filter->cache >= 0x0039) {
+				*s1 = 0x2823 + (filter->cache - 0x0031);
+				match = 1;
+			}
+		} else if ((c >= 0x1F1A5 + 0x41 && c <= 0x1F1A5 + 0x5A) &&
+				   (filter->cache >= 0x1F1A5 + 0x41 && filter->cache <= 0x1F1A5 + 0x5A)) {
+			for (i=0;i<10;i++) {
+				if (filter->cache == 0x1F1A5 + nflags_s[i][0] &&
+					c == 0x1F1A5 + nflags_s[i][1]) {
+					*s1 = nflags_code_sb[i]; 
+					match = 1;
+					break;
+				}
+			}
+		}
+	} else {
+		if (c == 0x0023 || ( c >= 0x0030 && c<=0x0039) ||
+			(c >= 0x1F1A5 + 0x41 && c<= 0x1F1A5 + 0x5A)) {
+			filter->status = 1;
+			filter->cache = c;
+			*s1 = -1;
+			return 0;
+		}		
+
+		if (c == 0x00A9) {
+			*s1 = 0x2855; match = 1;
+		} else if (c == 0x00AE) {
+			*s1 = 0x2856; match = 1;
+		} else if (c >= mb_tbl_uni_sb2code_min2 &&
+			c <= mb_tbl_uni_sb2code_max2) {
+			for (i=0; mb_tbl_uni_sb2code_key2[i] >0; i++) {
+				if (c >0 && mb_tbl_uni_sb2code_key2[i] == c) {
+					*s1 = mb_tbl_uni_sb2code_val2[i];
+					match = 1;
+					break;
+				}
+			}
+		} else if (c >= mb_tbl_uni_sb2code_min3 &&
+				   c <= mb_tbl_uni_sb2code_max3) {
+			for (i=0; mb_tbl_uni_sb2code_key3[i] >0; i++) {
+				if (c >0 && mb_tbl_uni_sb2code_key3[i] == c) {
+					*s1 = mb_tbl_uni_sb2code_val3[i];
+					match = 1;
+					break;
+				}
+			}
+		}
+	}
+	
+	if (match && *s1 >0) {
+		*c1 = *s1/94+0x21;
+		*c2 = *s1-94*(*c1-0x21)+0x21;
+		*s1 = (*c1 << 8) | *c2;
+		*s2 = 1;
+	}
+
+	return 1;
+}
 
 /*
  * SJIS-win => wchar
@@ -200,6 +600,21 @@ mbfl_filt_conv_sjis_open_wchar(int c, mbfl_convert_filter *filter)
 				} else if (s >= (94*94) && s < (114*94)) {		/* user (95ku - 114ku) */
 					w = s - (94*94) + 0xe000;
 				}
+				
+ 				if (s >= (94*94) && s < 119*94) {
+					int snd = 0;
+					
+					if (filter->from->no_encoding == mbfl_no_encoding_sjis_docomo) {
+						w = mbfiler_sjis_emoji_docomo2unicode(s, &snd);
+					} else if (filter->from->no_encoding == mbfl_no_encoding_sjis_kddi) {
+						w = mbfiler_sjis_emoji_kddi2unicode(s, &snd);
+					} else if (filter->from->no_encoding == mbfl_no_encoding_sjis_sb) {
+						w = mbfiler_sjis_emoji_sb2unicode(s, &snd);
+					}
+					if (w > 0  && snd > 0) {
+						CK((*filter->output_function)(snd, filter->data));
+					}
+				}		
 			}
 			if (w <= 0) {
 				w = (s1 << 8) | s2;
@@ -308,6 +723,15 @@ mbfl_filt_conv_wchar_sjis_open(int c, mbfl_convert_filter *filter)
 			s1 = -1;
 		}
 	}
+
+ 	if (filter->to->no_encoding == mbfl_no_encoding_sjis_docomo) {
+ 		mbfiler_unicode2sjis_emoji_docomo(c, &s1, &s2, &c1, &c2, filter);
+ 	} else if (filter->to->no_encoding == mbfl_no_encoding_sjis_kddi) {
+ 		mbfiler_unicode2sjis_emoji_kddi(c, &s1, &s2, &c1, &c2, filter);
+ 	} else if (filter->to->no_encoding == mbfl_no_encoding_sjis_sb) {
+ 		mbfiler_unicode2sjis_emoji_sb(c, &s1, &s2, &c1, &c2, filter);
+ 	}
+
 	if (s1 >= 0) {
 		if (s1 < 0x100) { /* latin or kana */
 			CK((*filter->output_function)(s1, filter->data));
@@ -319,7 +743,8 @@ mbfl_filt_conv_wchar_sjis_open(int c, mbfl_convert_filter *filter)
 			CK((*filter->output_function)(s2, filter->data));
 		}
 	} else {
-		if (filter->illegal_mode != MBFL_OUTPUTFILTER_ILLEGAL_MODE_NONE) {
+		if (filter->status == 0 && 
+			filter->illegal_mode != MBFL_OUTPUTFILTER_ILLEGAL_MODE_NONE) {
 			CK(mbfl_filt_conv_illegal_output(c, filter));
 		}
 	}
