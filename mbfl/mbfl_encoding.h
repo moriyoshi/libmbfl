@@ -72,6 +72,8 @@ enum mbfl_no_encoding {
  	mbfl_no_encoding_sjis_docomo,
  	mbfl_no_encoding_sjis_kddi,
  	mbfl_no_encoding_sjis_sb,
+ 	mbfl_no_encoding_sjis_kddi_pua,
+ 	mbfl_no_encoding_sjis_sb_pua,
 	mbfl_no_encoding_cp932,
 	mbfl_no_encoding_cp51932,
 	mbfl_no_encoding_jis,

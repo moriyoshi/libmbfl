@@ -159,6 +159,8 @@ static const mbfl_encoding *mbfl_encoding_ptr_list[] = {
  	&mbfl_encoding_sjis_docomo,
  	&mbfl_encoding_sjis_kddi,
  	&mbfl_encoding_sjis_sb,
+ 	&mbfl_encoding_sjis_kddi_pua,
+ 	&mbfl_encoding_sjis_sb_pua,
 	&mbfl_encoding_cp932,
 	&mbfl_encoding_cp51932,
 	&mbfl_encoding_jis,
