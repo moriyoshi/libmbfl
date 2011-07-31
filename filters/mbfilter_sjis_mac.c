@@ -435,6 +435,86 @@ mbfl_filt_conv_wchar_sjis_mac(int c, mbfl_convert_filter *filter)
 	//  r: U+FF00 -> U+FFFF
 
 	switch (filter->status) {
+
+	case 1:
+		c1 = filter->cache;
+		filter->cache = 0;
+		filter->status = 0;
+
+		s1 = 0;
+		s2 = 0;
+
+		if (c == 0xf87a) {
+			for (i=0;i<4;i++) {
+				if (c1 == s_form_tbl[i+34+3+3]) {
+					s1 = s_form_sjis_tbl[i+34+3+3];
+					break;
+				}
+			}
+			if (s1 <= 0) {
+				s2 = c1;
+			}
+		} else if (c == 0x20dd) {
+			for (i=0;i<3;i++) {
+				if (c1 == s_form_tbl[i+34+3]) {
+					s1 = s_form_sjis_tbl[i+34+3];
+					break;
+				}
+			}
+			if (s1 <= 0) {
+				s2 = c1;
+			}
+		} else if (c == 0xf87f) {
+			for (i=0;i<3;i++) {
+				if (c1 == s_form_tbl[i+34]) {
+					s1 = s_form_sjis_tbl[i+34];
+					break;
+				}
+			}
+			if (s1 <= 0) {
+				s2 = c1; s1 = -1;
+			}
+		} else if (c == 0xf87e) {
+			for (i=0;i<34;i++) {
+				if (c1 == s_form_tbl[i]) {
+					s1 = s_form_sjis_tbl[i];
+					break;
+				}
+			}
+			if (s1 <= 0) {
+				s2 = c1; s1 = -1;
+			}
+		} else {
+			s2 = c1;
+			s1 = c;
+		}
+
+		if (s2 > 0) {
+			for (i=0;i<sizeof(s_form_tbl)/sizeof(int);i++) {
+				if (c1 == s_form_tbl[i]) {
+					s1 = s_form_sjis_fallback_tbl[i];
+					break;
+				}
+			}
+		}
+
+		if (s1 >= 0) {
+			if (s1 < 0x100) {
+				CK((*filter->output_function)(s1, filter->data));
+			} else {
+				CK((*filter->output_function)((s1 >> 8) & 0xff, filter->data));
+				CK((*filter->output_function)(s1 & 0xff, filter->data));
+			}
+		} else {
+			if (filter->illegal_mode != MBFL_OUTPUTFILTER_ILLEGAL_MODE_NONE) {
+				CK(mbfl_filt_conv_illegal_output(c, filter));
+			}			
+		}
+
+		if (s2 <= 0 || s1 == -1) {
+			break;
+		}
+
 	case 0:
 
 		if (c >= ucs_a1_jis_table_min && c < ucs_a1_jis_table_max) {
@@ -556,81 +636,6 @@ mbfl_filt_conv_wchar_sjis_mac(int c, mbfl_convert_filter *filter)
 		}
 		break;
 
-	case 1:
-		c1 = filter->cache;
-		s1 = 0;
-		s2 = 0;
-
-		if (c == 0xf87a) {
-			for (i=0;i<4;i++) {
-				if (c1 == s_form_tbl[i+34+3+3]) {
-					s1 = s_form_sjis_tbl[i+34+3+3];
-					break;
-				}
-			}
-			if (s1 <= 0) {
-				s2 = c1;
-			}
-		} else if (c == 0x20dd) {
-			for (i=0;i<3;i++) {
-				if (c1 == s_form_tbl[i+34+3]) {
-					s1 = s_form_sjis_tbl[i+34+3];
-					break;
-				}
-			}
-			if (s1 <= 0) {
-				s2 = c1;
-			}
-		} else if (c == 0xf87f) {
-			for (i=0;i<3;i++) {
-				if (c1 == s_form_tbl[i+34]) {
-					s1 = s_form_sjis_tbl[i+34];
-					break;
-				}
-			}
-			if (s1 <= 0) {
-				s2 = c1;
-			}
-		} else if (c == 0xf87e) {
-			for (i=0;i<34;i++) {
-				if (c1 == s_form_tbl[i]) {
-					s1 = s_form_sjis_tbl[i];
-					break;
-				}
-			}
-			if (s1 <= 0) {
-				s2 = c1;
-			}
-		} else {
-			s2 = c1;
-			s1 = c;
-		}
-
-		if (s2 > 0) {
-			for (i=0;i<sizeof(s_form_tbl)/sizeof(int);i++) {
-				if (c1 == s_form_tbl[i]) {
-					s1 = s_form_sjis_tbl[i];
-					break;
-				}
-			}
-		}
-
-		if (s1 >= 0) {
-			if (s1 < 0x100) {
-				CK((*filter->output_function)(s1, filter->data));
-			} else {
-				CK((*filter->output_function)((s1 >> 8) & 0xff, filter->data));
-				CK((*filter->output_function)(s1 & 0xff, filter->data));
-			}
-		} else {
-			if (filter->illegal_mode != MBFL_OUTPUTFILTER_ILLEGAL_MODE_NONE) {
-				CK(mbfl_filt_conv_illegal_output(c, filter));
-			}			
-		}
-
-		filter->cache = 0;
-		filter->status = 0;
-		break;
 
 	case 2:
 		c1 = filter->cache; 
