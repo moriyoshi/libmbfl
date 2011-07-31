@@ -1,3 +1,4 @@
+
 /*
  * "streamable kanji code filter and converter"
  * Copyright (c) 1998-2002 HappySize, Inc. All rights reserved.
@@ -22,8 +23,8 @@
  *
  */
 /*
- * the source code included in this files was separated from mbfilter_ja.c
- * by moriyoshi koizumi <moriyoshi@php.net> on 4 dec 2002.
+ * the source code included in this files was separated from mbfilter_sjis_open.c
+ * by Rui Hirokawa <hirokawa@php.net> on 25 July 2011.
  *
  */
 
