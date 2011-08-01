@@ -88,6 +88,15 @@ const mbfl_encoding mbfl_encoding_sjis_sb = {
  	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_GL_UNSAFE
 };
 
+const mbfl_encoding mbfl_encoding_sjis_docomo_pua = {
+ 	mbfl_no_encoding_sjis_docomo_pua,
+ 	"SJIS-Mobile#DOCOMO-PUA",
+ 	"Shift_JIS",
+ 	NULL,
+ 	mblen_table_sjis,
+ 	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_GL_UNSAFE
+};
+
 const mbfl_encoding mbfl_encoding_sjis_kddi_pua = {
  	mbfl_no_encoding_sjis_kddi_pua,
  	"SJIS-Mobile#KDDI-PUA",
@@ -97,9 +106,18 @@ const mbfl_encoding mbfl_encoding_sjis_kddi_pua = {
  	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_GL_UNSAFE
 };
 
-const mbfl_encoding mbfl_encoding_sjis_pua = {
- 	mbfl_no_encoding_sjis_pua,
- 	"SJIS-Mobile#PUA",
+const mbfl_encoding mbfl_encoding_sjis_kddi_pua_b = {
+ 	mbfl_no_encoding_sjis_kddi_pua_b,
+ 	"SJIS-Mobile#KDDI-PUA-B",
+ 	"Shift_JIS",
+ 	NULL,
+ 	mblen_table_sjis,
+ 	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_GL_UNSAFE
+};
+
+const mbfl_encoding mbfl_encoding_sjis_sb_pua = {
+ 	mbfl_no_encoding_sjis_sb_pua,
+ 	"SJIS-Mobile#SOFTBANK-PUA",
  	"Shift_JIS",
  	NULL,
  	mblen_table_sjis,
@@ -160,6 +178,24 @@ const struct mbfl_convert_vtbl vtbl_wchar_sjis_sb = {
  	mbfl_filt_conv_common_flush
 };
 
+const struct mbfl_convert_vtbl vtbl_sjis_docomo_pua_wchar = {
+ 	mbfl_no_encoding_sjis_docomo_pua,
+ 	mbfl_no_encoding_wchar,
+ 	mbfl_filt_conv_common_ctor,
+ 	mbfl_filt_conv_common_dtor,
+ 	mbfl_filt_conv_sjis_mobile_wchar,
+ 	mbfl_filt_conv_common_flush
+};
+
+const struct mbfl_convert_vtbl vtbl_wchar_sjis_docomo_pua = {
+ 	mbfl_no_encoding_wchar,
+ 	mbfl_no_encoding_sjis_docomo_pua,
+ 	mbfl_filt_conv_common_ctor,
+ 	mbfl_filt_conv_common_dtor,
+ 	mbfl_filt_conv_wchar_sjis_mobile,
+ 	mbfl_filt_conv_common_flush
+};
+
 const struct mbfl_convert_vtbl vtbl_sjis_kddi_pua_wchar = {
  	mbfl_no_encoding_sjis_kddi_pua,
  	mbfl_no_encoding_wchar,
@@ -178,8 +214,8 @@ const struct mbfl_convert_vtbl vtbl_wchar_sjis_kddi_pua = {
  	mbfl_filt_conv_common_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_sjis_pua_wchar = {
- 	mbfl_no_encoding_sjis_pua,
+const struct mbfl_convert_vtbl vtbl_sjis_kddi_pua_b_wchar = {
+ 	mbfl_no_encoding_sjis_kddi_pua_b,
  	mbfl_no_encoding_wchar,
  	mbfl_filt_conv_common_ctor,
  	mbfl_filt_conv_common_dtor,
@@ -187,14 +223,34 @@ const struct mbfl_convert_vtbl vtbl_sjis_pua_wchar = {
  	mbfl_filt_conv_common_flush
 };
 
-const struct mbfl_convert_vtbl vtbl_wchar_sjis_pua = {
+const struct mbfl_convert_vtbl vtbl_wchar_sjis_kddi_pua_b = {
  	mbfl_no_encoding_wchar,
- 	mbfl_no_encoding_sjis_pua,
+ 	mbfl_no_encoding_sjis_kddi_pua_b,
  	mbfl_filt_conv_common_ctor,
  	mbfl_filt_conv_common_dtor,
  	mbfl_filt_conv_wchar_sjis_mobile,
  	mbfl_filt_conv_common_flush
 };
+
+const struct mbfl_convert_vtbl vtbl_sjis_sb_pua_wchar = {
+ 	mbfl_no_encoding_sjis_sb_pua,
+ 	mbfl_no_encoding_wchar,
+ 	mbfl_filt_conv_common_ctor,
+ 	mbfl_filt_conv_common_dtor,
+ 	mbfl_filt_conv_sjis_mobile_wchar,
+ 	mbfl_filt_conv_common_flush
+};
+
+const struct mbfl_convert_vtbl vtbl_wchar_sjis_sb_pua = {
+ 	mbfl_no_encoding_wchar,
+ 	mbfl_no_encoding_sjis_sb_pua,
+ 	mbfl_filt_conv_common_ctor,
+ 	mbfl_filt_conv_common_dtor,
+ 	mbfl_filt_conv_wchar_sjis_mobile,
+ 	mbfl_filt_conv_common_flush
+};
+
+
 
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
 
@@ -357,7 +413,18 @@ mbfiler_sjis_emoji_kddi2unicode_pua(int s, int *w)
 }
 
 int
-mbfiler_sjis_emoji2unicode_pua(int s, int c1, int c, int *w)
+mbfiler_sjis_emoji_kddi2unicode_pua_b(int s, int c1, int c, int *w)
+{
+	if ((c1 == 0xf3 && (c >= 0x40 && c<=0xfc && c != 0x7f)) ||
+		(c1 == 0xf4 && (c >= 0x40 && c<=0x93 && c != 0x7f)) ||
+		((c1 == 0xf6 || c1 == 0xf7) && (c >= 0x40 && c<=0xfc && c != 0x7f))) {
+		*w = (c1 << 8) + c - 0x0700; /* KDDI unofficial UTF-8 encoding */
+	}
+	return *w;
+}
+
+int
+mbfiler_sjis_emoji2unicode_pua(int s, int *w)
 {
 	if (s >= 0x27a9 && s <= 0x2802) {
 		*w = s - 0x27a9 + 0xe101;
@@ -371,11 +438,6 @@ mbfiler_sjis_emoji2unicode_pua(int s, int c1, int c, int *w)
 		*w = s - 0x2a99 + 0xe401;
 	} else if (s >= 0x2af8 && s <= 0x2b2e) {
 		*w = s - 0x2af8 + 0xe501;
-	} else if (
-		(c1 == 0xf3 && (c >= 0x40 && c<=0xfc && c != 0x7f)) ||
-		(c1 == 0xf4 && (c >= 0x40 && c<=0x93 && c != 0x7f)) ||
-		((c1 == 0xf6 || c1 == 0xf7) && (c >= 0x40 && c<=0xfc && c != 0x7f))) {
-		*w = (c1 << 8) + c - 0x0700; /* KDDI unofficial UTF-8 encoding */
 	}
 	return *w;
 }
@@ -391,7 +453,7 @@ mbfiler_unicode_pua2sjis_emoji_kddi(int c, int *s1, int *s2, int *c1, int *c2)
 		*s1 = c - 0xe5b5 + 0x284c;
 	} else if (c >= 0xe5cd && c <= 0xe5df) {
 		*s1 = c - 0xe5cd + 0x24b8;
-	} else if (c >= 0xea80 && c <= 0xe5fa) {
+	} else if (c >= 0xea80 && c <= 0xeafa) {
 		*s1 = c - 0xea80 + 0x24cb;
 	} else if (c >= 0xeafb && c <= 0xeb0d) {
 		*s1 = c - 0xeafb + 0x2839;
@@ -673,7 +735,7 @@ mbfl_filt_conv_sjis_mobile_wchar(int c, mbfl_convert_filter *filter)
 	switch (filter->status) {
 	case 0:
 		if (c >= 0 && c < 0x80) {	/* latin */
-			if (filter->from->no_encoding == mbfl_no_encoding_sjis_pua && 
+			if (filter->from->no_encoding == mbfl_no_encoding_sjis_sb_pua && 
 				c == 0x1b) {
 				filter->cache = c;
 				filter->status = 2;
@@ -740,8 +802,10 @@ mbfl_filt_conv_sjis_mobile_wchar(int c, mbfl_convert_filter *filter)
 						w = mbfiler_sjis_emoji_sb2unicode(s, &snd);
 					} else if (filter->from->no_encoding == mbfl_no_encoding_sjis_kddi_pua) {
 						mbfiler_sjis_emoji_kddi2unicode_pua(s, &w);
-					} else if (filter->from->no_encoding == mbfl_no_encoding_sjis_pua) {
-						mbfiler_sjis_emoji2unicode_pua(s, c1, c, &w);
+					} else if (filter->from->no_encoding == mbfl_no_encoding_sjis_kddi_pua_b) {
+						mbfiler_sjis_emoji_kddi2unicode_pua_b(s, c1, c, &w);
+					} else if (filter->from->no_encoding == mbfl_no_encoding_sjis_sb_pua) {
+						mbfiler_sjis_emoji2unicode_pua(s, &w);
 					}
 					if (w > 0  && snd > 0) {
 						CK((*filter->output_function)(snd, filter->data));
@@ -764,7 +828,7 @@ mbfl_filt_conv_sjis_mobile_wchar(int c, mbfl_convert_filter *filter)
 		}
 		break;
 	case 2:
-		if (filter->from->no_encoding == mbfl_no_encoding_sjis_pua && 
+		if (filter->from->no_encoding == mbfl_no_encoding_sjis_sb_pua && 
 			c == 0x24) {
 				filter->cache = c;
 				filter->status = 3;
@@ -777,7 +841,7 @@ mbfl_filt_conv_sjis_mobile_wchar(int c, mbfl_convert_filter *filter)
 
 	case 3:
 		/* Softbank Emoji: ESC $ [GEFOPQ] X SI */
-		if (filter->from->no_encoding == mbfl_no_encoding_sjis_pua && 
+		if (filter->from->no_encoding == mbfl_no_encoding_sjis_sb_pua && 
 			((c >= 0x45 && c <= 0x47) || (c >= 0x4f && c <= 0x51))) {
 				filter->cache = c;
 				filter->status = 4;
@@ -792,7 +856,7 @@ mbfl_filt_conv_sjis_mobile_wchar(int c, mbfl_convert_filter *filter)
 	case 4:
 		/* Softbank Emoji: ESC $ [GEFOPQ] X SI */
 		w = 0;
-		if (filter->from->no_encoding == mbfl_no_encoding_sjis_pua) {
+		if (filter->from->no_encoding == mbfl_no_encoding_sjis_sb_pua) {
 			c1 = filter->cache;
 
 			if (c == 0x0f) {
@@ -947,7 +1011,9 @@ mbfl_filt_conv_wchar_sjis_mobile(int c, mbfl_convert_filter *filter)
  		mbfiler_unicode2sjis_emoji_sb(c, &s1, &s2, &c1, &c2, filter);
  	} else if (filter->to->no_encoding == mbfl_no_encoding_sjis_kddi_pua) {
  		mbfiler_unicode_pua2sjis_emoji_kddi(c, &s1, &s2, &c1, &c2);
- 	} else if (filter->to->no_encoding == mbfl_no_encoding_sjis_pua) {
+ 	} else if (filter->to->no_encoding == mbfl_no_encoding_sjis_docomo_pua ||
+			   filter->to->no_encoding == mbfl_no_encoding_sjis_kddi_pua_b ||
+			   filter->to->no_encoding == mbfl_no_encoding_sjis_sb_pua) {
  		mbfiler_unicode_pua2sjis_emoji(c, &s1, &s2, &c1, &c2, &sjis_encoded);
  	}
 
