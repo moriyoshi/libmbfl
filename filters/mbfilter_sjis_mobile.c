@@ -515,23 +515,27 @@ mbfiler_unicode_pua2sjis_emoji(int c, int *s1, int *s2, int *c1, int *c2, int *s
 int
 mbfiler_unicode2sjis_emoji_docomo(int c, int *s1, int *s2, int *c1, int *c2, mbfl_convert_filter *filter)
 {
-	int i, match = 0;
+	int i, match = 0, c1s;
 	
 	if (filter->status == 1) {
+		c1s = filter->cache;
 		filter->status = 0;
-		*s1 = 0x0;
 		if (c == 0x20E3) {
-			if (filter->cache == 0x0023) {
+			if (c1s == 0x0023) {
 				*s1 = 0x2964;
 				match = 1;
-			} else if (filter->cache == 0x0030) { 
+			} else if (c1s == 0x0030) { 
 				*s1 = 0x296f;
 				match = 1;
-			} else if (filter->cache >= 0x0031 && 
-					   filter->cache <= 0x0039) {
-				*s1 = 0x2966 + (filter->cache - 0x0031);
+			} else if (c1s >= 0x0031 && c1s <= 0x0039) {
+				*s1 = 0x2966 + (c1s - 0x0031);
 				match = 1;
 			}
+		} else {
+			if (c1s >= ucs_a1_jis_table_min && c1s < ucs_a1_jis_table_max) {
+				c1s = ucs_a1_jis_table[c1s - ucs_a1_jis_table_min];
+				CK((*filter->output_function)(c1s, filter->data));
+			}			
 		}
 	} else {
 		if (c == 0x0023 || (c >= 0x0030 && c<=0x0039)) {
@@ -581,32 +585,35 @@ const int nflags_code_sb[] = {0x2b0a, 0x2b05, 0x2b08, 0x2b04, 0x2b07, 0x2b06, 0x
 int
 mbfiler_unicode2sjis_emoji_kddi(int c, int *s1, int *s2, int *c1, int *c2, mbfl_convert_filter *filter)
 {
-	int i, match = 0;
+	int i, match = 0, c1s;
 	
 	if (filter->status == 1) {
 		filter->status = 0;
-		*s1 = 0x0;
+		c1s = filter->cache;
 		if (c == 0x20E3) {
-			if (filter->cache == 0x0023) {
+			if (c1s == 0x0023) {
 				*s1 = 0x25bc;
 				match = 1;
-			} else if (filter->cache == 0x0030) { 
+			} else if (c1s == 0x0030) { 
 				*s1 = 0x2830;
 				match = 1;
-			} else if (filter->cache >= 0x0031 && 
-					   filter->cache <= 0x0039) {
-				*s1 = 0x27a6 + (filter->cache - 0x0031);
+			} else if (c1s >= 0x0031 && c1s <= 0x0039) {
+				*s1 = 0x27a6 + (c1s - 0x0031);
 				match = 1;
 			}
 		} else if ((c >= 0x1F1A5 + 0x41 && c <= 0x1F1A5 + 0x5A) &&
-				   (filter->cache >= 0x1F1A5 + 0x41 && filter->cache <= 0x1F1A5 + 0x5A)) {
+				   (c1s >= 0x1F1A5 + 0x41 && c1s <= 0x1F1A5 + 0x5A)) {
 			for (i=0;i<10;i++) {
-				if (filter->cache == 0x1F1A5 + nflags_s[i][0] &&
-					c == 0x1F1A5 + nflags_s[i][1]) {
+				if (c1s == 0x1F1A5 + nflags_s[i][0] && c == 0x1F1A5 + nflags_s[i][1]) {
 					*s1 = nflags_code_kddi[i]; 
 					match = 1;
 					break;
 				}
+			}
+		} else {
+			if (c1s >= ucs_a1_jis_table_min && c1s < ucs_a1_jis_table_max) {
+				c1s = ucs_a1_jis_table[c1s - ucs_a1_jis_table_min];
+				CK((*filter->output_function)(c1s, filter->data));
 			}
 		}
 	} else {
@@ -654,32 +661,35 @@ mbfiler_unicode2sjis_emoji_kddi(int c, int *s1, int *s2, int *c1, int *c2, mbfl_
 int
 mbfiler_unicode2sjis_emoji_sb(int c, int *s1, int *s2, int *c1, int *c2, mbfl_convert_filter *filter)
 {
-	int i, match = 0;
+	int i, match = 0, c1s;
 	
 	if (filter->status == 1) {
 		filter->status = 0;
-		*s1 = 0x0;
+		c1s = filter->cache;
 		if (c == 0x20E3) {
-			if (filter->cache == 0x0023) {
+			if (c1s == 0x0023) {
 				*s1 = 0x2817;
 				match = 1;
-			} else if (filter->cache == 0x0030) { 
+			} else if (c1s == 0x0030) { 
 				*s1 = 0x282c;
 				match = 1;
-			} else if (filter->cache >= 0x0031 && 
-					   filter->cache <= 0x0039) {
-				*s1 = 0x2823 + (filter->cache - 0x0031);
+			} else if (c1s >= 0x0031 && c1s <= 0x0039) {
+				*s1 = 0x2823 + (c1s - 0x0031);
 				match = 1;
 			}
 		} else if ((c >= 0x1F1A5 + 0x41 && c <= 0x1F1A5 + 0x5A) &&
-				   (filter->cache >= 0x1F1A5 + 0x41 && filter->cache <= 0x1F1A5 + 0x5A)) {
+				   (c1s >= 0x1F1A5 + 0x41 && c1s <= 0x1F1A5 + 0x5A)) {
 			for (i=0;i<10;i++) {
-				if (filter->cache == 0x1F1A5 + nflags_s[i][0] &&
-					c == 0x1F1A5 + nflags_s[i][1]) {
+				if (c1s == 0x1F1A5 + nflags_s[i][0] && c == 0x1F1A5 + nflags_s[i][1]) {
 					*s1 = nflags_code_sb[i]; 
 					match = 1;
 					break;
 				}
+			}
+		} else {
+			if (c1s >= ucs_a1_jis_table_min && c1s < ucs_a1_jis_table_max) {
+				c1s = ucs_a1_jis_table[c1s - ucs_a1_jis_table_min];
+				CK((*filter->output_function)(c1s, filter->data));
 			}
 		}
 	} else {
@@ -1055,8 +1065,7 @@ mbfl_filt_conv_wchar_sjis_mobile(int c, mbfl_convert_filter *filter)
 			CK((*filter->output_function)(s2, filter->data));
 		}
 	} else {
-		if (filter->status == 0 && 
-			filter->illegal_mode != MBFL_OUTPUTFILTER_ILLEGAL_MODE_NONE) {
+		if (filter->illegal_mode != MBFL_OUTPUTFILTER_ILLEGAL_MODE_NONE) {
 			CK(mbfl_filt_conv_illegal_output(c, filter));
 		}
 	}
