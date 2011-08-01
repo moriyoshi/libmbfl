@@ -731,12 +731,13 @@ int
 mbfl_filt_conv_sjis_mobile_wchar(int c, mbfl_convert_filter *filter)
 {
 	int c1, s, s1, s2, w;
+	int snd = 0;
 
 	switch (filter->status) {
 	case 0:
 		if (c >= 0 && c < 0x80) {	/* latin */
-			if (filter->from->no_encoding == mbfl_no_encoding_sjis_sb_pua && 
-				c == 0x1b) {
+			if ((filter->from->no_encoding == mbfl_no_encoding_sjis_sb_pua ||
+				 filter->from->no_encoding == mbfl_no_encoding_sjis_sb) && c == 0x1b) {
 				filter->cache = c;
 				filter->status = 2;
 			} else {
@@ -792,8 +793,6 @@ mbfl_filt_conv_sjis_mobile_wchar(int c, mbfl_convert_filter *filter)
 				}
 				
  				if (s >= (94*94) && s < 119*94) {
-					int snd = 0;
-					
 					if (filter->from->no_encoding == mbfl_no_encoding_sjis_docomo) {
 						w = mbfiler_sjis_emoji_docomo2unicode(s, &snd);
 					} else if (filter->from->no_encoding == mbfl_no_encoding_sjis_kddi) {
@@ -828,7 +827,8 @@ mbfl_filt_conv_sjis_mobile_wchar(int c, mbfl_convert_filter *filter)
 		}
 		break;
 	case 2:
-		if (filter->from->no_encoding == mbfl_no_encoding_sjis_sb_pua && 
+		if ((filter->from->no_encoding == mbfl_no_encoding_sjis_sb_pua ||
+			 filter->from->no_encoding == mbfl_no_encoding_sjis_sb) && 
 			c == 0x24) {
 				filter->cache = c;
 				filter->status = 3;
@@ -840,8 +840,9 @@ mbfl_filt_conv_sjis_mobile_wchar(int c, mbfl_convert_filter *filter)
 		break;
 
 	case 3:
-		/* Softbank Emoji: ESC $ [GEFOPQ] X SI */
-		if (filter->from->no_encoding == mbfl_no_encoding_sjis_sb_pua && 
+		/* Softbank Emoji: ESC $ [GEFOPQ] X 0x0f */
+		if ((filter->from->no_encoding == mbfl_no_encoding_sjis_sb_pua ||
+			 filter->from->no_encoding == mbfl_no_encoding_sjis_sb) && 
 			((c >= 0x45 && c <= 0x47) || (c >= 0x4f && c <= 0x51))) {
 				filter->cache = c;
 				filter->status = 4;
@@ -854,33 +855,54 @@ mbfl_filt_conv_sjis_mobile_wchar(int c, mbfl_convert_filter *filter)
 		break;
 
 	case 4:
-		/* Softbank Emoji: ESC $ [GEFOPQ] X SI */
+		/* Softbank Emoji Web code: ESC $ [GEFOPQ] X 0x0f */
 		w = 0;
-		if (filter->from->no_encoding == mbfl_no_encoding_sjis_sb_pua) {
+		if (filter->from->no_encoding == mbfl_no_encoding_sjis_sb_pua ||
+			filter->from->no_encoding == mbfl_no_encoding_sjis_sb) {
 			c1 = filter->cache;
 
 			if (c == 0x0f) {
 				w = c;
 				filter->cache = 0;
 				filter->status = 0;				
-			} else if (c1 == 0x47 && c >= 0x21 && c <= 0x7a) {
-				w = c - 0x0020 + 0xe000;
-				CK((*filter->output_function)(w, filter->data));
-			} else if (c1 == 0x45 && c >= 0x21 && c <= 0x7a) {
-				w = c - 0x0020 + 0xe100;
-				CK((*filter->output_function)(w, filter->data));
-			} else if (c1 == 0x46 && c >= 0x21 && c <= 0x7a) {
-				w = c - 0x0020 + 0xe200;
-				CK((*filter->output_function)(w, filter->data));
-			} else if (c1 == 0x4f && c >= 0x21 && c <= 0x6d) {
-				w = c - 0x0020 + 0xe300;
-				CK((*filter->output_function)(w, filter->data));
-			} else if (c1 == 0x50 && c >= 0x21 && c <= 0x6c) {
-				w = c - 0x0020 + 0xe400;
-				CK((*filter->output_function)(w, filter->data));
-			} else if (c1 == 0x51 && c >= 0x21 && c <= 0x5e) {
-				w = c - 0x0020 + 0xe500;
-				CK((*filter->output_function)(w, filter->data));
+			} else {
+				if  (filter->from->no_encoding == mbfl_no_encoding_sjis_sb_pua) {
+					if (c1 == 0x47 && c >= 0x21 && c <= 0x7a) {
+						w = c - 0x0021 + 0xe001;
+					} else if (c1 == 0x45 && c >= 0x21 && c <= 0x7a) {
+						w = c - 0x0021 + 0xe101;
+					} else if (c1 == 0x46 && c >= 0x21 && c <= 0x7a) {
+						w = c - 0x0021 + 0xe201;
+					} else if (c1 == 0x4f && c >= 0x21 && c <= 0x6d) {
+						w = c - 0x0021 + 0xe301;
+					} else if (c1 == 0x50 && c >= 0x21 && c <= 0x6c) {
+						w = c - 0x0021 + 0xe401;
+					} else if (c1 == 0x51 && c >= 0x21 && c <= 0x5e) {
+						w = c - 0x0021 + 0xe501;
+					}
+				} else {
+					if (c1 == 0x47 && c >= 0x21 && c <= 0x7a) {
+						s1 = 0x91; s2 = c;	
+					} else if (c1 == 0x45 && c >= 0x21 && c <= 0x7a) {
+						s1 = 0x8d; s2 = c;	
+					} else if (c1 == 0x46 && c >= 0x21 && c <= 0x7a) {
+						s1 = 0x8e; s2 = c;	
+					} else if (c1 == 0x4f && c >= 0x21 && c <= 0x6d) {
+						s1 = 0x92; s2 = c;	
+					} else if (c1 == 0x50 && c >= 0x21 && c <= 0x6c) {
+						s1 = 0x95; s2 = c;	
+					} else if (c1 == 0x51 && c >= 0x21 && c <= 0x5e) {
+						s1 = 0x96; s2 = c;	
+					}
+					s  = (s1 - 0x21)*94 + s2 - 0x21;
+					w = mbfiler_sjis_emoji_sb2unicode(s, &snd);
+					if (w > 0  && snd > 0) {
+						CK((*filter->output_function)(snd, filter->data));
+					}					
+				}
+				if (w > 0) {
+					CK((*filter->output_function)(w, filter->data));
+				}
 			}
 		}
 
