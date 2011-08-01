@@ -910,22 +910,6 @@ const int mb_tbl_uni_sb2code1_value[] = { // 0x0023 - 0x00ae
 	0x2829,	0x282a,	0x282b,	0x2855,	
 	0x2856,	};
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const int mb_tbl_uni_sb2code2_min = 0x2122;
 const int mb_tbl_uni_sb2code2_max = 0x3299;
 
