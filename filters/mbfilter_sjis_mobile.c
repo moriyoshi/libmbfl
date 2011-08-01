@@ -519,6 +519,7 @@ mbfiler_unicode2sjis_emoji_docomo(int c, int *s1, int *s2, int *c1, int *c2, mbf
 	
 	if (filter->status == 1) {
 		c1s = filter->cache;
+		filter->cache = 0;
 		filter->status = 0;
 		if (c == 0x20E3) {
 			if (c1s == 0x0023) {
@@ -588,8 +589,9 @@ mbfiler_unicode2sjis_emoji_kddi(int c, int *s1, int *s2, int *c1, int *c2, mbfl_
 	int i, match = 0, c1s;
 	
 	if (filter->status == 1) {
-		filter->status = 0;
 		c1s = filter->cache;
+		filter->cache = 0;
+		filter->status = 0;
 		if (c == 0x20E3) {
 			if (c1s == 0x0023) {
 				*s1 = 0x25bc;
@@ -666,6 +668,7 @@ mbfiler_unicode2sjis_emoji_sb(int c, int *s1, int *s2, int *c1, int *c2, mbfl_co
 	if (filter->status == 1) {
 		filter->status = 0;
 		c1s = filter->cache;
+		filter->cache = 0;
 		if (c == 0x20E3) {
 			if (c1s == 0x0023) {
 				*s1 = 0x2817;
@@ -1048,6 +1051,10 @@ mbfl_filt_conv_wchar_sjis_mobile(int c, mbfl_convert_filter *filter)
 			   filter->to->no_encoding == mbfl_no_encoding_sjis_sb_pua) {
  		mbfiler_unicode_pua2sjis_emoji(c, &s1, &s2, &c1, &c2, &sjis_encoded);
  	}
+
+	if (filter->status == 1 && filter->cache > 0) {
+		return c;
+	}
 
 	if (s1 >= 0) {
 		if (s1 < 0x100) { /* latin or kana */
