@@ -35,6 +35,7 @@ libmbfl_filters_la_SOURCES=mbfilter_cp936.c \
 	mbfilter_sjis.c \
 	mbfilter_sjis_open.c \
 	mbfilter_sjis_mobile.c \
+	mbfilter_sjis_mac.c \
 	mbfilter_7bit.c \
 	mbfilter_qprint.c \
 	mbfilter_ucs4.c \
