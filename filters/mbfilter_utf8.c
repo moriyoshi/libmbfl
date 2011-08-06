@@ -121,7 +121,7 @@ int mbfl_filt_conv_utf8_wchar(int c, mbfl_convert_filter *filter)
 			} else {
 				w = s & MBFL_WCSGROUP_MASK;
 				w |= MBFL_WCSGROUP_THROUGH;
-				CK((*filter->output_function)(w, filter->data));				
+				CK((*filter->output_function)(w, filter->data));
 			}
 			break;
 		case 0x20: /* 3byte code 2nd char: 0:0xa0-0xbf,1-F:0x80-0x9f */
