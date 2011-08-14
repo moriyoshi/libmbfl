@@ -39,33 +39,14 @@
 
 static int mbfl_filt_ident_gb18030(int c, mbfl_identify_filter *filter);
 
-static const unsigned char mblen_table_gb18030[] = { /* 0x81-0xFE */
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-  1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1
-};
-
-static const char *mbfl_encoding_gb18030_aliases[] = {NULL};
+static const char *mbfl_encoding_gb18030_aliases[] = {"gb-18030", "gb-18030-2000", NULL};
 
 const mbfl_encoding mbfl_encoding_gb18030 = {
 	mbfl_no_encoding_gb18030,
 	"GB18030",
 	"GB18030",
 	(const char *(*)[])&mbfl_encoding_gb18030_aliases,
-	mblen_table_gb18030,
+	NULL,
 	MBFL_ENCTYPE_MBCS | MBFL_ENCTYPE_GL_UNSAFE
 };
 
@@ -298,6 +279,10 @@ mbfl_filt_conv_wchar_gb18030(int c, mbfl_convert_filter *filter)
 		s = ucs_sfv_cp936_table[c - ucs_sfv_cp936_table_min];
 	} else if (c >= ucs_hff_cp936_table_min && c < ucs_hff_cp936_table_max) {
 		s = ucs_hff_cp936_table[c - ucs_hff_cp936_table_min];
+	}
+
+	if (c == 0x20ac) { /* euro-sign */
+		s = 0xa2e3;
 	}
 
 	if (s <= 0 && c >= mbfl_gb18030_c_tbl_key[0] && 
