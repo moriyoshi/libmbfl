@@ -169,7 +169,7 @@ mbfl_filt_conv_gb18030_wchar(int c, mbfl_convert_filter *filter)
 
 		if (w <= 0) {
 			c2 = (c1 << 8) | c;
-			for (k = 0; k < sizeof(mbfl_gb18030_pua_tbl)/(sizeof(unsigned short)*3); k++) {
+			for (k = 0; k < mbfl_gb18030_pua_tbl_max; k++) {
 				if (c2 >= mbfl_gb18030_pua_tbl[k][2] && 
 					c2 <= mbfl_gb18030_pua_tbl[k][2] +  mbfl_gb18030_pua_tbl[k][1] -  mbfl_gb18030_pua_tbl[k][0]) {
 					w = c2 -  mbfl_gb18030_pua_tbl[k][2] + mbfl_gb18030_pua_tbl[k][0];
@@ -325,7 +325,7 @@ mbfl_filt_conv_wchar_gb18030(int c, mbfl_convert_filter *filter)
 			}
 		} else {
 			/* U+E766..U+E864 */
-			k1 = 0; k2 = 32;
+			k1 = 0; k2 = mbfl_gb18030_pua_tbl_max;
 			while (k1 < k2) {
 				k = (k1 + k2) >> 1;
 				if (c < mbfl_gb18030_pua_tbl[k][0]) {

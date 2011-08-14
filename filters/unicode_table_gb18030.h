@@ -86,6 +86,8 @@ static const unsigned short mbfl_gb18030_pua_tbl[][3] = {
 	{0xe864, 0xe864, 0xfea0},
 };
 
+static const int mbfl_gb18030_pua_tbl_max = sizeof(mbfl_gb18030_pua_tbl)/(sizeof(unsigned short)*3);
+
 static const unsigned short mbfl_gb2uni_tbl[] = {
 0x0000, 0x0023, 0x0024, 0x0025, 0x0026, 0x002c, 0x002d, 0x0031, 
 0x0032, 0x0050, 0x0051, 0x0058, 0x0059, 0x005e, 0x005f, 0x005f, 
