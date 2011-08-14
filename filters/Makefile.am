@@ -53,6 +53,7 @@ libmbfl_filters_la_SOURCES=mbfilter_cp936.c \
 	mbfilter_euc_kr.c \
 	mbfilter_uhc.c \
 	mbfilter_iso2022_jp_ms.c \
+	mbfilter_gb18030.c \
 	mbfilter_iso2022_kr.c \
 	mbfilter_cp866.c \
 	mbfilter_koi8r.c \
@@ -76,6 +77,7 @@ libmbfl_filters_la_SOURCES=mbfilter_cp936.c \
 	mbfilter_cp866.h \
 	mbfilter_cp932.h \
 	mbfilter_cp936.h \
+	mbfilter_gb18030.h \
 	mbfilter_euc_cn.h \
 	mbfilter_euc_jp.h \
 	mbfilter_euc_jp_win.h \
@@ -149,6 +151,7 @@ libmbfl_filters_la_SOURCES=mbfilter_cp936.c \
 	unicode_table_armscii8.h \
 	unicode_table_cp850.h \
 	unicode_table_uhc.h \
+	unicode_table_gb18030.h \
 	translit_kana_jisx0201_jisx0208.h \
 	emoji2uni.h
 
