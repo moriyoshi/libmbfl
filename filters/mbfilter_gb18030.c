@@ -126,7 +126,7 @@ int
 mbfl_filt_conv_gb18030_wchar(int c, mbfl_convert_filter *filter)
 {
 	int k;
-	int c1, c2, c3, w;
+	int c1, c2, c3, w = -1;
 
 	switch (filter->status) {
 	case 0:
@@ -153,39 +153,58 @@ mbfl_filt_conv_gb18030_wchar(int c, mbfl_convert_filter *filter)
 		if (c1 >= 0x81 && c1 <= 0x84 && c >= 0x30 && c <= 0x39) { /* 4 byte range: Unicode BMP */
 			filter->status = 2;
 			filter->cache = (c1 << 8) | c;
+			return c;
 		} else if (c1 >= 0x90 && c1 <= 0xe3 && c >= 0x30 && c <= 0x39) { /* 4 byte range: Unicode 16 planes */
 			filter->status = 2;
 			filter->cache = (c1 << 8) | c;
+			return c;
 		} else if (((c1 >= 0xaa && c1 <= 0xaf) || (c1 >= 0xf8 && c1 <= 0xfe)) &&
 				   (c >= 0xa1 && c <= 0xfe)) { /* UDA part1,2: U+E000-U+E4C5 */
 			w = 94*(c1 >= 0xf8 ? c1 - 0xf2 : c1 - 0xaa) + (c - 0xa1) + 0xe000;
+			CK((*filter->output_function)(w, filter->data));
 		} else if (c1 >= 0xa1 && c1 <= 0xa7 && c >= 0x40 && c < 0xa1 && c != 0x7f) { /* UDA part3 : U+E4C6-U+E765*/
 			w = 96*(c1 - 0xa1) + c - (c >= 0x80 ? 0x41 : 0x40) + 0xe4c6;
-		} else if ( 
-			(c1 >= 0xa1 && c1 <= 0xa9 && c >= 0xa1 && c <= 0xfe) ||
-			(c1 >= 0xb0 && c1 <= 0xf7 && c >= 0xa1 && c <= 0xfe) ||
-			(c1 >= 0x81 && c1 <= 0xa0 && c >= 0x40 && c <= 0xfe && c != 0x7f) ||
-			(c1 >= 0xaa && c1 <= 0xfe && c >= 0x40 && c <= 0xa0 && c != 0x7f) ||
-			(c1 >= 0xa8 && c1 <= 0xa9 && c >= 0x40 && c <= 0xa0 && c != 0x7f)) {
-			w = (c1 - 0x81)*192 + (c - 0x40);
-			if (w >= 0 && w < cp936_ucs_table_size) {
-				w = cp936_ucs_table[w];
+			CK((*filter->output_function)(w, filter->data));
+		} 
+
+		if (w <= 0) {
+			c2 = (c1 << 8) | c;
+			for (k = 0; k < sizeof(mbfl_gb18030_pua_tbl)/(sizeof(unsigned short)*3); k++) {
+				if (c2 >= mbfl_gb18030_pua_tbl[k][2] && 
+					c2 <= mbfl_gb18030_pua_tbl[k][2] +  mbfl_gb18030_pua_tbl[k][1] -  mbfl_gb18030_pua_tbl[k][0]) {
+					w = c2 -  mbfl_gb18030_pua_tbl[k][2] + mbfl_gb18030_pua_tbl[k][0];
+					CK((*filter->output_function)(w, filter->data));
+					break;
+				}
+			}
+		}
+
+		if (w <= 0) {
+			if ((c1 >= 0xa1 && c1 <= 0xa9 && c >= 0xa1 && c <= 0xfe) ||
+				(c1 >= 0xb0 && c1 <= 0xf7 && c >= 0xa1 && c <= 0xfe) ||
+				(c1 >= 0x81 && c1 <= 0xa0 && c >= 0x40 && c <= 0xfe && c != 0x7f) ||
+				(c1 >= 0xaa && c1 <= 0xfe && c >= 0x40 && c <= 0xa0 && c != 0x7f) ||
+				(c1 >= 0xa8 && c1 <= 0xa9 && c >= 0x40 && c <= 0xa0 && c != 0x7f)) {
+				w = (c1 - 0x81)*192 + (c - 0x40);
+				if (w >= 0 && w < cp936_ucs_table_size) {
+					w = cp936_ucs_table[w];
+				} else {
+					w = 0;
+				}
+				if (w <= 0) {
+					w = (c1 << 8) | c;
+					w &= MBFL_WCSPLANE_MASK;
+					w |= MBFL_WCSPLANE_GB18030;
+				}
+				CK((*filter->output_function)(w, filter->data));
+			} else if ((c >= 0 && c < 0x21) || c == 0x7f) {		/* CTLs */
+				CK((*filter->output_function)(c, filter->data));
 			} else {
-				w = 0;
-			}
-			if (w <= 0) {
 				w = (c1 << 8) | c;
-				w &= MBFL_WCSPLANE_MASK;
-				w |= MBFL_WCSPLANE_GB18030;
+				w &= MBFL_WCSGROUP_MASK;
+				w |= MBFL_WCSGROUP_THROUGH;
+				CK((*filter->output_function)(w, filter->data));
 			}
-			CK((*filter->output_function)(w, filter->data));
-		} else if ((c >= 0 && c < 0x21) || c == 0x7f) {		/* CTLs */
-			CK((*filter->output_function)(c, filter->data));
-		} else {
-			w = (c1 << 8) | c;
-			w &= MBFL_WCSGROUP_MASK;
-			w |= MBFL_WCSGROUP_THROUGH;
-			CK((*filter->output_function)(w, filter->data));
 		}
 		break;
 	case 2: /* fbcs third byte */
@@ -293,7 +312,7 @@ mbfl_filt_conv_wchar_gb18030(int c, mbfl_convert_filter *filter)
 		}
 	}
 
-	if (c >= 0xe0000 && c <= 0xe864) { /* PUA */
+	if (c >= 0xe000 && c <= 0xe864) { /* PUA */
 		if (c < 0xe766) {
 			if (c < 0xe4c6) {
 				c1 = c - 0xe000;
@@ -301,10 +320,11 @@ mbfl_filt_conv_wchar_gb18030(int c, mbfl_convert_filter *filter)
 				s |= (c1 < 0x06 ? c1 + 0xaa : c1 + 0xf2) << 8;
 			} else {
 				c1 = c - 0xe4c6;
-				s = ((c1 % 96) + 0xa1) << 8; c1 /= 96;
+				s = ((c1 / 96) + 0xa1) << 8; c1 %= 96;
 				s |= c1 + (c1 >= 0x3f ? 0x41 : 0x40);			
 			}
 		} else {
+			/* U+E766..U+E864 */
 			k1 = 0; k2 = 32;
 			while (k1 < k2) {
 				k = (k1 + k2) >> 1;
@@ -318,7 +338,9 @@ mbfl_filt_conv_wchar_gb18030(int c, mbfl_convert_filter *filter)
 				}
 			}
 		}
-	} else if (s <= 0 && c >= 0x0080 && c <= 0xffff) { /* BMP */
+	} 
+
+	if (s <= 0 && c >= 0x0080 && c <= 0xffff) { /* BMP */
 		s = mbfl_bisec_srch(c, mbfl_uni2gb_tbl, mbfl_gb_uni_max);
 		if (s >= 0) {
 			c1 = c - mbfl_gb_uni_ofst[s];
