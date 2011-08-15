@@ -60,6 +60,7 @@
 #include "filters/mbfilter_sjis_open.h"
 #include "filters/mbfilter_sjis_mobile.h"
 #include "filters/mbfilter_sjis_mac.h"
+#include "filters/mbfilter_sjis_2004.h"
 #include "filters/mbfilter_cp51932.h"
 #include "filters/mbfilter_jis.h"
 #include "filters/mbfilter_iso2022_jp_ms.h"
@@ -168,6 +169,7 @@ static const mbfl_encoding *mbfl_encoding_ptr_list[] = {
  	&mbfl_encoding_sjis_kddi_pua_b,
  	&mbfl_encoding_sjis_sb_pua,
  	&mbfl_encoding_sjis_mac,
+	&mbfl_encoding_sjis2004,
 	&mbfl_encoding_utf8_docomo,
 	&mbfl_encoding_utf8_kddi,
 	&mbfl_encoding_utf8_kddi_b,

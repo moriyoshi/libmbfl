@@ -226,7 +226,7 @@ const int wchar2sjis_mac_r_tbl[][3] = {
 	{0x32a4, 0x32a9, 0x04ba},
 };
 
-const int wchar2sjis_mac_r_map[][2] = {
+const unsigned short wchar2sjis_mac_r_map[][2] = {
 	{0x2660, 0x2667},
 	{0x322a, 0x3243},
 	{0x3296, 0x329e},
@@ -580,7 +580,7 @@ mbfl_filt_conv_wchar_sjis_mac(int c, mbfl_convert_filter *filter)
 			}
 
 			if (s1 <= 0) {
-				for (i=0; i<sizeof(wchar2sjis_mac_r_map)/(2*sizeof(int));i++) {
+				for (i=0; i<sizeof(wchar2sjis_mac_r_map)/(2*sizeof(unsigned short));i++) {
 					if (c >= wchar2sjis_mac_r_map[i][0] && c <= wchar2sjis_mac_r_map[i][1]) {
 						s1 = wchar2sjis_mac_code_map[i][c-wchar2sjis_mac_r_map[i][0]]; 
 						break;

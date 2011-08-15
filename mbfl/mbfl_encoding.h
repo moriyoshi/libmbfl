@@ -81,6 +81,7 @@ enum mbfl_no_encoding {
  	mbfl_no_encoding_sjis_kddi_pua_b,
  	mbfl_no_encoding_sjis_sb_pua,
  	mbfl_no_encoding_sjis_mac,
+	mbfl_no_encoding_sjis2004,
 	mbfl_no_encoding_cp932,
 	mbfl_no_encoding_cp51932,
 	mbfl_no_encoding_jis,

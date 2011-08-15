@@ -52,6 +52,7 @@
 #include "filters/mbfilter_iso2022_kr.h"
 #include "filters/mbfilter_sjis.h"
 #include "filters/mbfilter_sjis_open.h"
+#include "filters/mbfilter_sjis_2004.h"
 #include "filters/mbfilter_sjis_mobile.h"
 #include "filters/mbfilter_sjis_mac.h"
 #include "filters/mbfilter_cp51932.h"
@@ -115,6 +116,8 @@ const struct mbfl_convert_vtbl *mbfl_convert_filter_list[] = {
 	&vtbl_wchar_sjis,
 	&vtbl_sjis_open_wchar,
 	&vtbl_wchar_sjis_open,
+	&vtbl_sjis2004_wchar,
+	&vtbl_wchar_sjis2004,
 	&vtbl_cp51932_wchar,
 	&vtbl_wchar_cp51932,
 	&vtbl_jis_wchar,
