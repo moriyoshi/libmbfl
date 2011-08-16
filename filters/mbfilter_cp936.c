@@ -195,19 +195,7 @@ mbfl_filt_conv_wchar_cp936(int c, mbfl_convert_filter *filter)
 
 	if (c >= ucs_a1_cp936_table_min && c < ucs_a1_cp936_table_max) {
 		/* U+0000 - U+0451 */
-		if (c >= 0x00a0 && c <= 0x00ff) {
-			s = ucs_a1_r_cp936_table[c - 0x00a0];
-		}  else {
-			s = ucs_a1_cp936_table[c - ucs_a1_cp936_table_min];
-		}
-		if (s == 0 && c >= 0x0100 && c <= 0x01db) {
-			for (k = 0; k<sizeof(ucs_a4_cp936_key)/sizeof(unsigned short);k++) {
-				if (c == ucs_a4_cp936_key[k]) {
-					s = ucs_a4_cp936_val[k];
-					break;
-				}
-			}
-		}			
+		s = ucs_a1_cp936_table[c - ucs_a1_cp936_table_min];
 	} else if (c >= ucs_a2_cp936_table_min && c < ucs_a2_cp936_table_max) {
 		/* U+2000 - U+26FF */
 		if (c == 0x203e) {
@@ -222,15 +210,6 @@ mbfl_filt_conv_wchar_cp936(int c, mbfl_convert_filter *filter)
 	} else if (c >= ucs_a3_cp936_table_min && c < ucs_a3_cp936_table_max) {
 		/* U+2F00 - U+33FF */
 		s = ucs_a3_cp936_table[c - ucs_a3_cp936_table_min];
-		if (s == 0) {
-			if (c >= 0x3192 && c <= 0x319f) {
-				s = ucs_a3_2_cp936_table[c-0x3192];
-			} else if ( c >= 0x322a && c <= 0x3243) {
-				s = ucs_a3_3_cp936_table[c-0x322a];
-			} else if ( c >= 0x3280 && c <= 0x32B0) {				
-				s = ucs_a3_4_cp936_table[c-0x3280];
-			}
-		}
 	} else if (c >= ucs_i_cp936_table_min && c < ucs_i_cp936_table_max) {
 		/* U+4D00-9FFF CJK Unified Ideographs (+ Extension A) */
 		s = ucs_i_cp936_table[c - ucs_i_cp936_table_min];
