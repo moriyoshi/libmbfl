@@ -201,6 +201,7 @@ static const mbfl_encoding *mbfl_encoding_ptr_list[] = {
 	&mbfl_encoding_hz,
 	&mbfl_encoding_euc_tw,
 	&mbfl_encoding_big5,
+	&mbfl_encoding_cp950,
 	&mbfl_encoding_euc_kr,
 	&mbfl_encoding_uhc,
 	&mbfl_encoding_2022kr,

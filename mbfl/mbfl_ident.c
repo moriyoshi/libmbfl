@@ -131,6 +131,7 @@ static const struct mbfl_identify_vtbl *mbfl_identify_filter_list[] = {
 	&vtbl_identify_hz,
 	&vtbl_identify_euctw,
 	&vtbl_identify_big5,
+	&vtbl_identify_cp950,
 	&vtbl_identify_euckr,
 	&vtbl_identify_uhc,
 	&vtbl_identify_2022kr,

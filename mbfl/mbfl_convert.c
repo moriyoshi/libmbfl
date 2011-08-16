@@ -168,6 +168,8 @@ const struct mbfl_convert_vtbl *mbfl_convert_filter_list[] = {
 	&vtbl_wchar_euctw,
 	&vtbl_big5_wchar,
 	&vtbl_wchar_big5,
+	&vtbl_cp950_wchar,
+	&vtbl_wchar_cp950,
 	&vtbl_euckr_wchar,
 	&vtbl_wchar_euckr,
 	&vtbl_uhc_wchar,

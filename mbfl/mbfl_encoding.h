@@ -107,6 +107,7 @@ enum mbfl_no_encoding {
 	mbfl_no_encoding_cp936,
 	mbfl_no_encoding_euc_tw,
 	mbfl_no_encoding_big5,
+	mbfl_no_encoding_cp950,
 	mbfl_no_encoding_euc_kr,
 	mbfl_no_encoding_2022kr,
 	mbfl_no_encoding_uhc,
