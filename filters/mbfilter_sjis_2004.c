@@ -300,7 +300,7 @@ retry:
 		}
 		break;
 
-	case 3:	/* got 0x8f,  X 0213 plane 2 first char : EUC-JP-2004 */
+	case 3:	/* X 0213 plane 2 first char : EUC-JP-2004 */
 		if ((c >= 0 && c < 0x21) || c == 0x7f) {		/* CTLs */
 			CK((*filter->output_function)(c, filter->data));
 			filter->status = 0;
@@ -310,7 +310,7 @@ retry:
 		}
 		break;
 
-	case 4:	/* got 0x8f,  X 0213 plane 2 second char */
+	case 4:	/* X 0213 plane 2 second char */
 
 		filter->status &= ~0xf;
 		c1 = filter->cache;
@@ -365,7 +365,7 @@ retry:
 
 		break;
 
-	case 5:	/* X 0212 */
+	case 5:	/* X 0208 second char */
 		filter->status &= ~0xf;
 		c1 = filter->cache;
 		if (c > 0x20 && c < 0x7f) {
