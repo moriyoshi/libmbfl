@@ -58,7 +58,9 @@
 #include "filters/mbfilter_cp51932.h"
 #include "filters/mbfilter_jis.h"
 #include "filters/mbfilter_iso2022_jp_ms.h"
+#include "filters/mbfilter_iso2022jp_2004.h"
 #include "filters/mbfilter_euc_jp.h"
+#include "filters/mbfilter_euc_jp_2004.h"
 #include "filters/mbfilter_euc_jp_win.h"
 #include "filters/mbfilter_gb18030.h"
 #include "filters/mbfilter_ascii.h"
@@ -128,8 +130,12 @@ const struct mbfl_convert_vtbl *mbfl_convert_filter_list[] = {
 	&vtbl_wchar_2022jp,
 	&vtbl_2022jpms_wchar,
 	&vtbl_wchar_2022jpms,
+	&vtbl_2022jp_2004_wchar,
+	&vtbl_wchar_2022jp_2004,
 	&vtbl_eucjpwin_wchar,
 	&vtbl_wchar_eucjpwin,
+	&vtbl_eucjp2004_wchar,
+	&vtbl_wchar_eucjp2004,
 	&vtbl_cp932_wchar,
 	&vtbl_wchar_cp932,
  	&vtbl_sjis_docomo_wchar,
@@ -489,8 +495,14 @@ mbfl_filt_conv_illegal_output(int c, mbfl_convert_filter *filter)
 					case MBFL_WCSPLANE_JIS0212:
 						ret = mbfl_convert_filter_strcat(filter, (const unsigned char *)"JIS2+");
 						break;
+					case MBFL_WCSPLANE_JIS0213:
+						ret = mbfl_convert_filter_strcat(filter, (const unsigned char *)"JIS3+");
+						break;
 					case MBFL_WCSPLANE_WINCP932:
 						ret = mbfl_convert_filter_strcat(filter, (const unsigned char *)"W932+");
+						break;
+					case MBFL_WCSPLANE_GB18030:
+						ret = mbfl_convert_filter_strcat(filter, (const unsigned char *)"GB+");
 						break;
 					case MBFL_WCSPLANE_8859_1:
 						ret = mbfl_convert_filter_strcat(filter, (const unsigned char *)"I8859_1+");
