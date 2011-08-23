@@ -40,6 +40,7 @@
 
 #include "emoji2uni.h"
 
+extern int mbfl_bisec_srch2(int w, const unsigned short tbl[], int n);
 extern int mbfl_filt_ident_sjis(int c, mbfl_identify_filter *filter);
 extern const unsigned char mblen_table_sjis[];
 
@@ -269,21 +270,6 @@ mbfilter_conv_r_map_tbl(int c, int *w, const unsigned short map[][3], int n)
 }
 
 int
-mbfilter_conv_seq_tbl(int c, int *w, const unsigned short *key, const unsigned short *val, int n)
-{
-	int i, match = 0;
-	for (i = 0; i< n; i++) {
-		if (c == key[i]) {
-			*w = val[i];
-			match = 1;
-			break;
-		}
-	}
-	return match;
-}
-
-
-int
 mbfilter_sjis_emoji_docomo2unicode(int s, int *snd)
 {
 	int w = s;
@@ -432,11 +418,17 @@ mbfilter_unicode2sjis_emoji_docomo(int c, int *s1, mbfl_convert_filter *filter)
 		} else if (c == 0x00AE) {
 			*s1 = 0x29ba; match = 1;
 		} else if (c >= mb_tbl_uni_docomo2code2_min && c <= mb_tbl_uni_docomo2code2_max) {
-			match = mbfilter_conv_seq_tbl(c, s1, mb_tbl_uni_docomo2code2_key, mb_tbl_uni_docomo2code2_value,
-										  mb_tbl_uni_docomo2code2_len);
+			i = mbfl_bisec_srch2(c, mb_tbl_uni_docomo2code2_key, mb_tbl_uni_docomo2code2_len);
+			if (i >= 0) {
+				*s1 = mb_tbl_uni_docomo2code2_value[i];
+				match = 1;
+			}
 		} else if (c >= mb_tbl_uni_docomo2code3_min && c <= mb_tbl_uni_docomo2code3_max) {
-			match = mbfilter_conv_seq_tbl(c - 0x10000, s1, mb_tbl_uni_docomo2code3_key, mb_tbl_uni_docomo2code3_value,
-										  mb_tbl_uni_docomo2code3_len);
+			i = mbfl_bisec_srch2(c - 0x10000, mb_tbl_uni_docomo2code3_key, mb_tbl_uni_docomo2code3_len);
+			if (i >= 0) {
+				*s1 = mb_tbl_uni_docomo2code3_value[i];
+				match = 1;
+			}			
 		}
 	}
 
@@ -491,11 +483,17 @@ mbfilter_unicode2sjis_emoji_kddi(int c, int *s1, mbfl_convert_filter *filter)
 		} else if (c == 0x00AE) {
 			*s1 = 0x27dd; match = 1;
 		} else if (c >= mb_tbl_uni_kddi2code2_min && c <= mb_tbl_uni_kddi2code2_max) {
-			match = mbfilter_conv_seq_tbl(c, s1, mb_tbl_uni_kddi2code2_key, mb_tbl_uni_kddi2code2_value,
-										  mb_tbl_uni_kddi2code2_len);
+			i = mbfl_bisec_srch2(c, mb_tbl_uni_kddi2code2_key, mb_tbl_uni_kddi2code2_len);
+			if (i >= 0) {
+				*s1 = mb_tbl_uni_kddi2code2_value[i];
+				match = 1;
+			}
 		} else if (c >= mb_tbl_uni_kddi2code3_min && c <= mb_tbl_uni_kddi2code3_max) {
-			match = mbfilter_conv_seq_tbl(c - 0x10000, s1, mb_tbl_uni_kddi2code3_key, mb_tbl_uni_kddi2code3_value,
-										  mb_tbl_uni_kddi2code3_len);
+			i = mbfl_bisec_srch2(c - 0x10000, mb_tbl_uni_kddi2code3_key, mb_tbl_uni_kddi2code3_len);
+			if (i >= 0) {
+				*s1 = mb_tbl_uni_kddi2code3_value[i];
+				match = 1;
+			}
 		}
 	}
 	
@@ -549,11 +547,17 @@ mbfilter_unicode2sjis_emoji_sb(int c, int *s1, mbfl_convert_filter *filter)
 		} else if (c == 0x00AE) {
 			*s1 = 0x2856; match = 1;
 		} else if (c >= mb_tbl_uni_sb2code2_min && c <= mb_tbl_uni_sb2code2_max) {
-			match = mbfilter_conv_seq_tbl(c, s1, mb_tbl_uni_sb2code2_key, mb_tbl_uni_sb2code2_value,
-										  mb_tbl_uni_sb2code2_len);
+			i = mbfl_bisec_srch2(c, mb_tbl_uni_sb2code2_key, mb_tbl_uni_sb2code2_len);
+			if (i >= 0) {
+				*s1 = mb_tbl_uni_sb2code2_value[i];
+				match = 1;
+			}
 		} else if (c >= mb_tbl_uni_sb2code3_min && c <= mb_tbl_uni_sb2code3_max) {
-			match = mbfilter_conv_seq_tbl(c - 0x10000, s1, mb_tbl_uni_sb2code3_key, mb_tbl_uni_sb2code3_value,
-										  mb_tbl_uni_sb2code3_len);
+			i = mbfl_bisec_srch2(c - 0x10000, mb_tbl_uni_sb2code3_key, mb_tbl_uni_sb2code3_len);
+			if (i >= 0) {
+				*s1 = mb_tbl_uni_sb2code3_value[i];
+				match = 1;
+			}
 		}
 	}
 	
