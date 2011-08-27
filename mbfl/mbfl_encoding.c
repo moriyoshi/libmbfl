@@ -174,7 +174,6 @@ static const mbfl_encoding *mbfl_encoding_ptr_list[] = {
 	&mbfl_encoding_utf8_kddi_a,
 	&mbfl_encoding_utf8_kddi_b,
 	&mbfl_encoding_utf8_sb,
-	&mbfl_encoding_utf8_mobile,
 	&mbfl_encoding_cp932,
 	&mbfl_encoding_cp51932,
 	&mbfl_encoding_jis,

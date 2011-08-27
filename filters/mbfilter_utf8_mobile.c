@@ -35,30 +35,6 @@
 
 #include "mbfilter_utf8_mobile.h"
 #include "mbfilter_sjis_mobile.h"
-#include "unicode_table_cp932_ext.h"
-#include "unicode_table_jis.h"
-
-#define SJIS_DECODE(c1,c2,s1,s2)	\
-		do {						\
-			s1 = c1;				\
-			if (s1 < 0xa0) {		\
-				s1 -= 0x81;			\
-			} else {				\
-				s1 -= 0xc1;			\
-			}						\
-			s1 <<= 1;				\
-			s1 += 0x21;				\
-			s2 = c2;				\
-			if (s2 < 0x9f) {		\
-				if (s2 < 0x7f) {	\
-					s2++;			\
-				}					\
-				s2 -= 0x20;			\
-			} else {				\
-				s1++;				\
-				s2 -= 0x7e;			\
-			}						\
-		} while (0)
 
 extern int mbfl_filt_ident_utf8(int c, mbfl_identify_filter *filter);
 
@@ -107,15 +83,6 @@ const mbfl_encoding mbfl_encoding_utf8_sb = {
 	MBFL_ENCTYPE_MBCS
 };
 
-const mbfl_encoding mbfl_encoding_utf8_mobile = {
-	mbfl_no_encoding_utf8_mobile,
-	"UTF-8-Mobile",
-	"UTF-8",
-	NULL,
-	mblen_table_utf8,
-	MBFL_ENCTYPE_MBCS
-};
-
 const struct mbfl_identify_vtbl vtbl_identify_utf8_docomo = {
 	mbfl_no_encoding_utf8_docomo,
 	mbfl_filt_ident_common_ctor,
@@ -139,13 +106,6 @@ const struct mbfl_identify_vtbl vtbl_identify_utf8_kddi_b = {
 
 const struct mbfl_identify_vtbl vtbl_identify_utf8_sb = {
 	mbfl_no_encoding_utf8_sb,
-	mbfl_filt_ident_common_ctor,
-	mbfl_filt_ident_common_dtor,
-	mbfl_filt_ident_utf8
-};
-
-const struct mbfl_identify_vtbl vtbl_identify_utf8_mobile = {
-	mbfl_no_encoding_utf8_mobile,
 	mbfl_filt_ident_common_ctor,
 	mbfl_filt_ident_common_dtor,
 	mbfl_filt_ident_utf8
@@ -222,52 +182,6 @@ const struct mbfl_convert_vtbl vtbl_wchar_utf8_sb = {
 	mbfl_filt_conv_wchar_utf8_mobile,
 	mbfl_filt_conv_common_flush
 };
-
-const struct mbfl_convert_vtbl vtbl_utf8_mobile_wchar = {
-	mbfl_no_encoding_utf8_mobile,
-	mbfl_no_encoding_wchar,
-	mbfl_filt_conv_common_ctor,
-	mbfl_filt_conv_common_dtor,
-	mbfl_filt_conv_utf8_mobile_wchar,
-	mbfl_filt_conv_common_flush
-};
-
-const struct mbfl_convert_vtbl vtbl_wchar_utf8_mobile = {
-	mbfl_no_encoding_wchar,
-	mbfl_no_encoding_utf8_mobile,
-	mbfl_filt_conv_common_ctor,
-	mbfl_filt_conv_common_dtor,
-	mbfl_filt_conv_wchar_utf8_mobile,
-	mbfl_filt_conv_common_flush
-};
-
-const struct mbfl_convert_vtbl vtbl_sjis_docomo_utf8_mobile = {
-	mbfl_no_encoding_sjis_docomo,
-	mbfl_no_encoding_utf8_mobile,
-	mbfl_filt_conv_common_ctor,
-	mbfl_filt_conv_common_dtor,
-	mbfl_filt_conv_sjis_utf8_mobile,
-	mbfl_filt_conv_common_flush
-};
-
-const struct mbfl_convert_vtbl vtbl_sjis_kddi_utf8_mobile = {
-	mbfl_no_encoding_sjis_kddi,
-	mbfl_no_encoding_utf8_mobile,
-	mbfl_filt_conv_common_ctor,
-	mbfl_filt_conv_common_dtor,
-	mbfl_filt_conv_sjis_utf8_mobile,
-	mbfl_filt_conv_common_flush
-};
-
-const struct mbfl_convert_vtbl vtbl_sjis_sb_utf8_mobile = {
-	mbfl_no_encoding_sjis_sb,
-	mbfl_no_encoding_utf8_mobile,
-	mbfl_filt_conv_common_ctor,
-	mbfl_filt_conv_common_dtor,
-	mbfl_filt_conv_sjis_utf8_mobile,
-	mbfl_filt_conv_common_flush
-};
-
 
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
 
@@ -460,191 +374,3 @@ int mbfl_filt_conv_wchar_utf8_mobile(int c, mbfl_convert_filter *filter)
 
 	return c;
 }
-
-/*
- * SJIS-Mobile => UTF-8-Mobile
- */
-int mbfl_filt_conv_sjis_utf8_mobile(int c, mbfl_convert_filter *filter)
-{
-	int w, s, s1, s2, c1;
-
-retry:
-	switch (filter->status) {
-	case 0:
-		if (c >= 0 && c < 0x80) {	/* latin */
-			if (filter->from->no_encoding == mbfl_no_encoding_sjis_sb && c == 0x1b) {
-				filter->cache = c;
-				filter->status = 2;
-			} else {
-				CK((*filter->output_function)(c, filter->data));
-			}
-		} else if (c > 0xa0 && c < 0xe0) {	/* kana */
-			CK((*filter->output_function)(0xfec0 + c, filter->data));
-		} else if (c > 0x80 && c < 0xfd && c != 0xa0) {	/* kanji first char */
-			filter->status = 1;
-			filter->cache = c;
-		} else {
-			w = c & MBFL_WCSGROUP_MASK;
-			w |= MBFL_WCSGROUP_THROUGH;
-			CK((*filter->output_function)(w, filter->data));
-		}
-		break;
-
-	case 1:		/* kanji second char */
-		filter->status = 0;
-		c1 = filter->cache;
-		if (c >= 0x40 && c <= 0xfc && c != 0x7f) {
-			w = 0;
-			SJIS_DECODE(c1, c, s1, s2);
-			s = (s1 - 0x21)*94 + s2 - 0x21;
-			if (s <= 137) {
-				if (s == 31) {
-					w = 0xff3c;			/* FULLWIDTH REVERSE SOLIDUS */
-				} else if (s == 32) {
-					w = 0xff5e;			/* FULLWIDTH TILDE */
-				} else if (s == 33) {
-					w = 0x2225;			/* PARALLEL TO */
-				} else if (s == 60) {
-					w = 0xff0d;			/* FULLWIDTH HYPHEN-MINUS */
-				} else if (s == 80) {
-					w = 0xffe0;			/* FULLWIDTH CENT SIGN */
-				} else if (s == 81) {
-					w = 0xffe1;			/* FULLWIDTH POUND SIGN */
-				} else if (s == 137) {
-					w = 0xffe2;			/* FULLWIDTH NOT SIGN */
-				}
-			}
-			if (w == 0) {
-				if (s >= cp932ext1_ucs_table_min && s < cp932ext1_ucs_table_max) {		/* vendor ext1 (13ku) */
-					w = cp932ext1_ucs_table[s - cp932ext1_ucs_table_min];
-				} else if (s >= 0 && s < jisx0208_ucs_table_size) {		/* X 0208 */
-					w = jisx0208_ucs_table[s];
-				} else if (s >= cp932ext2_ucs_table_min && s < cp932ext2_ucs_table_max) {		/* vendor ext2 (89ku - 92ku) */
-					w = cp932ext2_ucs_table[s - cp932ext2_ucs_table_min];
-				} else if (s >= cp932ext3_ucs_table_min && s < cp932ext3_ucs_table_max) {		/* vendor ext3 (115ku - 119ku) */
-					w = cp932ext3_ucs_table[s - cp932ext3_ucs_table_min];
-				} else if (s >= (94*94) && s < (114*94)) {		/* user (95ku - 114ku) */
-					w = s - (94*94) + 0xe000;
-				}
-				
- 				if (s >= (94*94) && s < 119*94) {
-
-					if (filter->from->no_encoding == mbfl_no_encoding_utf8_docomo &&
-						mbfilter_conv_map_tbl(s, &s1, mbfl_docomo2uni_pua, 4) > 0) {
-						w = s1;
-					} else if (filter->from->no_encoding == mbfl_no_encoding_utf8_kddi_b &&
-							   mbfilter_conv_map_tbl(s, &s1, mbfl_kddi2uni_pua_b, 8) > 0) {
-						w = s1;
-					} else if (filter->from->no_encoding == mbfl_no_encoding_utf8_sb &&
-							   mbfilter_conv_map_tbl(s, &s1, mbfl_sb2uni_pua, 6) > 0) {
-						w = s1;
-					}
-				}		
-			}
-			if (w <= 0) {
-				w = (s1 << 8) | s2;
-				w &= MBFL_WCSPLANE_MASK;
-				w |= MBFL_WCSPLANE_WINCP932;
-			}
-
-			if (w >= 0 && w < 0x110000) {			
-				mbfl_output_wchar_utf8(w, filter);
-			} else {
-				if (filter->illegal_mode != MBFL_OUTPUTFILTER_ILLEGAL_MODE_NONE) {
-					CK(mbfl_filt_conv_illegal_output(w, filter));				
-				}
-			}
-		} else if ((c >= 0 && c < 0x21) || c == 0x7f) {		/* CTLs */
-			CK((*filter->output_function)(c, filter->data));
-		} else {
-			w = (c1 << 8) | c;
-			w &= MBFL_WCSGROUP_MASK;
-			w |= MBFL_WCSGROUP_THROUGH;
-			CK((*filter->output_function)(w, filter->data));
-		}
-		break;
-	/* ESC : Softbank Emoji */
-	case 2:
-		if (filter->from->no_encoding == mbfl_no_encoding_sjis_sb && 
-			c == 0x24) {
-				filter->cache = c;
-				filter->status++;
-		} else {
-			filter->cache = 0;
-			filter->status = 0;
-			CK((*filter->output_function)(0x1b, filter->data));
-			goto retry;
-		}
-		break;
-
-	/* ESC $ : Softbank Emoji */
-	case 3:
-		if (filter->from->no_encoding == mbfl_no_encoding_sjis_sb && 
-			((c >= 0x45 && c <= 0x47) || (c >= 0x4f && c <= 0x51))) {
-				filter->cache = c;
-				filter->status++;
-		} else {
-			filter->cache = 0;
-			filter->status = 0;
-			CK((*filter->output_function)(0x1b, filter->data));
-			CK((*filter->output_function)(0x24, filter->data));
-			goto retry;
-		}
-		break;
-
-	/* ESC [GEFOPQ] : Softbank Emoji */
-	case 4:
-		w = 0;
-		if (filter->from->no_encoding == mbfl_no_encoding_sjis_sb) {
-			c1 = filter->cache;
-
-			if (c == 0x0f) {
-				w = c;
-				filter->cache = 0;
-				filter->status = 0;				
-			} else {
-				if (c1 == 0x47 && c >= 0x21 && c <= 0x7a) {
-					s1 = 0x91; s2 = c;	
-				} else if (c1 == 0x45 && c >= 0x21 && c <= 0x7a) {
-					s1 = 0x8d; s2 = c;	
-				} else if (c1 == 0x46 && c >= 0x21 && c <= 0x7a) {
-					s1 = 0x8e; s2 = c;	
-				} else if (c1 == 0x4f && c >= 0x21 && c <= 0x6d) {
-					s1 = 0x92; s2 = c;	
-				} else if (c1 == 0x50 && c >= 0x21 && c <= 0x6c) {
-					s1 = 0x95; s2 = c;	
-				} else if (c1 == 0x51 && c >= 0x21 && c <= 0x5e) {
-					s1 = 0x96; s2 = c;	
-				}
-				s  = (s1 - 0x21)*94 + s2 - 0x21;
-
-
-				if (mbfilter_conv_map_tbl(s, &s1, mbfl_sb2uni_pua, 6) > 0) {
-					w = s1;
-				}
-
-				if (w > 0) {
-					mbfl_output_wchar_utf8(w, filter);
-				}
-			}
-		}
-
-		if (w <= 0) {
-			c1 = filter->cache;
-			filter->cache = 0;
-			filter->status = 0;
-			CK((*filter->output_function)(0x1b, filter->data));
-			CK((*filter->output_function)(0x24, filter->data));
-			CK((*filter->output_function)(c1 & 0xff, filter->data));
-			goto retry;
-		}
-		break;
-
-	default:
-		filter->status = 0;
-		break;
-	}
-
-	return c;
-}
-
