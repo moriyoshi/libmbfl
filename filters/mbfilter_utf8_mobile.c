@@ -40,12 +40,10 @@ extern int mbfl_filt_ident_utf8(int c, mbfl_identify_filter *filter);
 
 extern const unsigned char mblen_table_utf8[];
 
-static int mbfl_output_wchar_utf8(int w, mbfl_convert_filter *filter);
-
-static const char *mbfl_encoding_utf8_docomo_aliases[] = {"UTF-8-DOCOMO", NULL};
-static const char *mbfl_encoding_utf8_kddi_b_aliases[] = {"UTF-8-Mobile#KDDI",
-														  "UTF-8-KDDI", NULL};
-static const char *mbfl_encoding_utf8_sb_aliases[] = {"UTF-8-SOFTBANK", NULL};
+static const char *mbfl_encoding_utf8_docomo_aliases[] = {"UTF-8-DOCOMO", "UTF8-DOCOMO", NULL};
+static const char *mbfl_encoding_utf8_kddi_a_aliases[] = {"UTF-8-KDDI", "UTF8-KDDI", NULL};
+static const char *mbfl_encoding_utf8_kddi_b_aliases[] = {"UTF-8-Mobile#KDDI", "UTF-8-KDDI", "UTF8-KDDI", NULL};
+static const char *mbfl_encoding_utf8_sb_aliases[] = {"UTF-8-SOFTBANK", "UTF8-SOFTBANK", NULL};
 
 const mbfl_encoding mbfl_encoding_utf8_docomo = {
 	mbfl_no_encoding_utf8_docomo,
@@ -60,7 +58,7 @@ const mbfl_encoding mbfl_encoding_utf8_kddi_a = {
 	mbfl_no_encoding_utf8_kddi_a,
 	"UTF-8-Mobile#KDDI-A",
 	"UTF-8",
-	NULL,
+	(const char *(*)[])&mbfl_encoding_utf8_kddi_a_aliases,
 	mblen_table_utf8,
 	MBFL_ENCTYPE_MBCS
 };
@@ -184,33 +182,6 @@ const struct mbfl_convert_vtbl vtbl_wchar_utf8_sb = {
 };
 
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
-
-static int mbfl_output_wchar_utf8(int w, mbfl_convert_filter *filter)
-{
-	if (w < 0 || w >= 0x110000) {
-		if (filter->illegal_mode != MBFL_OUTPUTFILTER_ILLEGAL_MODE_NONE) {
-			CK(mbfl_filt_conv_illegal_output(w, filter));
-		}
-		return w;
-	}
-
-	if (w < 0x80) {
-		CK((*filter->output_function)(w, filter->data));
-	} else if (w < 0x800) {
-		CK((*filter->output_function)(((w >> 6) & 0x1f) | 0xc0, filter->data));
-		CK((*filter->output_function)((w & 0x3f) | 0x80, filter->data));
-	} else if (w < 0x10000) {
-		CK((*filter->output_function)(((w >> 12) & 0x0f) | 0xe0, filter->data));
-		CK((*filter->output_function)(((w >> 6) & 0x3f) | 0x80, filter->data));
-				CK((*filter->output_function)((w & 0x3f) | 0x80, filter->data));
-	} else {
-		CK((*filter->output_function)(((w >> 18) & 0x07) | 0xf0, filter->data));
-		CK((*filter->output_function)(((w >> 12) & 0x3f) | 0x80, filter->data));
-		CK((*filter->output_function)(((w >> 6) & 0x3f) | 0x80, filter->data));
-		CK((*filter->output_function)((w & 0x3f) | 0x80, filter->data));
-	}
-	return w;
-}
 
 /*
  * UTF-8 => wchar
@@ -365,7 +336,21 @@ int mbfl_filt_conv_wchar_utf8_mobile(int c, mbfl_convert_filter *filter)
 			return c;
 		}
 
-		mbfl_output_wchar_utf8(c, filter);
+		if (c < 0x80) {
+			CK((*filter->output_function)(c, filter->data));
+		} else if (c < 0x800) {
+			CK((*filter->output_function)(((c >> 6) & 0x1f) | 0xc0, filter->data));
+			CK((*filter->output_function)((c & 0x3f) | 0x80, filter->data));
+		} else if (c < 0x10000) {
+			CK((*filter->output_function)(((c >> 12) & 0x0f) | 0xe0, filter->data));
+			CK((*filter->output_function)(((c >> 6) & 0x3f) | 0x80, filter->data));
+			CK((*filter->output_function)((c & 0x3f) | 0x80, filter->data));
+		} else {
+			CK((*filter->output_function)(((c >> 18) & 0x07) | 0xf0, filter->data));
+			CK((*filter->output_function)(((c >> 12) & 0x3f) | 0x80, filter->data));
+			CK((*filter->output_function)(((c >> 6) & 0x3f) | 0x80, filter->data));
+			CK((*filter->output_function)((c & 0x3f) | 0x80, filter->data));
+		}
 	} else {
 		if (filter->illegal_mode != MBFL_OUTPUTFILTER_ILLEGAL_MODE_NONE) {
 			CK(mbfl_filt_conv_illegal_output(c, filter));
@@ -374,3 +359,4 @@ int mbfl_filt_conv_wchar_utf8_mobile(int c, mbfl_convert_filter *filter)
 
 	return c;
 }
+
