@@ -35,7 +35,6 @@
 #include "mbfilter_utf8.h"
 
 int mbfl_filt_ident_utf8(int c, mbfl_identify_filter *filter);
-int mbfl_filt_conv_utf8_wchar_flush(mbfl_convert_filter *filter);
 
 const unsigned char mblen_table_utf8[] = {
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -94,7 +93,7 @@ const struct mbfl_convert_vtbl vtbl_wchar_utf8 = {
 
 #define CK(statement)	do { if ((statement) < 0) return (-1); } while (0)
 
-static void mbfl_filt_put_invalid_char(int c, mbfl_convert_filter *filter)
+void mbfl_filt_put_invalid_char(int c, mbfl_convert_filter *filter)
 {
 	int w;
 	w = c & MBFL_WCSGROUP_MASK;
