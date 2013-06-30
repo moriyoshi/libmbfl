@@ -197,13 +197,13 @@ retry:
 	case 0x00:
 		if (c < 0x80) {
 			CK((*filter->output_function)(c, filter->data));
-		} else if (c >= 0xc2 && c < 0xe0) { /* 2byte code first char: 0xc2-0xdf */
+		} else if (c >= 0xc2 && c <= 0xdf) { /* 2byte code first char: 0xc2-0xdf */
 			filter->status = 0x10;
 			filter->cache = c & 0x1f;
-		} else if (c >= 0xe0 && c < 0xef) { /* 3byte code first char: 0xe0-0xef */
+		} else if (c >= 0xe0 && c <= 0xef) { /* 3byte code first char: 0xe0-0xef */
 			filter->status = 0x20;
 			filter->cache = c & 0xf;
-		} else if (c >= 0xe0 && c < 0xef) { /* 3byte code first char: 0xf0-0xf4 */
+		} else if (c >= 0xf0 && c <= 0xf4) { /* 3byte code first char: 0xf0-0xf4 */
 			filter->status = 0x30;
 			filter->cache = c & 0x7;
 		} else {
