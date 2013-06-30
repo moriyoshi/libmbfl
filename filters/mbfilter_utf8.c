@@ -35,6 +35,7 @@
 #include "mbfilter_utf8.h"
 
 int mbfl_filt_ident_utf8(int c, mbfl_identify_filter *filter);
+int mbfl_filt_conv_utf8_wchar_flush(mbfl_convert_filter *filter);
 
 const unsigned char mblen_table_utf8[] = {
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -79,7 +80,7 @@ const struct mbfl_convert_vtbl vtbl_utf8_wchar = {
 	mbfl_filt_conv_common_ctor,
 	mbfl_filt_conv_common_dtor,
 	mbfl_filt_conv_utf8_wchar,
-	mbfl_filt_conv_common_flush
+	mbfl_filt_conv_utf8_wchar_flush
 };
 
 const struct mbfl_convert_vtbl vtbl_wchar_utf8 = {
@@ -189,9 +190,32 @@ retry:
 			goto retry;						
 		}
 		break;
+	default:
+		filter->status = 0;
+		break;
 	}
 
 	return c;
+}
+
+int mbfl_filt_conv_utf8_wchar_flush(mbfl_convert_filter *filter)
+{
+	int status, cache;
+
+	status = filter->status;
+	cache = filter->cache;
+
+	filter->status = 0;
+	filter->cache = 0;
+
+	if (status != 0) {
+		mbfl_filt_put_invalid_char(cache, filter);
+	}
+
+	if (filter->flush_function != NULL) {
+		(*filter->flush_function)(filter->data);
+	}
+	return 0;
 }
 
 /*
