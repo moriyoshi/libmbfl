@@ -114,25 +114,17 @@ int mbfl_filt_conv_utf8_wchar(int c, mbfl_convert_filter *filter)
 retry:
 	switch (filter->status & 0xff) {
 	case 0x00:
-		if (c < 0xf5) {
-			int len = mblen_table_utf8[c & 0xff];
-			switch (len) {
-			case 1:
-				CK((*filter->output_function)(c, filter->data));
-				break;
-			case 2: /* 2byte code first char: 0xc2-0xdf */
-				filter->status = 0x10;
-				filter->cache = c & 0x1f;
-				break;
-			case 3: /* 3byte code first char: 0xe0-0xef */
-				filter->status = 0x20;
-				filter->cache = c & 0xf;
-				break;
-			case 4: /* 4byte code first char: 0xf0-0xf4 */
-				filter->status = 0x30;
-				filter->cache = c & 0x7;
-				break;				
-			}
+		if (c < 0x80) {
+			CK((*filter->output_function)(c, filter->data));
+		} else if (c >= 0xc2 && c < 0xe0) { /* 2byte code first char: 0xc2-0xdf */
+			filter->status = 0x10;
+			filter->cache = c & 0x1f;
+		} else if (c >= 0xe0 && c < 0xef) { /* 3byte code first char: 0xe0-0xef */
+			filter->status = 0x20;
+			filter->cache = c & 0xf;
+		} else if (c >= 0xe0 && c < 0xef) { /* 3byte code first char: 0xf0-0xf4 */
+			filter->status = 0x30;
+			filter->cache = c & 0x7;
 		} else {
 			mbfl_filt_put_invalid_char(c, filter);
 		}
