@@ -36,7 +36,11 @@ mbfilter_ucs2.c mbfilter_utf32.c mbfilter_utf16.c mbfilter_utf8.c mbfilter_utf7.
 mbfilter_utf7imap.c mbfilter_euc_jp_win.c mbfilter_cp932.c mbfilter_cp51932.c
 mbfilter_euc_cn.c mbfilter_euc_kr.c mbfilter_uhc.c mbfilter_iso2022_jp_ms.c
 mbfilter_iso2022_kr.c mbfilter_cp866.c mbfilter_koi8r.c mbfilter_koi8u.c
-mbfilter_armscii8.c mbfilter_cp850.c html_entities.c)
+mbfilter_armscii8.c mbfilter_cp850.c html_entities.c mbfilter_cp5022x.c
+mbfilter_euc_jp_2004.c mbfilter_gb18030.c mbfilter_iso2022jp_2004.c
+mbfilter_iso2022jp_mobile.c mbfilter_sjis_2004.c mbfilter_sjis_mac.c
+mbfilter_sjis_mobile.c mbfilter_sjis_open.c mbfilter_tl_jisx0201_jisx0208.c
+mbfilter_utf8_mobile.c)
 
 foreach(mbfl_filter_file ${_mbfl_filters_files})
 	list(APPEND mbfl_filters_files "${CMAKE_CURRENT_SOURCE_DIR}/${mbfl_filter_file}")
