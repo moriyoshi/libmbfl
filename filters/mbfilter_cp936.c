@@ -304,5 +304,3 @@ static int mbfl_filt_ident_cp936(int c, mbfl_identify_filter *filter)
 
 	return c;
 }
-
-
