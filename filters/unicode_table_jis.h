@@ -15,8 +15,8 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with "streamable kanji code filter and converter";
- * if not, write to the Free Software Foundation, Inc., 59 Temple Place,
- * Suite 330, Boston, MA  02111-1307  USA
+ * if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
  *
  * The authors of this file: PHP3 internationalization team
  * You can contact the primary authors; 金本　茂 <sgk@happysize.co.jp>,
