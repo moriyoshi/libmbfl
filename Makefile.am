@@ -7,3 +7,4 @@ EXTRA_DIST=AUTHORS DISCLAIMER LICENSE Makefile.bcc32 \
 	libmbfl.dsp libmbfl.dsw libmbfl.sln libmbfl.vcproj mbfl.rc \
 	mksbcc32.bat rules.mak.bcc32
 SUBDIRS = nls filters mbfl tests
+CLEANFILES=*.log *.sum
